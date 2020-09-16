@@ -1,0 +1,67 @@
+{
+  "private": true,
+  "name": "born-ui",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "dumi dev",
+    "docs:build": "dumi build",
+    "docs:deploy": "gh-pages -d docs-dist",
+    "build": "father-build",
+    "deploy": "npm run docs:build && npm run docs:deploy",
+    "release": "npm run build && npm publish",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage",
+    "lint": "umi g tmp && npm run lint:js && npm run lint:style && npm run lint:prettier",
+    "lint-staged": "lint-staged",
+    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
+    "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src && npm run lint:style",
+    "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+    "lint:prettier": "prettier --check \"**/*\" --end-of-line auto",
+    "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
+    "prettier": "prettier -c --write \"**/*\""
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "typings": "dist/index.d.ts",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "**/*.less": "stylelint --syntax less",
+    "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
+    "**/*.{js,jsx,tsx,ts,less,md,json}": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@ant-design/icons": "^4.2.2",
+    "antd": "4.6.4",
+    "classnames": "^2.2.6",
+    "numeral": "^2.0.6",
+    "react": "^16.12.0",
+    "unstated-next": "^1.1.0",
+    "use-json-comparison": "^1.0.5",
+    "use-merge-value": "^1.0.2"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^11.0.0",
+    "@commitlint/prompt-cli": "^11.0.0",
+    "@types/classnames": "^2.2.10",
+    "@types/numeral": "^0.0.28",
+    "@umijs/fabric": "^2.2.2",
+    "@umijs/preset-react": "1.x",
+    "@umijs/test": "^3.0.5",
+    "commitlint": "^11.0.0",
+    "dumi": "^1.0.9",
+    "eslint": "^7.9.0",
+    "father-build": "^1.17.2",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.3.0",
+    "prettier": "^2.1.2",
+    "stylelint": "^13.7.1",
+    "yorkie": "^2.0.0"
+  }
+}
