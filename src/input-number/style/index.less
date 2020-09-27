@@ -1,0 +1,45 @@
+@import '~antd/es/style/themes/default.less';
+@import '../../style/index.less';
+
+@input-number-cls: ~'@{born-ui-prefix}-input-number';
+
+.@{input-number-cls} {
+  position: relative;
+  &-suffix {
+    position: absolute;
+    top: 4px;
+    right: 10px;
+  }
+  .@{ant-prefix}-input-number-handler-wrap {
+    z-index: 9;
+  }
+  .@{ant-prefix}-input-number-input-wrap {
+    padding-right: 20px;
+  }
+  &-range {
+    &-left {
+      width: 115px;
+      &:hover,
+      &:focus,
+      &.@{ant-prefix}-input-number-focused {
+        border-right-width: 2px !important;
+      }
+    }
+    &-split {
+      width: 30px !important;
+      background-color: #fff !important;
+      border-right: 0;
+      border-left: 0;
+      pointer-events: none;
+    }
+    &-right {
+      width: 115px;
+      border-left-width: 0;
+      &:hover,
+      &:focus,
+      &.@{ant-prefix}-input-number-focused {
+        border-left-width: 1px !important;
+      }
+    }
+  }
+}
