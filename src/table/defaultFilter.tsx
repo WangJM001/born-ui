@@ -176,7 +176,6 @@ const defaultColumnsFilter = <T, U = {}>(
             <div className={`${className}-pane`}>
               <DatePicker.RangePicker
                 key="editor-datepicker"
-                autoFocus
                 value={selectedKeys[0] as any}
                 onChange={((value) => setSelectedKeys([value])) as (values: any) => void}
                 showTime={dataType === 'dateTime'}
@@ -191,7 +190,6 @@ const defaultColumnsFilter = <T, U = {}>(
           <>
             <div className={`${className}-pane`}>
               <Input
-                autoFocus
                 placeholder="请输入"
                 value={selectedKeys[0] as string}
                 onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
