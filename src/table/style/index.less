@@ -1,0 +1,100 @@
+@import '~antd/es/style/themes/default.less';
+@import '../../style/index.less';
+
+@table-cls: ~'@{born-ui-prefix}-table';
+
+.@{table-cls} {
+  &-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: -6px 0 16px 0;
+    &-title {
+      margin-right: 16px;
+      color: @heading-color;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+    }
+    &-option {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-left: 16px;
+    }
+    &-item-icon {
+      margin-left: 16px;
+      font-size: 16px;
+      cursor: pointer;
+      &:first-child {
+        margin-left: 8px;
+      }
+    }
+  }
+  &-column-setting {
+    &-overlay {
+      .ant-popover-inner-content {
+        padding: 12px 0;
+      }
+    }
+    &-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 32px;
+    }
+    &-list {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      &-title {
+        color: #8c8c8c;
+        font-size: 12px;
+      }
+      &-item {
+        z-index: 1200;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 4px 16px;
+        &-option {
+          display: none;
+          float: right;
+          cursor: pointer;
+          > span {
+            > i.anticon {
+              color: @primary-color;
+            }
+          }
+          > span + span {
+            margin-left: 8px;
+          }
+        }
+        &:hover {
+          background-color: @item-active-bg;
+          .@{table-cls}-column-setting-list-item-option {
+            display: block;
+          }
+        }
+      }
+      .@{ant-prefix}-checkbox-wrapper {
+        flex: 1;
+        margin: 0;
+        :last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  &-alert {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 32px;
+    margin: -6px 0 16px 0;
+  }
+  &-column-filter-pane {
+    margin-bottom: 8px;
+  }
+}
