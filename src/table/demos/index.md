@@ -16,6 +16,8 @@ group:
 
 ## 选择和操作
 
+<code src="./selection.tsx" />
+
 ## 筛选和排序
 
 <code src="./filter-sorter.tsx" />
@@ -23,5 +25,7 @@ group:
 ## 行编辑
 
 <code src="./edit-row.tsx" />
+
+## URL Query
 
 ## API
