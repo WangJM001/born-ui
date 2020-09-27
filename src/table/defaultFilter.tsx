@@ -73,7 +73,7 @@ const defaultOnFilter = <T, U = {}>(
 };
 
 const defaultColumnsFilterByObject = <T, U = {}>(
-  dataType: ColumnsDataEnumType | ColumnsDataOptionType,
+  dataType: ColumnsDataEnumType | ColumnsDataOptionType<T>,
 ) => {
   if (dataType.type === 'enum' && dataType.values) {
     return {
