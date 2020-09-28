@@ -33,7 +33,7 @@ const useFetchData = <T, U = {}>(
     pageNumber: number;
     totalRow: number;
   }) => Promise<RequestData<T>>,
-  options?: {
+  options: {
     current?: number;
     pageSize?: number;
     defaultCurrent?: number;
@@ -43,11 +43,12 @@ const useFetchData = <T, U = {}>(
     onLoad?: (dataSource: T[]) => void;
     pagination: boolean;
     useUrlState?: boolean;
+    onCancelEditing: () => void;
   },
 ): UseFetchDataAction<T> => {
   // 用于标定组件是否解除挂载，如果解除了就不要 setState
   const mountRef = useRef(true);
-  const { pagination, onLoad = () => null, postData, useUrlState } = options || {};
+  const { pagination, onLoad = () => null, postData, useUrlState, onCancelEditing } = options;
 
   const [dataSource, setDataSource] = useState<T[]>([]);
   const [loading, setLoading] = useState<boolean | undefined>(undefined);
@@ -94,6 +95,9 @@ const useFetchData = <T, U = {}>(
     if (loading || !mountRef.current) {
       return;
     }
+
+    onCancelEditing();
+
     setLoading(true);
     const { pageSize, pageNumber, totalRow } = pageInfo;
     let items: T[] = [];
@@ -141,6 +145,8 @@ const useFetchData = <T, U = {}>(
    * pageIndex 改变的时候自动刷新
    */
   useEffect(() => {
+    onCancelEditing();
+
     const { pageNumber, pageSize } = pageInfo;
     // 如果上次的页码为空或者两次页码等于是没必要查询的
     // 如果 pageSize 发生变化是需要查询的，所以又加了 prePageSize
@@ -186,6 +192,7 @@ const useFetchData = <T, U = {}>(
 
   useDeepCompareEffect(() => {
     mountRef.current = true;
+
     fetchListDebounce.run();
     return () => {
       fetchListDebounce.cancel();
@@ -210,11 +217,12 @@ const useFetchData = <T, U = {}>(
     },
     cancel: fetchListDebounce.cancel,
     pageSize: pageInfo.pageSize,
-    setPageInfo: (info) =>
+    setPageInfo: (info) => {
       setPageInfo({
         ...pageInfo,
         ...info,
-      }),
+      });
+    },
   };
 };
 

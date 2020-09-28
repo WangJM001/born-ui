@@ -193,7 +193,7 @@ const EditableCell = <T, U = {}>({
         </>
       );
     }
-  } else if (counter.editingKey && isOptionColumn(record, dataType)) {
+  } else if ((counter.editingKey || counter.editingKey === 0) && isOptionColumn(record, dataType)) {
     dom = <span className={`${className}-option-disabled`}>{children}</span>;
   }
 

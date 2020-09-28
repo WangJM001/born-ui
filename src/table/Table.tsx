@@ -455,6 +455,14 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
           current: 1,
         };
 
+  const counter = Container.useContainer();
+
+  const onCancelEditing = useCallback(() => {
+    if (counter.editable) {
+      counter.setEditingKey(undefined);
+    }
+  }, [counter.editable]);
+
   const action = useFetchData(
     async (pageParams) => {
       if (!request) {
@@ -480,6 +488,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
       onLoad,
       postData,
       useUrlState,
+      onCancelEditing,
       effects: [stringify(params), stringify(search), stringify(filter), stringify(sort)],
     },
   );
@@ -503,18 +512,12 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
     propsPagination !== false &&
     mergePagination<T, {}>(propsPagination, action, defaultTablePageSize);
 
-  const counter = Container.useContainer();
-
   const onCleanSelected = useCallback(() => {
     if (propsRowSelection && propsRowSelection.onChange) {
       propsRowSelection.onChange([], []);
     }
     setSelectedRowsAndKey([], []);
   }, [setSelectedRowKeys]);
-
-  const onCancelEditing = useCallback(() => {
-    counter.setEditingKey(undefined);
-  }, []);
 
   counter.setAction(action);
   counter.propsRef.current = props;
@@ -734,8 +737,6 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
         if (rest.onChange) {
           rest.onChange(changePagination, filters, sorter, extra);
         }
-
-        onCancelEditing();
 
         // 制造筛选的数据
         setFilter(
