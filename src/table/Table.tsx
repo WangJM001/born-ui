@@ -198,7 +198,12 @@ export interface TableProps<T, U extends { [key: string]: any }>
    */
   onEditSave?: (formValue: T, originalRecord: T, index: number) => Promise<any>;
 
+  /**
+   * card body padding样式
+   */
   padding?: boolean;
+
+  useUrlState?: boolean;
 }
 
 const mergePagination = <T extends any, U>(
@@ -316,8 +321,11 @@ const genColumnList = <T, U = {}>(
   counter: ReturnType<typeof useCounter>,
   formatSymbol: FormatSymbolType,
   columnEmptyText?: ColumnEmptyText,
-): (AColumnsType<T>[number] & { index?: number })[] =>
-  (columns
+): (AColumnsType<T>[number] & { index?: number })[] => {
+  const editable = columns.some((column) => column.editor);
+  counter.setEditable(editable);
+
+  return (columns
     .map((item, columnsIndex) => {
       const { key, dataIndex, title, filters, dataType, sorter, editor, rules, editorName } = item;
       const columnKey = genColumnKey(key, dataIndex, columnsIndex);
@@ -327,9 +335,9 @@ const genColumnList = <T, U = {}>(
 
       const config = columnKey ? map[columnKey] || { fixed: item.fixed } : { fixed: item.fixed };
       const { propsRef } = counter;
-      const tempColumns = {
+      const tempColumn = {
         index: columnsIndex,
-        ...omit(item, ['editor', 'rules', 'editorName']),
+        ...omit(item, ['editor', 'rules', 'editorName', 'datatype']),
         ...(filters === true
           ? defaultColumnsFilter(dataIndex, dataType, !!propsRef.current?.request)
           : { filters }),
@@ -359,7 +367,13 @@ const genColumnList = <T, U = {}>(
             counter,
             formatSymbol,
           }),
-        onCell: (record: T, index: number) =>
+      };
+      if (!tempColumn.children || !tempColumn.children.length) {
+        delete tempColumn.children;
+      }
+
+      if (editable) {
+        tempColumn.onCell = (record: T, index?: number) =>
           ({
             index,
             title,
@@ -369,18 +383,13 @@ const genColumnList = <T, U = {}>(
             editor,
             editorName,
             rules,
-          } as any),
-      };
-      if (!tempColumns.children || !tempColumns.children.length) {
-        delete tempColumns.children;
-      }
-      if (editor) {
-        counter.setEditable(true);
+          } as any);
       }
 
-      return tempColumns;
+      return tempColumn;
     })
     .filter((item: any) => !item.hideInTable) as unknown) as AColumnType<T>[];
+};
 
 /**
  * 重新封装Table
@@ -406,6 +415,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
     columnEmptyText = '-',
     rowKey = 'id',
     padding = true,
+    useUrlState,
     ...rest
   } = props;
   const [selectedRowKeys, setSelectedRowKeys] = useMergedState<React.ReactText[]>([], {
@@ -462,7 +472,6 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
 
       // eslint-disable-next-line no-underscore-dangle
       delete (actionParams as any)._timestamp;
-
       return request((actionParams as unknown) as U, sort, filter);
     },
     {
@@ -470,6 +479,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
       pagination: propsPagination !== false,
       onLoad,
       postData,
+      useUrlState,
       effects: [stringify(params), stringify(search), stringify(filter), stringify(sort)],
     },
   );

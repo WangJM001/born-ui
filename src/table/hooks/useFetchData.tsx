@@ -4,6 +4,7 @@ import { usePrevious } from 'ahooks';
 import { RequestData } from '../../interface';
 import useDebounceFn from '../../_utils/hooks/useDebounceFn';
 import useDeepCompareEffect from '../../_utils/hooks/useDeepCompareEffect';
+import useUrlStateExpand from './useUrlStateExpand';
 
 export interface UseFetchDataAction<T> {
   dataSource: T[];
@@ -41,20 +42,32 @@ const useFetchData = <T, U = {}>(
     effects?: any[];
     onLoad?: (dataSource: T[]) => void;
     pagination: boolean;
+    useUrlState?: boolean;
   },
 ): UseFetchDataAction<T> => {
   // 用于标定组件是否解除挂载，如果解除了就不要 setState
   const mountRef = useRef(true);
-  const { pagination, onLoad = () => null, postData } = options || {};
+  const { pagination, onLoad = () => null, postData, useUrlState } = options || {};
 
   const [dataSource, setDataSource] = useState<T[]>([]);
   const [loading, setLoading] = useState<boolean | undefined>(undefined);
 
-  const [pageInfo, setPageInfo] = useState<PageInfo>({
-    pageNumber: options?.current || options?.defaultCurrent || 1,
-    totalRow: -1,
-    pageSize: options?.pageSize || options?.defaultPageSize || 20,
-  });
+  const [pageInfo, setPageInfo] = useUrlStateExpand<PageInfo>(
+    {
+      pageNumber: options?.current || options?.defaultCurrent || 1,
+      totalRow: -1,
+      pageSize: options?.pageSize || options?.defaultPageSize || 10,
+    },
+    {
+      enable: useUrlState,
+      excludes: ['totalRow'],
+      formatter: ({ pageNumber, totalRow, pageSize }) => ({
+        pageNumber: Number(pageNumber),
+        totalRow: Number(totalRow),
+        pageSize: Number(pageSize),
+      }),
+    },
+  );
 
   // Batching update  https://github.com/facebook/react/issues/14259
   const setDataAndLoading = (newData: T[], dataTotal: number) => {

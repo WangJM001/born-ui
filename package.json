@@ -37,6 +37,7 @@
     ]
   },
   "dependencies": {
+    "@ahooksjs/use-url-state": "^2.5.1",
     "@ant-design/icons": "^4.2.2",
     "ahooks": "^2.6.0",
     "antd": "4.6.5",
