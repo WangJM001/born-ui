@@ -9,6 +9,7 @@ import { ColumnType } from './Table';
 import InputPercent from '../input-percent';
 import Container from './container';
 import { isOptionColumn } from './utils';
+import { CLASS_NAME_PREFIX } from '../constants';
 
 const FormItem = Form.Item;
 
@@ -100,7 +101,7 @@ export function genCellEditor<T, U = {}>(
 }
 
 export interface EditableCellProps<T> {
-  index: number;
+  index?: number;
   record: T;
   dataIndex: React.Key;
   dataType: ColumnType['dataType'];
@@ -125,10 +126,13 @@ const EditableCell = <T, U = {}>({
   rules = [],
   ...restProps
 }: PropsWithChildren<EditableCellProps<T>>) => {
+  const className = `${CLASS_NAME_PREFIX}-table-editable-cell`;
   const counter = Container.useContainer();
   const editing = counter.isEditing(record || {});
 
   const editSave = () => {
+    if (!index && index !== 0) return;
+
     counter.editFormRef.current
       ?.validateFields()
       .then((row: any) => {
@@ -170,7 +174,13 @@ const EditableCell = <T, U = {}>({
   if (editing) {
     if (editor) {
       dom = (
-        <FormItem name={editorName || dataIndex} label={title} validateFirst rules={rules}>
+        <FormItem
+          name={editorName || dataIndex}
+          label={title}
+          validateFirst
+          rules={rules}
+          className={`${className}-form-item`}
+        >
           {genCellEditor(record, editor, dataType)}
         </FormItem>
       );
@@ -183,6 +193,8 @@ const EditableCell = <T, U = {}>({
         </>
       );
     }
+  } else if (counter.editingKey && isOptionColumn(record, dataType)) {
+    dom = <span className={`${className}-option-disabled`}>{children}</span>;
   }
 
   return <td {...restProps}>{dom}</td>;

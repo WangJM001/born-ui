@@ -17,14 +17,14 @@ export default () => {
       title: '百分比',
       dataIndex: 'percent',
       dataType: 'percent',
-      width: 130,
+      width: 140,
       editor: true,
     },
     {
       title: '更新日期',
       dataIndex: 'updatedAt',
       dataType: 'date',
-      width: 140,
+      width: 160,
       editor: true,
     },
     {
@@ -39,7 +39,7 @@ export default () => {
           error: '异常',
         },
       },
-      width: 140,
+      width: 150,
       editor: true,
     },
     {

@@ -33,7 +33,7 @@
   }
   &-column-setting {
     &-overlay {
-      .ant-popover-inner-content {
+      .@{ant-prefix}-popover-inner-content {
         padding: 12px 0;
       }
     }
@@ -62,7 +62,7 @@
           float: right;
           cursor: pointer;
           > span {
-            > i.anticon {
+            > i.@{ant-prefix}icon {
               color: @primary-color;
             }
           }
@@ -96,5 +96,32 @@
   }
   &-column-filter-pane {
     margin-bottom: 8px;
+  }
+
+  &-editable-cell {
+    &-form-item {
+      margin: -5px 0;
+      .@{ant-prefix}-form-item-label {
+        display: none;
+      }
+      .@{ant-prefix}-form-item-control {
+        width: 100%;
+        .@{ant-prefix}-input-number,
+        .@{ant-prefix}-select {
+          width: 100%;
+        }
+      }
+    }
+    &-option-disabled {
+      cursor: not-allowed;
+      a {
+        color: @disabled-color;
+        pointer-events: none;
+      }
+    }
+  }
+
+  .@{ant-prefix}-btn-link {
+    padding: 0;
   }
 }
