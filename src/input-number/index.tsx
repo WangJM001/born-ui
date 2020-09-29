@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { InputNumberProps as AInputNumberProps } from 'antd/lib/input-number';
 import { InputNumber as AInputNumber } from 'antd';
 import { CLASS_NAME_PREFIX } from '../constants';
@@ -33,4 +33,4 @@ const InputNumber = ({ groupSeparator = ',', suffix, style, ...restProps }: Inpu
 
 InputNumber.InputNumberRange = InputNumberRange;
 
-export default memo(InputNumber);
+export default InputNumber;

@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react';
+import React, { FC } from 'react';
 import { Input } from 'antd';
 import useMergeValue from 'use-merge-value';
 import InputNumber, { InputNumberProps } from '.';
@@ -45,4 +45,4 @@ const InputNumberRange: FC<InputNumberRangeProps> = ({
   );
 };
 
-export default memo(InputNumberRange);
+export default InputNumberRange;

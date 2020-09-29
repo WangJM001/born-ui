@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react';
+import React, { FC } from 'react';
 import { Empty as AEmpty } from 'antd';
 import { EmptyProps } from 'antd/lib/empty';
 
@@ -16,4 +16,4 @@ const Empty: EmptyType = (props) => {
 Empty.PRESENTED_IMAGE_DEFAULT = AEmpty.PRESENTED_IMAGE_DEFAULT;
 Empty.PRESENTED_IMAGE_SIMPLE = AEmpty.PRESENTED_IMAGE_SIMPLE;
 
-export default memo(Empty);
+export default Empty;

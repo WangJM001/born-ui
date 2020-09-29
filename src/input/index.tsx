@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react';
+import React, { FC } from 'react';
 import AInput, {
   InputProps,
   GroupProps,
@@ -37,4 +37,4 @@ Input.Search = AInput.Search;
 Input.TextArea = TextArea;
 Input.Password = AInput.Password;
 
-export default memo(Input);
+export default Input;

@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useContext, forwardRef } from 'react';
+import React, { useCallback, useContext, forwardRef } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import dayjsGenerateConfig from 'rc-picker/lib/generate/dayjs';
 import generatePicker, {
@@ -53,4 +53,4 @@ const RangePicker = forwardRef<any, RangePickerProps>(
   },
 );
 
-export default memo(RangePicker);
+export default RangePicker;

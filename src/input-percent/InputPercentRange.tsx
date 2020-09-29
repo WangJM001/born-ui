@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react';
+import React, { FC } from 'react';
 import { Input } from 'antd';
 import useMergeValue from 'use-merge-value';
 import { CLASS_NAME_PREFIX } from '../constants';
@@ -45,4 +45,4 @@ const InputPercentRange: FC<InputPercentRangeProps> = ({
   );
 };
 
-export default memo(InputPercentRange);
+export default InputPercentRange;

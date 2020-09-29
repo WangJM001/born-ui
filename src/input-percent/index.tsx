@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import InputNumber, { InputNumberProps } from '../input-number';
 import InputPercentRange from './InputPercentRange';
 
@@ -39,4 +39,4 @@ const InputPercent = ({
 
 InputPercent.InputPercentRange = InputPercentRange;
 
-export default memo(InputPercent);
+export default InputPercent;
