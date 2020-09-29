@@ -54,7 +54,7 @@
     "use-merge-value": "^1.0.2"
   },
   "devDependencies": {
-    "@ant-design/pro-skeleton": "^1.0.0-beta.2",
+    "@ant-design/pro-skeleton": "^1.0.0-beta.9",
     "@commitlint/config-conventional": "^11.0.0",
     "@commitlint/prompt-cli": "^11.0.0",
     "@types/classnames": "^2.2.10",
