@@ -330,6 +330,7 @@ const genColumnList = <T, U = {}>(
       const config = columnKey ? map[columnKey] || { fixed: item.fixed } : { fixed: item.fixed };
       const dataIndexStr = genDataIndexStr(dataIndex);
       const filteredValue = urlFilter[dataIndexStr];
+      const isEnumFilter = typeof dataType === 'object' && dataType.type === 'enum';
       const { propsRef } = counter;
       const tempColumn = {
         index: columnsIndex,
@@ -342,7 +343,7 @@ const genColumnList = <T, U = {}>(
             ? defaultColumnsSorter<T>(dataIndex, dataType)
             : sorter,
         ...(propsRef.current?.urlState && {
-          filteredValue: filteredValue ? [filteredValue] : undefined,
+          filteredValue: !isEnumFilter && filteredValue ? [filteredValue] : filteredValue,
           sortOrder: transformSortOrder(urlSorter[dataIndexStr]),
         }),
         title: title && typeof title === 'function' ? title(item) : title,

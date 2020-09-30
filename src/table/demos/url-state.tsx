@@ -22,6 +22,7 @@ const columns: ColumnsType<TableListItem> = [
     dataIndex: 'updatedAt',
     dataType: 'date',
     width: 140,
+    filters: true,
   },
   {
     title: '状态',
@@ -35,6 +36,7 @@ const columns: ColumnsType<TableListItem> = [
         error: '异常',
       },
     },
+    filters: true,
     width: 140,
   },
   {
