@@ -1,53 +1,63 @@
-import React, {
-  useEffect,
-  CSSProperties,
-  useRef,
-  useState,
-  ReactNode,
-  useCallback,
-  useContext,
-} from 'react';
-import { Table as ATable, Card, Space, Empty } from 'antd';
-import useMergedState from 'rc-util/lib/hooks/useMergedState';
-import classNames from 'classnames';
-import { stringify } from 'use-json-comparison';
+import useUrlState from '@ahooksjs/use-url-state';
+import { Card, Empty, Space, Table as ATable } from 'antd';
+import Form, { Rule } from 'antd/lib/form';
 import {
-  TablePaginationConfig,
   ColumnsType as AColumnsType,
-  TableProps as ATableProps,
   ColumnType as AColumnType,
+  TablePaginationConfig,
+  TableProps as ATableProps,
 } from 'antd/lib/table';
 import {
   ColumnFilterItem,
-  TableCurrentDataSource,
   SorterResult,
+  TableCurrentDataSource,
   TableRowSelection as ATableRowSelection,
 } from 'antd/lib/table/interface';
-import Form, { Rule } from 'antd/lib/form';
+import classNames from 'classnames';
 import omit from 'lodash/omit';
-import { CLASS_NAME_PREFIX } from '../constants';
-import useDeepCompareEffect from '../_utils/hooks/useDeepCompareEffect';
-import checkUndefinedOrNull from '../_utils/checkUndefinedOrNull';
-import useFetchData, { UseFetchDataAction } from './hooks/useFetchData';
-import Container, { useCounter } from './container';
-import Toolbar, { OptionConfig, ToolbarProps } from './Toolbar';
-import Alert from './Alert';
-import { genColumnKey, getRowKey } from './utils';
-import defaultRenderText, { ColumnsDataType } from './defaultRender';
-import { RequestData } from '../interface';
-import omitEmpty from '../_utils/omitEmpty';
-import defaultColumnsFilter from './defaultFilter';
+import useMergedState from 'rc-util/lib/hooks/useMergedState';
+import React, {
+  CSSProperties,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { stringify } from 'use-json-comparison';
 import { ConfigContext } from '../config-provider';
 import { FormatSymbolType } from '../config-provider/context';
+import { CLASS_NAME_PREFIX } from '../constants';
+import { RequestData } from '../interface';
+import checkUndefinedOrNull from '../_utils/checkUndefinedOrNull';
+import useDeepCompareEffect from '../_utils/hooks/useDeepCompareEffect';
+import omitEmpty from '../_utils/omitEmpty';
+import Alert from './Alert';
+import Container, { useCounter } from './container';
+import defaultColumnsFilter from './defaultFilter';
+import defaultRenderText, { ColumnsDataType } from './defaultRender';
 import defaultColumnsSorter from './defaultSorter';
 import EditableCell from './EditableCell';
+import useFetchData, { UseFetchDataAction } from './hooks/useFetchData';
+import Toolbar, { OptionConfig, ToolbarProps } from './Toolbar';
+import { genColumnKey, genDataIndexStr, getRowKey, transformSortOrder } from './utils';
 
-export type SortType = {
+export type SorterType = {
   [key: string]: 'asc' | 'desc';
 };
 
 export type FilterType = {
-  [key: string]: React.ReactText[];
+  [key: string]: any;
+};
+
+export type UrlStateType = {
+  pageNumber?: string;
+  pageSize?: string;
+  search?: string;
+  filter?: string;
+  sorter?: string;
 };
 
 export interface ActionType<T> {
@@ -146,8 +156,8 @@ export interface TableProps<T, U extends { [key: string]: any }>
       pageSize?: number;
       pageNumber?: number;
     },
-    sort: SortType,
-    filter: FilterType,
+    sort?: SorterType,
+    filter?: FilterType,
   ) => Promise<RequestData<T>>;
 
   /**
@@ -184,7 +194,7 @@ export interface TableProps<T, U extends { [key: string]: any }>
   /**
    * 默认的操作栏配置
    */
-  options?: OptionConfig<T> | false;
+  options?: OptionConfig | false;
 
   rowSelection?: TableRowSelection<T> | false;
 
@@ -202,47 +212,30 @@ export interface TableProps<T, U extends { [key: string]: any }>
    * card body padding样式
    */
   padding?: boolean;
-
-  useUrlState?: boolean;
+  /**
+   * 将状态同步到 url query 中
+   */
+  urlState?: boolean;
 }
 
 const mergePagination = <T extends any, U>(
   pagination: TablePaginationConfig | boolean | undefined = {},
   action: UseFetchDataAction<T>,
-  defaultPageSize: number,
 ): TablePaginationConfig | false | undefined => {
   if (pagination === false) {
     return {};
   }
   let defaultPagination: TablePaginationConfig | {} = pagination || {};
-  const { current, pageSize } = action;
+  const { current, pageSize, totalRow } = action;
   if (pagination === true) {
     defaultPagination = {};
   }
   return {
     showSizeChanger: true,
-    total: action.totalRow,
+    total: totalRow,
     ...(defaultPagination as TablePaginationConfig),
     current,
     pageSize,
-    onChange: (pageNumber: number, newPageSize?: number) => {
-      // pageSize 改变之后就没必要切换页码
-      if (newPageSize !== pageSize && current !== pageNumber) {
-        action.setPageInfo({ pageSize: newPageSize, pageNumber });
-      } else {
-        if (newPageSize !== pageSize) {
-          action.setPageInfo({ pageSize: newPageSize });
-        }
-        if (current !== pageNumber) {
-          action.setPageInfo({ pageNumber });
-        }
-      }
-
-      const { onChange } = pagination as TablePaginationConfig;
-      if (onChange) {
-        onChange(pageNumber, newPageSize || defaultPageSize);
-      }
-    },
   };
 };
 
@@ -319,11 +312,12 @@ const genColumnList = <T, U = {}>(
     [key: string]: ColumnsState;
   },
   counter: ReturnType<typeof useCounter>,
+  urlState: UrlStateType,
   formatSymbol: FormatSymbolType,
   columnEmptyText?: ColumnEmptyText,
 ): (AColumnsType<T>[number] & { index?: number })[] => {
-  const editable = columns.some((column) => column.editor);
-  counter.setEditable(editable);
+  const urlFilter = urlState.filter ? JSON.parse(urlState.filter) : {};
+  const urlSorter = urlState.sorter ? JSON.parse(urlState.sorter) : {};
 
   return (columns
     .map((item, columnsIndex) => {
@@ -334,6 +328,8 @@ const genColumnList = <T, U = {}>(
       }
 
       const config = columnKey ? map[columnKey] || { fixed: item.fixed } : { fixed: item.fixed };
+      const dataIndexStr = genDataIndexStr(dataIndex);
+      const filteredValue = urlFilter[dataIndexStr];
       const { propsRef } = counter;
       const tempColumn = {
         index: columnsIndex,
@@ -345,6 +341,10 @@ const genColumnList = <T, U = {}>(
           sorter === true && !propsRef.current?.request
             ? defaultColumnsSorter<T>(dataIndex, dataType)
             : sorter,
+        ...(propsRef.current?.urlState && {
+          filteredValue: filteredValue ? [filteredValue] : undefined,
+          sortOrder: transformSortOrder(urlSorter[dataIndexStr]),
+        }),
         title: title && typeof title === 'function' ? title(item) : title,
         fixed: config.fixed,
         width: item.width || (item.fixed ? 200 : undefined),
@@ -353,6 +353,7 @@ const genColumnList = <T, U = {}>(
               (item as ColumnGroupType<T>).children as ColumnsType<T>,
               map,
               counter,
+              urlState,
               formatSymbol,
               columnEmptyText,
             )
@@ -372,7 +373,7 @@ const genColumnList = <T, U = {}>(
         delete tempColumn.children;
       }
 
-      if (editable) {
+      if (counter.editable) {
         tempColumn.onCell = (record: T, index?: number) =>
           ({
             index,
@@ -415,7 +416,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
     columnEmptyText = '-',
     rowKey = 'id',
     padding = true,
-    useUrlState,
+    urlState: isUrlState,
     ...rest
   } = props;
   const [selectedRowKeys, setSelectedRowKeys] = useMergedState<React.ReactText[]>([], {
@@ -428,17 +429,33 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
     setSelectedRows(rows);
   };
 
-  const [search, setSearch] = useState<{}>();
-  const [filter, setFilter] = useState<FilterType>({});
-  const [sort, setSort] = useState<SortType>({});
+  let searchName = 'keyword';
+  if (options && options.search && !(options.search === true)) {
+    searchName = options.search.name || 'keyword';
+  }
+  const [search, setSearch] = useState<Record<string, any>>();
+  const [filter, setFilter] = useState<FilterType>();
+  const [sorter, setSorter] = useState<SorterType>();
+
+  const { tablePageSize: defaultTablePageSize, formatSymbol } = useContext(ConfigContext);
+
+  const defaultUrlState = {
+    pageNumber: '1',
+    pageSize: `${defaultTablePageSize}`,
+    search: undefined,
+    filter: '{}',
+    sorter: '{}',
+  };
+  const [urlState, setUrlState] = useUrlState<UrlStateType>(defaultUrlState, {
+    navigateMode: 'replace',
+  });
+  const urlStateDeps = Object.keys(defaultUrlState).map((state) => urlState[state]);
 
   /**
    * 获取 table 的 dom ref
    */
   const rootRef = useRef<HTMLDivElement>(null);
   const fullScreen = useRef<() => void>();
-
-  const { tablePageSize: defaultTablePageSize, formatSymbol } = useContext(ConfigContext);
 
   /**
    * 需要初始化 不然默认可能报错
@@ -480,16 +497,15 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
 
       // eslint-disable-next-line no-underscore-dangle
       delete (actionParams as any)._timestamp;
-      return request((actionParams as unknown) as U, sort, filter);
+      return request((actionParams as unknown) as U, sorter, filter);
     },
     {
       ...fetchPagination,
       pagination: propsPagination !== false,
       onLoad,
       postData,
-      useUrlState,
       onCancelEditing,
-      effects: [stringify(params), stringify(search), stringify(filter), stringify(sort)],
+      effects: [stringify(params), stringify(search), stringify(filter), stringify(sorter)],
     },
   );
 
@@ -508,9 +524,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
 
   action.fullScreen = fullScreen.current;
 
-  const pagination =
-    propsPagination !== false &&
-    mergePagination<T, {}>(propsPagination, action, defaultTablePageSize);
+  const pagination = propsPagination !== false && mergePagination<T, {}>(propsPagination, action);
 
   const onCleanSelected = useCallback(() => {
     if (propsRowSelection && propsRowSelection.onChange) {
@@ -521,6 +535,38 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
 
   counter.setAction(action);
   counter.propsRef.current = props;
+
+  /**
+   * 同步url state到内部state
+   * page:string
+   * pageSize:string
+   * search:string
+   * filter: {[dataIndex]:string}
+   * sort: {[dataIndex]:'asc'|'desc'}
+   */
+  useEffect(() => {
+    if (isUrlState) {
+      action.setPageInfo({
+        pageNumber: Number(urlState.pageNumber),
+        pageSize: Number(urlState.pageSize),
+      });
+    }
+  }, [isUrlState, urlState.pageNumber, urlState.pageSize]);
+  useEffect(() => {
+    if (isUrlState) {
+      setSearch({ [searchName]: urlState.search });
+    }
+  }, [isUrlState, urlState.search]);
+  useEffect(() => {
+    if (isUrlState) {
+      setFilter(JSON.parse(urlState.filter));
+    }
+  }, [isUrlState, urlState.filter]);
+  useEffect(() => {
+    if (isUrlState) {
+      setSorter(JSON.parse(urlState.sorter));
+    }
+  }, [isUrlState, urlState.sorter]);
 
   /**
    * 这里生成action的映射，保证 action 总是使用的最新
@@ -564,44 +610,71 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
     }
   }, [counter.editable]);
 
+  useDeepCompareEffect(() => {
+    counter.setEditable(propsColumns.some((column) => column.editor));
+  }, [propsColumns]);
+
+  const tableColumns = useMemo(
+    () =>
+      genColumnList<T>(
+        propsColumns,
+        counter.columnsMap,
+        counter,
+        urlState,
+        formatSymbol,
+        columnEmptyText,
+      ),
+    [propsColumns, ...urlStateDeps],
+  );
+
+  /**
+   * 记录枚举列
+   * 数据过滤时使用
+   */
+  const enumsColumnsDataIndex: string[] = useMemo(
+    () =>
+      propsColumns
+        .map(({ dataType, dataIndex }) =>
+          typeof dataType === 'object' && dataType.type === 'enum'
+            ? genDataIndexStr(dataIndex)
+            : '',
+        )
+        .filter(Boolean),
+    [propsColumns],
+  );
+
   /**
    * Table Column 变化的时候更新一下，这个参数将会用于渲染
    */
   useDeepCompareEffect(() => {
-    const tableColumn = genColumnList<T>(
-      propsColumns,
-      counter.columnsMap,
-      counter,
-      formatSymbol,
-      columnEmptyText,
-    );
-    if (tableColumn && tableColumn.length > 0) {
-      counter.setColumns(tableColumn);
+    if (tableColumns && tableColumns.length > 0) {
+      counter.setColumns(tableColumns);
       // 重新生成key的字符串用于排序
       counter.setSortKeyColumns(
-        tableColumn.map((item, index) => {
+        tableColumns.map((item, index) => {
           const key = genColumnKey(item.key, (item as ColumnType).dataIndex, index) || `${index}`;
           return `${key}_${index}`;
         }),
       );
     }
-  }, [propsColumns]);
+  }, [tableColumns]);
 
   /**
    * 这里主要是为了排序，为了保证更新及时，每次都重新计算
    */
   useDeepCompareEffect(() => {
     const keys = counter.sortKeyColumns.join(',');
-    let tableColumn = genColumnList<T>(
+    let sortTableColumn = genColumnList<T>(
       propsColumns,
       counter.columnsMap,
       counter,
+      urlState,
       formatSymbol,
       columnEmptyText,
     );
     if (keys.length > 0) {
       // 用于可视化的排序
-      tableColumn = tableColumn.sort((a, b) => {
+      sortTableColumn = sortTableColumn.sort((a, b) => {
         const { fixed: aFixed, index: aIndex } = a;
         const { fixed: bFixed, index: bIndex } = b;
         if (
@@ -622,8 +695,8 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
         return keys.indexOf(aKey) - keys.indexOf(bKey);
       });
     }
-    if (tableColumn && tableColumn.length > 0) {
-      counter.setColumns(tableColumn);
+    if (sortTableColumn && sortTableColumn.length > 0) {
+      counter.setColumns(sortTableColumn);
     }
   }, [counter.columnsMap, counter.sortKeyColumns.join('-')]);
 
@@ -650,6 +723,92 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
       setSelectedRowsAndKey(keys, rows);
     },
   };
+
+  const onTableChange = useCallback(
+    (
+      changePagination: TablePaginationConfig,
+      changeFilters: {
+        [string: string]: React.ReactText[] | null;
+      },
+      changeSorter: SorterResult<T> | SorterResult<T>[],
+      extra: TableCurrentDataSource<T>,
+    ) => {
+      if (rest.onChange) {
+        rest.onChange(changePagination, changeFilters, changeSorter, extra);
+      }
+
+      switch (extra.action) {
+        case 'paginate': {
+          const { current, pageSize } = changePagination;
+          if (isUrlState) {
+            const paginate: { pageNumber?: number; pageSize?: number } = { pageNumber: current };
+            if (action.pageSize !== pageSize) {
+              paginate.pageSize = pageSize;
+            }
+            setUrlState(paginate);
+          } else {
+            action.setPageInfo({
+              pageNumber: current,
+              pageSize,
+            });
+          }
+          break;
+        }
+        case 'filter': {
+          const filterValue = Object.keys(changeFilters).reduce((prev, key) => {
+            const value = changeFilters[key];
+            if (!value || value.length === 0) {
+              return prev;
+            }
+
+            return {
+              ...prev,
+              [key]: enumsColumnsDataIndex.includes(key) ? value : value[0],
+            };
+          }, {});
+
+          if (isUrlState) {
+            setUrlState({ filter: stringify(filterValue), pageNumber: 1 });
+          } else {
+            setFilter(filterValue);
+            action.resetPageIndex();
+          }
+          break;
+        }
+        case 'sort': {
+          let sorterValue;
+          if (Array.isArray(changeSorter)) {
+            const data = changeSorter.reduce<{
+              [key: string]: any;
+            }>((pre, value) => {
+              if (!value.order) {
+                return pre;
+              }
+              return {
+                ...pre,
+                [`${value.field}`]: transformSortOrder(value.order),
+              };
+            }, {});
+            sorterValue = omitEmpty(data);
+          } else if (changeSorter.order) {
+            sorterValue = omitEmpty({
+              [`${changeSorter.field}`]: transformSortOrder(changeSorter.order),
+            });
+          }
+
+          if (isUrlState) {
+            setUrlState({ sorter: stringify(sorterValue) });
+          } else {
+            setSorter(sorterValue);
+          }
+          break;
+        }
+        default:
+          break;
+      }
+    },
+    [rest.onChange, action.totalRow, ...urlStateDeps],
+  );
 
   if (counter.columns.length < 1) {
     return (
@@ -678,17 +837,17 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
         options={options}
         headerTitle={headerTitle}
         action={action}
+        searchValue={search && search[searchName]}
         onSearch={(keyword) => {
           if (options && options.search) {
-            const { name = 'keyword' } =
-              options.search === true
-                ? {
-                    name: 'keyword',
-                  }
-                : options.search;
-            setSearch({
-              [name]: keyword,
-            });
+            if (isUrlState) {
+              setUrlState({ search: keyword, pageNumber: 1 });
+            } else {
+              setSearch({
+                [searchName]: keyword,
+              });
+              action.resetPageIndex();
+            }
           }
         }}
         selectedRows={selectedRows}
@@ -726,57 +885,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
       loading={action.loading || props.loading}
       dataSource={action.dataSource}
       pagination={pagination}
-      onChange={(
-        changePagination: TablePaginationConfig,
-        filters: {
-          [string: string]: React.ReactText[] | null;
-        },
-        sorter: SorterResult<T> | SorterResult<T>[],
-        extra: TableCurrentDataSource<T>,
-      ) => {
-        if (rest.onChange) {
-          rest.onChange(changePagination, filters, sorter, extra);
-        }
-
-        // 制造筛选的数据
-        setFilter(
-          Object.keys(filters).reduce((prev, key) => {
-            const value = filters[key];
-            if (!value || value.length === 0) {
-              return prev;
-            }
-
-            return {
-              ...prev,
-              [key]: value[0],
-            };
-          }, {}),
-        );
-
-        // 制造一个排序的数据
-        if (Array.isArray(sorter)) {
-          const data = sorter.reduce<{
-            [key: string]: any;
-          }>((pre, value) => {
-            if (!value.order) {
-              return pre;
-            }
-            return {
-              ...pre,
-              [`${value.field}`]: value.order === 'ascend' ? 'asc' : 'desc',
-            };
-          }, {});
-          setSort(omitEmpty(data));
-        } else if (sorter.order) {
-          setSort(
-            omitEmpty({
-              [`${sorter.field}`]: sorter.order === 'ascend' ? 'asc' : 'desc',
-            }),
-          );
-        } else {
-          setSort({});
-        }
-      }}
+      onChange={onTableChange}
     />
   );
 

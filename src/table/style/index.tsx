@@ -13,3 +13,4 @@ import 'antd/lib/button/style';
 import '../../input-number/style';
 import '../../date-picker/style';
 import '../../input/style';
+import 'antd/lib/form/style';

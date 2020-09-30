@@ -3,6 +3,9 @@ import { DataIndex } from 'rc-table/lib/interface';
 import { TableProps } from '.';
 import { ColumnType } from './Table';
 
+export const genDataIndexStr = (dataIndex: string | string[]) =>
+  Array.isArray(dataIndex) ? dataIndex.join('.') : dataIndex;
+
 /**
  *  根据 key 和 dataIndex 生成唯一 id
  * @param key 用户设置的 key
@@ -39,4 +42,22 @@ export const isOptionColumn = <T, U = {}>(record: T, dataType: ColumnType['dataT
   }
 
   return (typeof dataType === 'object' && dataType.type === 'option') || dataType === 'option';
+};
+
+/**
+ * desc->descend
+ * asc->ascend
+ * descend->desc
+ * ascend->asc
+ */
+export const transformSortOrder = (direction?: 'desc' | 'descend' | 'asc' | 'ascend') => {
+  if (!direction) {
+    return undefined;
+  }
+
+  if (direction.endsWith('end')) {
+    return direction.replace('end', '');
+  }
+
+  return `${direction}end`;
 };

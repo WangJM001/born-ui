@@ -1,4 +1,5 @@
 import React from 'react';
+import useMergeValue from 'use-merge-value';
 import { ReloadOutlined, SettingOutlined } from '@ant-design/icons';
 import { Divider, Space, Tooltip, Input } from 'antd';
 import { SearchProps } from 'antd/lib/input';
@@ -7,7 +8,7 @@ import ColumnSetting from '../ColumnSetting';
 import { UseFetchDataAction } from '../hooks/useFetchData';
 import FullScreenIcon from './FullscreenIcon';
 
-export interface OptionConfig<T> {
+export interface OptionConfig {
   fullScreen?: boolean;
   reload?: boolean;
   setting?: boolean;
@@ -26,9 +27,10 @@ export interface ToolbarProps<T = unknown> {
         },
       ) => React.ReactNode[]);
   action: UseFetchDataAction<T>;
-  options?: OptionConfig<T> | false;
+  options?: OptionConfig | false;
   selectedRowKeys?: (string | number)[];
   selectedRows?: T[];
+  searchValue?: string;
   onSearch?: (keyWords: string) => void;
 }
 
@@ -93,10 +95,11 @@ const Toolbar = <T, U = {}>({
   },
   selectedRowKeys,
   selectedRows,
+  searchValue: propSearchValue,
   onSearch,
 }: ToolbarProps<T>) => {
   const className = `${CLASS_NAME_PREFIX}-table-toolbar`;
-
+  const [value, setValue] = useMergeValue(propSearchValue);
   const options = propsOptions
     ? {
         fullScreen: false,
@@ -127,12 +130,15 @@ const Toolbar = <T, U = {}>({
         <Space>
           {options && options.search && (
             <Input.Search
+              className={`${className}-option-search`}
+              value={value}
               placeholder="请输入"
-              style={{
-                width: 200,
-              }}
+              allowClear
               {...options.search}
               onSearch={onSearch}
+              onChange={(e) => {
+                setValue(e.target.value);
+              }}
             />
           )}
           {actions

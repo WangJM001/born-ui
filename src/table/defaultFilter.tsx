@@ -96,6 +96,9 @@ const defaultColumnsFilter = <T, U = {}>(
   dataType: ColumnType<T>['dataType'],
   request: boolean,
 ) => {
+  /**
+   * 类型不确定无法生成统一的filter
+   */
   if (typeof dataType === 'function') {
     return undefined;
   }

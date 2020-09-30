@@ -42,8 +42,8 @@ export async function getTableListData(
     pageNumber?: number;
     pageSize?: number;
   },
-  sort: SortType,
-  filter: FilterType,
+  sort?: SortType,
+  filter?: FilterType,
 ): Promise<RequestPagingData<TableListItem>> {
   console.log(params, sort, filter);
   const { pageNumber = 1, pageSize = 0 } = params;

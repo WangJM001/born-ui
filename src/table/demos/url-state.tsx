@@ -8,12 +8,14 @@ const columns: ColumnsType<TableListItem> = [
   {
     title: '名称',
     dataIndex: 'name',
+    filters: true,
   },
   {
     title: '百分比',
     dataIndex: 'percent',
     dataType: 'percent',
     width: 130,
+    sorter: true,
   },
   {
     title: '更新日期',
@@ -55,6 +57,6 @@ export default () => (
       </Button>,
       <Button key="export">导出</Button>,
     ]}
-    useUrlState
+    urlState
   />
 );

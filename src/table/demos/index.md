@@ -26,10 +26,10 @@ group:
 
 <code src="./edit-row.tsx" />
 
-## URL Query
+## URL State
 
 > 通过 url query 参数来存储分页、过滤、排序参数
 
-<code src="./url-query.tsx" />
+<code src="./url-state.tsx" />
 
 ## API

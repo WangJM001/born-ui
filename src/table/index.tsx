@@ -1,12 +1,12 @@
-import Table, {
-  ColumnsType,
-  ActionType,
-  TableProps,
-  ColumnsState,
-  FilterType,
-  SortType,
-} from './Table';
 import defaultRenderText, { ColumnsDataType } from './defaultRender';
+import Table, {
+  ActionType,
+  ColumnsState,
+  ColumnsType,
+  FilterType,
+  SorterType,
+  TableProps,
+} from './Table';
 
 export type {
   TableProps,
@@ -15,9 +15,8 @@ export type {
   ColumnsType,
   ActionType,
   FilterType,
-  SortType,
+  SorterType as SortType,
 };
-
 export { defaultRenderText };
 
 export default Table;
