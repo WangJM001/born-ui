@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import { InputNumberProps as AInputNumberProps } from 'antd/lib/input-number';
 import { InputNumber as AInputNumber } from 'antd';
 import { CLASS_NAME_PREFIX } from '../constants';
@@ -10,8 +11,19 @@ export interface InputNumberProps extends AInputNumberProps {
   groupSeparator?: string;
 }
 
-const InputNumber = ({ groupSeparator = ',', suffix, style, ...restProps }: InputNumberProps) => (
-  <div className={`${CLASS_NAME_PREFIX}-input-number`} style={style}>
+const InputNumber = ({
+  groupSeparator = ',',
+  suffix,
+  style,
+  disabled,
+  ...restProps
+}: InputNumberProps) => (
+  <div
+    className={classNames(`${CLASS_NAME_PREFIX}-input-number`, {
+      [`${CLASS_NAME_PREFIX}-input-number-disabled`]: disabled,
+    })}
+    style={style}
+  >
     <AInputNumber
       {...(groupSeparator && {
         formatter: (value) => {
@@ -25,6 +37,7 @@ const InputNumber = ({ groupSeparator = ',', suffix, style, ...restProps }: Inpu
         parser: (value) => `${value}`.replace(new RegExp(`(${groupSeparator}*)`, 'g'), ''),
       })}
       placeholder="请输入"
+      disabled={disabled}
       {...restProps}
     />
     <div className={`${CLASS_NAME_PREFIX}-input-number-suffix`}>{suffix}</div>

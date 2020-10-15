@@ -5,7 +5,12 @@ import { Omit } from 'antd/lib/_util/type';
 import DatePicker from '../date-picker';
 
 export interface TimePickerProps
-  extends Omit<PickerTimeProps<Dayjs>, 'picker' | 'value' | 'onChange'> {
+  extends Omit<
+    PickerTimeProps<Dayjs>,
+    'picker' | 'value' | 'onChange' | 'defaultValue' | 'defaultPickerValue'
+  > {
+  defaultValue?: string;
+  defaultPickerValue?: string;
   value?: string;
   onChange?: (value: string) => void;
 }

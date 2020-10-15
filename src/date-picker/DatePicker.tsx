@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, forwardRef } from 'react';
+import React, { useContext, forwardRef } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import dayjsGenerateConfig from 'rc-picker/lib/generate/dayjs';
 import generatePicker, {
@@ -10,7 +10,12 @@ import { ConfigContext } from '../config-provider';
 
 const ADatePicker = generatePicker<Dayjs>(dayjsGenerateConfig);
 
-declare type MergeProps<Props> = Omit<Props, 'value' | 'onChange'> & {
+declare type MergeProps<Props> = Omit<
+  Props,
+  'value' | 'onChange' | 'defaultValue' | 'defaultPickerValue'
+> & {
+  defaultValue?: string;
+  defaultPickerValue?: string;
   value?: string;
   onChange?: (value: string) => void;
 };
@@ -21,7 +26,7 @@ export declare type DatePickerProps =
   | MergeProps<PickerTimeProps<Dayjs>>;
 
 const DatePicker = forwardRef<any, DatePickerProps>(
-  ({ value, onChange, picker = 'date', ...restProps }, ref) => {
+  ({ value, defaultValue, defaultPickerValue, onChange, picker = 'date', ...restProps }, ref) => {
     const { formatSymbol } = useContext(ConfigContext);
     let format = formatSymbol[picker];
     // @ts-ignore
@@ -29,21 +34,22 @@ const DatePicker = forwardRef<any, DatePickerProps>(
       format = formatSymbol.dateTime;
     }
 
-    const newValue = value ? dayjs(value) : undefined;
+    const formattedValue = value ? dayjs(value) : undefined;
+    const formattedDefaultValue = defaultValue ? dayjs(defaultValue) : undefined;
+    const formattedDefaultPickerValue = defaultPickerValue ? dayjs(defaultPickerValue) : undefined;
 
-    const handleChange = useCallback(
-      (_, dateStr) => {
-        if (onChange) {
-          onChange(dateStr);
-        }
-      },
-      [onChange],
-    );
+    const handleChange = (_: Dayjs | null, dateStr: string) => {
+      if (onChange) {
+        onChange(dateStr);
+      }
+    };
 
     return (
       <ADatePicker
         ref={ref}
-        value={newValue}
+        value={formattedValue}
+        defaultValue={formattedDefaultValue}
+        defaultPickerValue={formattedDefaultPickerValue}
         onChange={handleChange}
         picker={picker}
         format={format}

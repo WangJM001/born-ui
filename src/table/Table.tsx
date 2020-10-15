@@ -199,11 +199,6 @@ export interface TableProps<T, U extends { [key: string]: any }>
   rowSelection?: TableRowSelection<T> | false;
 
   /**
-   * 空值时显示
-   */
-  columnEmptyText?: ColumnEmptyText;
-
-  /**
    * 行编辑后点击保存触发
    */
   onEditSave?: (formValue: T, originalRecord: T, index: number) => Promise<any>;
@@ -414,7 +409,6 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
     onColumnsStateChange,
     options = false,
     rowSelection: propsRowSelection = false,
-    columnEmptyText = '-',
     rowKey = 'id',
     padding = true,
     urlState: isUrlState,
@@ -438,7 +432,9 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
   const [filter, setFilter] = useState<FilterType>();
   const [sorter, setSorter] = useState<SorterType>();
 
-  const { tablePageSize: defaultTablePageSize, formatSymbol } = useContext(ConfigContext);
+  const { tablePageSize: defaultTablePageSize, formatSymbol, emptyText } = useContext(
+    ConfigContext,
+  );
 
   const defaultUrlState = {
     pageNumber: '1',
@@ -623,7 +619,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
         counter,
         urlState,
         formatSymbol,
-        columnEmptyText,
+        emptyText,
       ),
     [propsColumns, ...urlStateDeps],
   );
@@ -671,7 +667,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
       counter,
       urlState,
       formatSymbol,
-      columnEmptyText,
+      emptyText,
     );
     if (keys.length > 0) {
       // 用于可视化的排序

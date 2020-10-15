@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import InputNumber, { InputNumberProps } from '../input-number';
 import InputPercentRange from './InputPercentRange';
 
@@ -14,14 +14,11 @@ const InputPercent = ({
   onChange,
   ...restProps
 }: InputPercentProps) => {
-  const handleChange = useCallback(
-    (v: string | number | undefined) => {
-      if (onChange) {
-        onChange(v && typeof v === 'number' ? v / 100 : v);
-      }
-    },
-    [onChange],
-  );
+  const handleChange = (v: string | number | undefined) => {
+    if (onChange) {
+      onChange(v && typeof v === 'number' ? v / 100 : v);
+    }
+  };
 
   return (
     <InputNumber

@@ -15,6 +15,7 @@ export type FormatSymbolType = {
 export interface ConfigConsumerProps {
   formatSymbol: FormatSymbolType;
   tablePageSize: number;
+  emptyText: string | false;
 }
 
 export const defaultFormatSymbol = {
@@ -34,6 +35,7 @@ export const defaultTablePageSize = 10;
 export const ConfigContext = React.createContext<ConfigConsumerProps>({
   formatSymbol: defaultFormatSymbol,
   tablePageSize: defaultTablePageSize,
+  emptyText: '-',
 });
 
 export const ConfigConsumer = ConfigContext.Consumer;
