@@ -295,6 +295,13 @@ const columnRender = <T, U = any>({
 };
 
 /**
+ * 数字、金额、百分比默认居右显示
+ * @param dataType
+ */
+const columnAlgin = <T, U = any>(dataType: ColumnType<T>['dataType']): ColumnType<T>['align'] =>
+  dataType === 'currency' || dataType === 'number' || dataType === 'percent' ? 'right' : 'left';
+
+/**
  * 转化 columns 格式
  * 主要是 render 方法的自行实现
  * @param columns
@@ -364,7 +371,9 @@ const genColumnList = <T, U = {}>(
             counter,
             formatSymbol,
           }),
+        align: item.align || columnAlgin(dataType),
       };
+
       if (!tempColumn.children || !tempColumn.children.length) {
         delete tempColumn.children;
       }
