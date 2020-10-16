@@ -44,7 +44,7 @@ group:
 | --- | --- | --- | --- |
 | request | 获取 `dataSource` 的方法 | `(params?: {pageSize: number;current: number;[key: string]: any;},sort,filter) => Promise<RequestData<T>>` | - |
 | params | 用于 request 查询的多余参数，一旦变化会触发重新加载 | object | - | - |
-| postData | 对通过 `request` 获取的数据进行处理 | `(data: T[]) => T[]` | - |
+| formatData | 对通过 `request` 获取的数据进行处理 | `(data: T[]) => T[]` | - |
 | actionRef | Table action 的引用，便于自定义触发 | `React.MutableRefObject<ActionType>` \| `((actionRef: ActionType) => void)` | - |
 | options | table 工具栏，设为 false 时不显示 | `{{ fullScreen: boolean \| function, reload: boolean \| function,setting: true,search: boolean\|{name: string} }}` | false |
 | columnsStateMap | columns 的状态枚举 | `{[key: string]: { show:boolean, fixed: "right" \| "left"} }` | - |

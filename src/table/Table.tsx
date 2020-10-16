@@ -163,7 +163,7 @@ export interface TableProps<T, U extends { [key: string]: any }>
   /**
    * 对数据进行一些处理
    */
-  postData?: (data: T[]) => any[];
+  formatData?: (data: T[]) => any[];
 
   /**
    * 初始化的参数，可以操作 table
@@ -407,7 +407,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
     className,
     params = {},
     headerTitle,
-    postData,
+    formatData,
     pagination: propsPagination,
     actionRef,
     columns: propsColumns = [],
@@ -509,7 +509,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
       ...fetchPagination,
       pagination: propsPagination !== false,
       onLoad,
-      postData,
+      formatData,
       onCancelEditing,
       effects: [stringify(params), stringify(search), stringify(filter), stringify(sorter)],
     },

@@ -33,7 +33,7 @@ const useFetchData = <T, U = {}>(
     pageSize?: number;
     defaultCurrent?: number;
     defaultPageSize?: number;
-    postData?: (data: T[]) => any[];
+    formatData?: (data: T[]) => any[];
     effects?: any[];
     onLoad?: (dataSource: T[]) => void;
     pagination: boolean;
@@ -42,7 +42,7 @@ const useFetchData = <T, U = {}>(
 ): UseFetchDataAction<T> => {
   // 用于标定组件是否解除挂载，如果解除了就不要 setState
   const mountRef = useRef(true);
-  const { pagination, onLoad = () => null, postData, onCancelEditing } = options;
+  const { pagination, onLoad = () => null, formatData, onCancelEditing } = options;
 
   const [dataSource, setDataSource] = useState<T[]>([]);
   const [loading, setLoading] = useState<boolean | undefined>(undefined);
@@ -105,8 +105,8 @@ const useFetchData = <T, U = {}>(
           items = data.items;
           total = data.totalRow || 0;
         }
-        if (postData) {
-          items = postData(items);
+        if (formatData) {
+          items = formatData(items);
         }
         setDataAndLoading(items, total);
       }
