@@ -5,9 +5,7 @@
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
-    "docs:deploy": "gh-pages -d docs-dist",
     "build": "father-build",
-    "deploy": "npm run docs:build && npm run docs:deploy",
     "release": "npm run build && npm publish",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage",
@@ -40,7 +38,7 @@
     "@ahooksjs/use-url-state": "^2.5.1",
     "@ant-design/icons": "^4.2.2",
     "ahooks": "^2.6.0",
-    "antd": "4.6.6",
+    "antd": "4.7.0",
     "array-move": "^3.0.1",
     "classnames": "^2.2.6",
     "dayjs": "^1.8.36",
