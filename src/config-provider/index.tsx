@@ -17,6 +17,7 @@ const ConfigProvider: React.FC<ConfigProviderProps> = (props) => {
   const config: ConfigConsumerProps = {
     formatSymbol: props.formatSymbol || defaultFormatSymbol,
     tablePageSize: props.tablePageSize || defaultTablePageSize,
+    emptyText: props.emptyText || '-',
   };
   return (
     <ConfigContext.Provider value={config}>
