@@ -1,1 +1,1 @@
-import 'and/lib/empty/style';
+import 'antd/lib/empty/style';
