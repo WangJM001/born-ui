@@ -45,13 +45,13 @@ title: Form
 
 | 类型          | 描述           | 组件                     |
 | ------------- | -------------- | ------------------------ |
-| currency      | 转化值为金额   | `InputNumber`            |
+| currency      | 金额           | `InputNumber`            |
 | date          | 日期           | `DatePicker`             |
 | dateRange     | 日期区间       | `DatePicker.RangePicker` |
 | dateTime      | 日期和时间     | `DatePicker`             |
 | dateTimeRange | 日期和时间区间 | `DatePicker.RangePicker` |
-| text          | 默认值         | `Input`                  |
-| textarea      | 文本框         | `Input.Textarea`         |
+| text          | 文本框         | `Input`                  |
+| textarea      | 文本域         | `Input.Textarea`         |
 | percent       | 百分比         | `InputPercent`           |
 | number        | 数字           | `InputNumber`            |
 | enum          | 枚举           | -                        |
