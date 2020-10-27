@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, forwardRef } from 'react';
 import AInput, {
   InputProps,
   GroupProps,
@@ -24,9 +24,9 @@ Input.defaultProps = {
   placeholder: '请输入',
 };
 
-const TextArea: FC<TextAreaProps> = (props) => {
-  return <AInput.TextArea {...props} />;
-};
+const TextArea = forwardRef<unknown, TextAreaProps>((props, ref) => {
+  return <AInput.TextArea ref={ref} {...props} />;
+});
 
 TextArea.defaultProps = {
   placeholder: '请输入',

@@ -5,15 +5,15 @@
 
 .@{input-number-cls} {
   position: relative;
+  width: 104px;
+  & > .ant-input-number {
+    width: 100%;
+  }
   &-suffix {
     position: absolute;
     top: 4px;
     right: 10px;
-  }
-  &-disabled {
-    .@{input-number-cls}-suffix {
-      color: @disabled-color;
-    }
+    color: @disabled-color;
   }
   .@{ant-prefix}-input-number-handler-wrap {
     z-index: 9;

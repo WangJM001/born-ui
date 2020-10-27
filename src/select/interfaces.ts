@@ -7,10 +7,7 @@ export declare type RawValue = string | number;
 export declare type ValueType<T> = RawValue | RawValue[] | T | T[];
 
 export interface SelectBaseProps<T>
-  extends Omit<
-    ASelectProps<SelectValue>,
-    'options' | 'onChange' | 'value' | 'showSearch' | 'defaultValue'
-  > {
+  extends Omit<ASelectProps<SelectValue>, 'onChange' | 'value' | 'showSearch' | 'defaultValue'> {
   /**
    * 代替showSearch
    * string 值为分页远程请求时属性名
