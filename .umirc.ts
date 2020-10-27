@@ -19,6 +19,15 @@ export default defineConfig({
     [
       'import',
       {
+        libraryName: 'antd',
+        libraryDirectory: 'lib',
+        style: true,
+      },
+      'import-antd',
+    ],
+    [
+      'import',
+      {
         libraryName: '@born/born-ui',
         libraryDirectory: '',
         style: true,
