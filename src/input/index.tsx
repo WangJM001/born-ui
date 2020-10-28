@@ -6,6 +6,7 @@ import AInput, {
   TextAreaProps,
   PasswordProps,
 } from 'antd/lib/input';
+import ATextArea from 'antd/lib/input/TextArea';
 
 export type { InputProps, GroupProps, SearchProps, TextAreaProps, PasswordProps };
 
@@ -24,8 +25,8 @@ Input.defaultProps = {
   placeholder: '请输入',
 };
 
-const TextArea = forwardRef<unknown, TextAreaProps>((props, ref) => {
-  return <AInput.TextArea ref={ref} {...props} />;
+const TextArea = forwardRef<ATextArea, TextAreaProps>((props, ref) => {
+  return <ATextArea ref={ref} {...props} />;
 });
 
 TextArea.defaultProps = {
