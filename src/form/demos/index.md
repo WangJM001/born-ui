@@ -25,7 +25,7 @@ title: Form
 | 属性 | 描述 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | column | 一行的 `Form.Item` 数量，支持响应式的对象写法 `{ xs: 8, sm: 16, md: 24}` | `number` | - |
-| items | 数据化配置选项内容 | [FormItemProps](#FormItemProps) | - |  |
+| items | 数据化配置选项内容 | [FormItemProps](#FormItemProps) | - |
 
 ### FormItemProps
 
