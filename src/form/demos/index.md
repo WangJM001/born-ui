@@ -54,7 +54,7 @@ title: Form
 | textarea      | 文本域         | `Input.Textarea`         |
 | percent       | 百分比         | `InputPercent`           |
 | number        | 数字           | `InputNumber`            |
-| enum          | 枚举           | -                        |
+| enum          | 枚举           | `Select`                 |
 
 ##### 枚举
 
