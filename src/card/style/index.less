@@ -1,0 +1,25 @@
+@import '~antd/es/style/themes/default.less';
+@import '../../style/index.less';
+
+@card-cls: ~'@{born-ui-prefix}-card';
+
+.@{card-cls} {
+  &-without-header-split {
+    > .ant-card-head {
+      border: none;
+      & + .ant-card-body {
+        padding-top: 0;
+      }
+    }
+  }
+  &-ghost {
+    background: transparent;
+    > .ant-card-head {
+      padding-left: 0;
+      & + .ant-card-body {
+        padding-top: 24px;
+        background: @white;
+      }
+    }
+  }
+}
