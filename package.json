@@ -4,7 +4,7 @@
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
-    "build": "father-build",
+    "build": "father-build && node ./scripts/copy-antd",
     "release": "npm run build && npm publish",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage",
