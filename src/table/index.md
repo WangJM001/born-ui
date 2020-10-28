@@ -6,33 +6,33 @@ title: Table
 
 ## 功能图谱
 
-<img src='./images/map.png' />
+<img src='./demos/images/map.png' />
 
 ## 基础用法
 
-<code src="./basic.tsx" />
+<code src="./demos/basic.tsx" />
 
 ## 远程加载数据
 
-<code src="./request.tsx" />
+<code src="./demos/request.tsx" />
 
 ## 选择和操作
 
-<code src="./selection.tsx" />
+<code src="./demos/selection.tsx" />
 
 ## 筛选和排序
 
-<code src="./filter-sorter.tsx" />
+<code src="./demos/filter-sorter.tsx" />
 
 ## 行编辑
 
-<code src="./edit-row.tsx" />
+<code src="./demos/edit-row.tsx" />
 
 ## URL State
 
 > 通过 url query 参数来存储分页、过滤、排序参数
 
-<code src="./url-state.tsx" />
+<code src="./demos/url-state.tsx" />
 
 ## API
 

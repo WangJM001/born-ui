@@ -6,15 +6,15 @@ title: Select
 
 ## 功能图谱
 
-<img src='./images/map.png' />
+<img src='./demos/images/map.png' />
 
 ## 远程请求数据
 
-<code src="./request.tsx" title='请求后台' desc="不分页"/>
+<code src="./demos/request.tsx" title='请求后台' desc="不分页"/>
 
-<code src="./request-pagination.tsx" title='请求后台' desc="分页，分页模式下 labelInValue 强制为 true，防止设置默认值显示错误"/>
+<code src="./demos/request-pagination.tsx" title='请求后台' desc="分页，分页模式下 labelInValue 强制为 true，防止设置默认值显示错误"/>
 
-<code src="./request-multiple.tsx" title='多选模式' desc="不分页"/>
+<code src="./demos/request-multiple.tsx" title='多选模式' desc="不分页"/>
 
 ## API
 

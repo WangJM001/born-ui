@@ -6,15 +6,15 @@ title: Form
 
 ## 功能图谱
 
-<img src='./images/map.png' />
+<img src='./demos/images/map.png' />
 
 ## 数据集方式渲染
 
-<code src="./items-render.tsx" title='items render' desc="根据dataType类型自动渲染组件"/>
+<code src="./demos/items-render.tsx" title='items render' desc="根据dataType类型自动渲染组件"/>
 
 ## 栅格化显示
 
-<code src="./grid.tsx" title='grid render' desc="栅格化显示"/>
+<code src="./demos/grid.tsx" title='grid render' desc="栅格化显示"/>
 
 ## API
 

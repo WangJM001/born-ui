@@ -6,15 +6,15 @@ title: Card
 
 ## 功能图谱
 
-<img src='./images/map.png' />
+<img src='./demos/images/map.png' />
 
 ## 基础用法
 
-<code src="./basic.tsx" title='基础用法' desc="默认不展示header分割线及bordered"/>
+<code src="./demos/basic.tsx" title='基础用法' desc="默认不展示header分割线及bordered"/>
 
 ## 幽灵模式
 
-<code src="./ghost.tsx" title='幽灵模式' desc="取消卡片 header 的 padding 和 背景颜色"/>
+<code src="./demos/ghost.tsx" title='幽灵模式' desc="取消卡片 header 的 padding 和 背景颜色"/>
 
 ## API
 
