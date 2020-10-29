@@ -12,3 +12,4 @@ export { default as Input } from './input';
 export { default as InputNumber } from './input-number';
 export { default as InputPercent } from './input-percent';
 export { default as TimePicker } from './time-picker';
+export { default as Descriptions } from './descriptions';
