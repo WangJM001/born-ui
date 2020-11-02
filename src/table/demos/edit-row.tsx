@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Button } from 'antd';
-import { Table } from '@born/born-ui';
-import { ColumnsType, ActionType } from '@born/born-ui/table';
+import { Table } from '@utech/born-ui';
+import { ColumnsType, ActionType } from '@utech/born-ui/table';
 import { getTableListData, TableListItem } from './service';
 
 export default () => {

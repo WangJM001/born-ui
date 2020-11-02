@@ -18,8 +18,8 @@
     "declaration": true,
     "skipLibCheck": true,
     "paths": {
-      "@born/born-ui": ["./src"],
-      "@born/born-ui/*": ["./src/*", "./node_modules/antd/es/*"]
+      "@utech/born-ui": ["./src"],
+      "@utech/born-ui/*": ["./src/*", "./node_modules/antd/es/*"]
     }
   },
   "exclude": ["node_modules", "lib", "es", "dist", "typings", "**/__test__", "test"]

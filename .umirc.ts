@@ -13,7 +13,7 @@ export default defineConfig({
     loading: '@ant-design/pro-skeleton',
   },
   alias: {
-    '@born/born-ui': require('path').resolve(__dirname, './src'),
+    '@utech/born-ui': require('path').resolve(__dirname, './src'),
   },
   extraBabelPlugins: [
     [
@@ -28,7 +28,7 @@ export default defineConfig({
     [
       'import',
       {
-        libraryName: '@born/born-ui',
+        libraryName: '@utech/born-ui',
         libraryDirectory: '',
         style: true,
       },

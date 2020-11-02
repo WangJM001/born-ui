@@ -1,4 +1,4 @@
-import { RequestListData, RequestPagingData } from '@born/born-ui/interface';
+import { RequestListData, RequestPagingData } from '@utech/born-ui/interface';
 
 export interface DataItem {
   id: number;

@@ -2,4 +2,4 @@
 
 ### 版本
 
-`@born/born-ui@0.1.1` 依赖 `antd@4.7.3`
+`@utech/born-ui@0.1.1` 依赖 `antd@4.7.3`

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Descriptions } from '@born/born-ui';
+import { Descriptions } from '@utech/born-ui';
 
 export default () => (
   <Descriptions>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from '@born/born-ui';
+import { Form } from '@utech/born-ui';
 import { Slider } from 'antd';
 
 export default () => (

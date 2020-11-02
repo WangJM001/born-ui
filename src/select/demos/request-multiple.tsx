@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select } from '@born/born-ui';
+import { Select } from '@utech/born-ui';
 import { getDataWithoutPagination } from './service';
 
 export default () => (
