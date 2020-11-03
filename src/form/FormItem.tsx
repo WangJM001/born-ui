@@ -7,4 +7,8 @@ export interface FormItemProps extends AFormItemProps {
 
 const FormItem: FC<FormItemProps> = ({ span, ...restProps }) => <AFormItem {...restProps} />;
 
+FormItem.defaultProps = {
+  validateFirst: true,
+};
+
 export default FormItem;

@@ -31,11 +31,12 @@ title: Form
 
 > 这里只列出与 antd form item 不同的 api
 
-| 属性     | 描述                               | 类型                 | 默认值 |
-| -------- | ---------------------------------- | -------------------- | ------ |
+| 属性 | 描述 | 类型 | 默认值 |
+| --- | --- | --- | --- |
 | dataType | 值的类型，[配置项](#datatype-类型) | `ColumnsDataType<T>` | 'text' |
-| render   | 渲染表单输入组件                   | `() = > void`        | -      |
-| span     | 包含列的数量, 需配合`column`使用   | `number`             | 1      |
+| render | 渲染表单输入组件 | `() = > void` | - |
+| span | 包含列的数量, 需配合`column`使用 | `number` | 1 |
+| validateFirst | 当某一规则校验不通过时，是否停止剩下的规则的校验。设置 parallel 时会并行校验 | `boolean \| parallel` | false |
 
 #### dataType 类型
 
