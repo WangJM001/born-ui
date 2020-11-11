@@ -38,6 +38,10 @@ title: Table
 
 <code src="./demos/search-form.tsx" desc="必须结合request属性使用,过滤参数传入request接口" />
 
+## 额外内容显示
+
+<code src="./demos/extra-render.tsx"/>
+
 ## API
 
 > 这里只列出与 antd table 不同的 api

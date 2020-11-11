@@ -1,4 +1,5 @@
 import useUrlState from '@ahooksjs/use-url-state';
+import { useCreation } from 'ahooks';
 import { Card, Empty, Space, Table as ATable } from 'antd';
 import Form, { Rule } from 'antd/lib/form';
 import {
@@ -433,6 +434,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
     padding = true,
     urlState: isUrlState,
     searchForm,
+    extraRender,
     ...rest
   } = props;
   const [selectedRowKeys, setSelectedRowKeys] = useMergedState<React.ReactText[]>([], {
@@ -515,6 +517,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
         ...(pageParams || {}),
         ...params,
         ...search,
+        ...searchForm?.initialValues,
         ...searchFormParams,
       };
 
@@ -746,6 +749,15 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
     }
   }, [propsPagination]);
 
+  const extraRenderParams = useCreation(
+    () => ({
+      ...params,
+      ...searchForm?.initialValues,
+      ...searchFormParams,
+    }),
+    [stringify(params), stringify(searchFormParams), stringify(searchForm?.initialValues)],
+  );
+
   const rowSelection: TableRowSelection<T> = {
     selectedRowKeys,
     preserveSelectedRowKeys: true,
@@ -939,6 +951,12 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
           }}
           {...searchForm}
         />
+      )}
+
+      {extraRender && (
+        <div className={`${CLASS_NAME_PREFIX}-table-extra`}>
+          {extraRender(extraRenderParams as any)}
+        </div>
       )}
 
       <Card

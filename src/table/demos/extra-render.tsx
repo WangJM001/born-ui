@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, Radio, Select } from 'antd';
-import { Table } from '@utech/born-ui';
+import { Button, Radio, Table, Card, Select } from '@utech/born-ui';
 import { ColumnsType } from '@utech/born-ui/table';
 import { getTableListData, TableListItem } from './service';
 
@@ -56,8 +55,12 @@ export default () => (
           新增
         </Button>,
       ]}
+      extraRender={(params) => {
+        console.log('params:', params);
+        return <Card>Extra Content</Card>;
+      }}
       searchForm={{
-        initialValues: { keyword: '123', status: '1', other: '2' },
+        initialValues: { status: '1', other: '2' },
         items: [
           [
             {
