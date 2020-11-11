@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="34px" viewBox="0 0 21 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>编组</title>
+    <desc>Created with Sketch.</desc>
+    <g id="logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="最终版备份" transform="translate(-48.000000, -111.000000)">
+            <g id="编组-16" transform="translate(48.000000, 111.000000)">
+                <g id="编组" transform="translate(0.000000, 0.000000)">
+                    <path d="M0,20.4 L6.8,27.2 L6.8,34 L0,27.2 L0,20.4 Z M0,0 L6.8,6.8 L6.8,27.2 L0,20.4 L0,0 Z" id="形状结合" fill="#B7C9F0"></path>
+                    <polygon id="路径" fill="#7F9ADC" points="20.4 27.2 13.6 20.4 13.6 6.8 20.4 13.6"></polygon>
+                    <polygon id="路径备份-3" fill="#496CB8" transform="translate(10.200000, 27.200000) scale(-1, 1) rotate(90.000000) translate(-10.200000, -27.200000) " points="10.2 17 17 23.8 10.2 37.4 3.4 30.6"></polygon>
+                    <polygon id="路径" fill="#8BA6E1" points="6.799864 23.8 6.8 34 -4.16379912e-16 27.2"></polygon>
+                    <polygon id="路径备份-6" fill="#A4B9E8" transform="translate(13.532000, 11.968000) scale(-1, 1) rotate(90.000000) translate(-13.532000, -11.968000) " points="11.832 5.168 18.632 11.968 15.232 18.768 8.432 11.968"></polygon>
+                    <polygon id="路径" fill="#8FAAE7" points="13.6 6.8 20.4 13.6 13.6 17"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
