@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from 'antd';
-import { Table } from '@utech/born-ui';
+import { Button, Table } from '@utech/born-ui';
+
 import { ColumnsType } from '@utech/born-ui/table';
 import { getTableListData, TableListItem } from './service';
 

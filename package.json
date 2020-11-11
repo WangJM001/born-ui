@@ -38,6 +38,10 @@
       "prettier --write"
     ]
   },
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "registry": "http://localhost:4873"
+  },
   "dependencies": {
     "@ahooksjs/use-url-state": "^2.5.1",
     "@ant-design/icons": "^4.2.2",

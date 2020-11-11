@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
-import { Button } from 'antd';
-import { Table } from '@utech/born-ui';
+import { Table, Button } from '@utech/born-ui';
 import { ColumnsType, ActionType } from '@utech/born-ui/table';
 import { getTableListData, TableListItem } from './service';
 

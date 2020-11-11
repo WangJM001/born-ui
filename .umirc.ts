@@ -1,4 +1,7 @@
 import { defineConfig } from 'dumi';
+import { readdirSync } from 'fs';
+
+const componentNames = readdirSync('./src');
 
 // more config: https://d.umijs.org/config
 export default defineConfig({
@@ -19,17 +22,13 @@ export default defineConfig({
     [
       'import',
       {
-        libraryName: 'antd',
-        libraryDirectory: 'lib',
-        style: true,
-      },
-      'import-antd',
-    ],
-    [
-      'import',
-      {
         libraryName: '@utech/born-ui',
-        libraryDirectory: '',
+        customName: (name: string) => {
+          if (componentNames.includes(name)) {
+            return `@utech/born-ui/${name}`;
+          }
+          return `antd/es/${name}`;
+        },
         style: true,
       },
       'import-born-ui',
