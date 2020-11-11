@@ -41,6 +41,7 @@ export type DataEnumType = {
 export interface FormItemPropsExt extends Omit<FormItemProps, 'children'> {
   dataType?: DataType;
   render?: () => React.ReactNode;
+  width?: number | string;
 }
 
 export interface FormProps extends AFormProps {
@@ -70,9 +71,9 @@ function mergeItems(items: FormItemPropsExt[] = [], children: React.ReactNode, c
       });
   }
 
-  const itemNodes = items?.map(({ dataType, render, name, span = 1, ...rest }, i) => {
+  const itemNodes = items?.map(({ dataType, render, name, span = 1, width, style, ...rest }, i) => {
     const item = (
-      <Item key={name?.toString() || i} name={name} {...rest}>
+      <Item key={name?.toString() || i} name={name} style={{ ...style, width }} {...rest}>
         {render ? render() : defaultRender(dataType)}
       </Item>
     );

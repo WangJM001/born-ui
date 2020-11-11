@@ -4,7 +4,7 @@ import ErrorList, { ErrorListProps } from 'antd/lib/form/ErrorList';
 import List, { FormListProps } from 'antd/lib/form/FormList';
 import { FormProvider } from 'antd/lib/form/context';
 import Item, { FormItemProps } from './FormItem';
-import InternalForm, { FormProps } from './Form';
+import InternalForm, { FormProps, FormItemPropsExt } from './Form';
 
 type InternalFormType = typeof InternalForm;
 
@@ -33,6 +33,7 @@ export type {
   RuleObject,
   RuleRender,
   FormListProps,
+  FormItemPropsExt,
 };
 
 export default Form;
