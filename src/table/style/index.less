@@ -1,8 +1,57 @@
 @import '../../style/index.less';
 
 @table-cls: ~'@{born-ui-prefix}-table';
+@search-form-cls: ~'@{born-ui-prefix}-table-search-form';
 
 .@{table-cls} {
+  &-search-form {
+    margin-bottom: 24px;
+    .@{ant-prefix}-card-body {
+      display: flex;
+      padding-bottom: 0;
+      .@{search-form-cls}-wrapper {
+        flex: 1;
+        > .@{ant-prefix}-form-inline {
+          max-width: 750px;
+          .@{ant-prefix}-form-item {
+            margin-bottom: 24px;
+            > .@{ant-prefix}-form-item-label {
+              min-width: 100px;
+            }
+          }
+          .@{search-form-cls}-collapse-wrapper {
+            width: 100%;
+            &.collapsed {
+              display: none;
+            }
+          }
+        }
+      }
+      .@{search-form-cls}-actions {
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        clear: both;
+        width: 136px;
+        margin: 0 0 24px 24px;
+        .@{search-form-cls}-collapsed {
+          position: absolute;
+          right: -24px;
+          bottom: -40px;
+          width: 24px;
+          height: 16px;
+          line-height: 15px;
+          text-align: center;
+          background-color: @white;
+          border-radius: 0 0 8px 8px;
+          cursor: pointer;
+          &:hover {
+            color: @primary-color;
+          }
+        }
+      }
+    }
+  }
   &-toolbar {
     display: flex;
     align-items: center;

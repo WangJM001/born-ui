@@ -34,6 +34,10 @@ title: Table
 
 <code src="./demos/url-state.tsx" />
 
+## 搜索过滤
+
+<code src="./demos/search-form.tsx" desc="必须结合request属性使用,过滤参数传入request接口" />
+
 ## API
 
 > 这里只列出与 antd table 不同的 api
