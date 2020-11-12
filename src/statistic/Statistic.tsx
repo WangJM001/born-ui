@@ -11,6 +11,7 @@ export interface StatisticProps extends AStatisticProps {
   footer?: React.ReactNode;
   titleTip?: string | TooltipProps;
   dataType?: 'percent' | 'currency';
+  extra?: React.ReactNode;
 }
 
 const Statistic: FC<StatisticProps> = ({
@@ -22,6 +23,7 @@ const Statistic: FC<StatisticProps> = ({
   titleTip,
   className: propsClassName,
   dataType,
+  extra,
   ...restProps
 }) => {
   const className = `${CLASS_NAME_PREFIX}-statistic`;
@@ -33,15 +35,15 @@ const Statistic: FC<StatisticProps> = ({
   let internalPrecision = precision;
 
   if (dataType === 'currency' && typeof internalValue === 'number') {
-    internalSuffix = '元';
     internalPrecision = 2;
+    internalSuffix = '元';
     if (internalValue >= 1000000) {
       internalValue /= 10000;
       internalSuffix = '万元';
     }
   } else if (dataType === 'percent' && typeof internalValue === 'number') {
     internalValue *= 100;
-    internalSuffix = `% ${internalSuffix}`;
+    internalSuffix = '%';
     internalPrecision = 1;
   }
 
@@ -49,6 +51,13 @@ const Statistic: FC<StatisticProps> = ({
     internalValue = emptyText || '';
     internalSuffix = '';
   }
+
+  internalSuffix = (
+    <>
+      {internalSuffix}
+      <span className={`${className}-extra`}>{extra}</span>
+    </>
+  );
 
   let mixTitle = title;
   if (titleTip) {
