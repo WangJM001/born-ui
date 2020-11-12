@@ -12,7 +12,46 @@ title: 使用说明
 
 ## 版本
 
-`@utech/born-ui@0.1.1` 依赖 `antd@4.7.3`
+```jsx | inline
+import React from 'react';
+import { version, dependencies } from '../package.json';
+
+export default () => (
+  <div>
+    <span
+      style={{ color: '#fff', backgroundColor: '#555', padding: 4, borderRadius: '2px 0 0 2px' }}
+    >
+      @utech/born-ui
+    </span>
+    <span
+      style={{
+        color: '#fff',
+        backgroundColor: '#007ec6',
+        padding: 4,
+        borderRadius: '0 2px 2px 0',
+      }}
+    >
+      v{version}
+    </span>
+    <span style={{ margin: '0 16px', fontSize: 16 }}>→</span>
+    <span
+      style={{ color: '#fff', backgroundColor: '#555', padding: 4, borderRadius: '2px 0 0 2px' }}
+    >
+      antd
+    </span>
+    <span
+      style={{
+        color: '#fff',
+        backgroundColor: '#007ec6',
+        padding: 4,
+        borderRadius: '0 2px 2px 0',
+      }}
+    >
+      v{dependencies.antd}
+    </span>
+  </div>
+);
+```
 
 ## 📦 安装
 
