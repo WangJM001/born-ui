@@ -1,4 +1,4 @@
-import React, { FC, useContext, useMemo } from 'react';
+import React, { FC, useContext } from 'react';
 import classNames from 'classnames';
 import { Statistic as AStatistic, Tooltip } from 'antd';
 import { StatisticProps as AStatisticProps } from 'antd/es/statistic/Statistic';
@@ -10,8 +10,7 @@ import { ConfigContext } from '../config-provider';
 export interface StatisticProps extends AStatisticProps {
   footer?: React.ReactNode;
   titleTip?: string | TooltipProps;
-  /** 当值大于1000000时，转换数字为万 */
-  transformNumSuffix?: boolean;
+  dataType?: 'percent' | 'currency';
 }
 
 const Statistic: FC<StatisticProps> = ({
@@ -22,40 +21,34 @@ const Statistic: FC<StatisticProps> = ({
   footer,
   titleTip,
   className: propsClassName,
-  transformNumSuffix,
+  dataType,
   ...restProps
 }) => {
   const className = `${CLASS_NAME_PREFIX}-statistic`;
 
   const { emptyText } = useContext(ConfigContext);
 
-  const mergeProps = useMemo(() => {
-    if (transformNumSuffix) {
-      let internalValue = value;
-      let internalSuffix = suffix || '';
-      let internalPrecision = precision;
+  let internalValue = value;
+  let internalSuffix = suffix || '';
+  let internalPrecision = precision;
 
-      if (typeof value === 'number' && value >= 1000000) {
-        internalValue = value / 10000;
-        internalSuffix = `万${internalSuffix}`;
-        if (!internalPrecision) {
-          internalPrecision = 2;
-        }
-      }
-      return {
-        value:
-          typeof internalValue === 'undefined' || internalValue === null
-            ? emptyText || ''
-            : internalValue,
-        suffix:
-          typeof internalValue === 'undefined' || internalValue === null
-            ? undefined
-            : internalSuffix,
-        precision: internalPrecision,
-      };
+  if (dataType === 'currency' && typeof internalValue === 'number') {
+    internalSuffix = '元';
+    internalPrecision = 2;
+    if (internalValue >= 1000000) {
+      internalValue /= 10000;
+      internalSuffix = '万元';
     }
-    return undefined;
-  }, [value, suffix, precision, transformNumSuffix]);
+  } else if (dataType === 'percent' && typeof internalValue === 'number') {
+    internalValue *= 100;
+    internalSuffix = `% ${internalSuffix}`;
+    internalPrecision = 1;
+  }
+
+  if (!internalValue && internalValue !== 0) {
+    internalValue = emptyText || '';
+    internalSuffix = '';
+  }
 
   let mixTitle = title;
   if (titleTip) {
@@ -76,17 +69,14 @@ const Statistic: FC<StatisticProps> = ({
       <AStatistic
         className={classNames(classNames, propsClassName)}
         title={mixTitle}
+        value={internalValue}
+        suffix={internalSuffix}
+        precision={internalPrecision}
         {...restProps}
-        {...mergeProps}
       />
       {footer && <div className={`${className}-footer`}>{footer}</div>}
     </>
   );
-};
-
-Statistic.defaultProps = {
-  transformNumSuffix: true,
-  precision: 2,
 };
 
 export default Statistic;
