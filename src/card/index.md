@@ -10,11 +10,11 @@ title: Card
 
 ## 基础用法
 
-<code src="./demos/basic.tsx" title='基础用法' desc="默认不展示header分割线及bordered"/>
+<code src="./demos/basic.tsx" title='基础用法' desc="默认不展示header分割线及bordered" background="#f0f2f5" />
 
 ## 幽灵模式
 
-<code src="./demos/ghost.tsx" title='幽灵模式' desc="取消卡片 header 的 padding 和 背景颜色"/>
+<code src="./demos/ghost.tsx" title='幽灵模式' desc="取消卡片 header 的 padding 和 背景颜色" background="#f0f2f5" />
 
 ## API
 

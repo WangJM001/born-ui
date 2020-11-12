@@ -36,11 +36,11 @@ title: Table
 
 ## 搜索过滤
 
-<code src="./demos/search-form.tsx" desc="必须结合request属性使用,过滤参数传入request接口" />
+<code src="./demos/search-form.tsx" desc="必须结合request属性使用,过滤参数传入request接口" background="#f0f2f5" />
 
 ## 额外内容显示
 
-<code src="./demos/extra-render.tsx"/>
+<code src="./demos/extra-render.tsx" background="#f0f2f5" />
 
 ## API
 

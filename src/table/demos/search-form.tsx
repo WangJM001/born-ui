@@ -46,61 +46,59 @@ const columns: ColumnsType<TableListItem> = [
 ];
 
 export default () => (
-  <div style={{ padding: 24, margin: '-40px -24px', backgroundColor: '#f0f2f5' }}>
-    <Table<TableListItem>
-      columns={columns}
-      request={getTableListData}
-      headerTitle="表格标题"
-      toolbar={[
-        <Button key="new" type="primary">
-          新增
-        </Button>,
-      ]}
-      searchForm={{
-        initialValues: { keyword: '123', status: '1', other: '2' },
-        items: [
-          [
-            {
-              label: '关键字',
-              name: 'keyword',
-              width: '100%',
-            },
-            {
-              label: '状态',
-              name: 'status',
-              render: () => (
-                <Radio.Group>
-                  <Radio.Button value="0">关闭</Radio.Button>
-                  <Radio.Button value="1">运行中</Radio.Button>
-                  <Radio.Button value="2">已上线</Radio.Button>
-                  <Radio.Button value="3">异常</Radio.Button>
-                </Radio.Group>
-              ),
-            },
-            {
-              label: '其他',
-              name: 'other',
-              render: () => (
-                <Select
-                  options={[
-                    { value: '1', label: '一' },
-                    { value: '2', label: '二' },
-                  ]}
-                />
-              ),
-              width: 300,
-            },
-          ],
-          [
-            {
-              label: '更新日期',
-              name: 'updatedAt',
-              dataType: 'dateRange',
-              width: 300,
-            },
-          ],
+  <Table<TableListItem>
+    columns={columns}
+    request={getTableListData}
+    headerTitle="表格标题"
+    toolbar={[
+      <Button key="new" type="primary">
+        新增
+      </Button>,
+    ]}
+    searchForm={{
+      initialValues: { keyword: '123', status: '1', other: '2' },
+      items: [
+        [
+          {
+            label: '关键字',
+            name: 'keyword',
+            width: '100%',
+          },
+          {
+            label: '状态',
+            name: 'status',
+            render: () => (
+              <Radio.Group>
+                <Radio.Button value="0">关闭</Radio.Button>
+                <Radio.Button value="1">运行中</Radio.Button>
+                <Radio.Button value="2">已上线</Radio.Button>
+                <Radio.Button value="3">异常</Radio.Button>
+              </Radio.Group>
+            ),
+          },
+          {
+            label: '其他',
+            name: 'other',
+            render: () => (
+              <Select
+                options={[
+                  { value: '1', label: '一' },
+                  { value: '2', label: '二' },
+                ]}
+              />
+            ),
+            width: 300,
+          },
         ],
-      }}
-    />
-  </div>
+        [
+          {
+            label: '更新日期',
+            name: 'updatedAt',
+            dataType: 'dateRange',
+            width: 300,
+          },
+        ],
+      ],
+    }}
+  />
 );
