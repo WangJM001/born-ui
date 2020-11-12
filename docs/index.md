@@ -19,7 +19,12 @@ import { version, dependencies } from '../package.json';
 export default () => (
   <div>
     <span
-      style={{ color: '#fff', backgroundColor: '#555', padding: 4, borderRadius: '2px 0 0 2px' }}
+      style={{
+        color: '#fff',
+        backgroundColor: '#555',
+        padding: '4px 8px',
+        borderRadius: '2px 0 0 2px',
+      }}
     >
       @utech/born-ui
     </span>
@@ -27,7 +32,7 @@ export default () => (
       style={{
         color: '#fff',
         backgroundColor: '#007ec6',
-        padding: 4,
+        padding: '4px 8px',
         borderRadius: '0 2px 2px 0',
       }}
     >
@@ -35,7 +40,12 @@ export default () => (
     </span>
     <span style={{ margin: '0 16px', fontSize: 16 }}>→</span>
     <span
-      style={{ color: '#fff', backgroundColor: '#555', padding: 4, borderRadius: '2px 0 0 2px' }}
+      style={{
+        color: '#fff',
+        backgroundColor: '#555',
+        padding: '4px 8px',
+        borderRadius: '2px 0 0 2px',
+      }}
     >
       antd
     </span>
@@ -43,7 +53,7 @@ export default () => (
       style={{
         color: '#fff',
         backgroundColor: '#007ec6',
-        padding: 4,
+        padding: '4px 8px',
         borderRadius: '0 2px 2px 0',
       }}
     >
