@@ -6,7 +6,7 @@ title: Form
 
 ## 功能图谱
 
-<img src='./demos/images/map.png' />
+<img src='./demos/images/features.png' />
 
 ## 数据集方式渲染
 

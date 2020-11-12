@@ -6,7 +6,7 @@ title: Descriptions
 
 ## 功能图谱
 
-<img src='./demos/images/map.png' />
+<img src='./demos/images/features.png' />
 
 ## 基本用法
 
