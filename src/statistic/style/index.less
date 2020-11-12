@@ -1,0 +1,74 @@
+@import '~antd/es/style/themes/default.less';
+@import '../../style/index.less';
+
+@statistic-cls: ~'@{born-ui-prefix}-statistic';
+@statistic-group-cls: ~'@{statistic-cls}-group';
+
+.@{statistic-cls} {
+  &-tooltip-icon {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 12px;
+    line-height: 12px;
+    vertical-align: middle;
+  }
+  &-footer {
+    color: @text-color-secondary;
+  }
+}
+
+.@{statistic-group-cls} {
+  padding: 0;
+  > .@{ant-prefix}-card-body {
+    display: flex;
+    width: 100%;
+    padding: 0;
+  }
+  &-left {
+    flex: 1;
+    width: 100%;
+    &-col {
+      display: inline-block;
+      float: none;
+      &:not(:last-child)::after {
+        position: absolute;
+        top: 25%;
+        right: 0;
+        height: 50%;
+        border-right: 1px solid #e6e6e6;
+        content: '';
+      }
+      &-hidden {
+        display: none;
+      }
+    }
+    &-item {
+      > .@{ant-prefix}-card-body {
+        padding: 16px 24px;
+      }
+    }
+  }
+  &-right {
+    position: relative;
+    width: 160px;
+    vertical-align: top;
+    user-select: none;
+    &-expand {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      &-icon {
+        color: @primary-color;
+        font-size: 20px;
+        text-align: center;
+      }
+      &-text {
+        color: @primary-color;
+        font-size: 14px;
+        text-align: center;
+      }
+    }
+  }
+}
