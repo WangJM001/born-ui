@@ -1,0 +1,45 @@
+@import '~antd/es/style/themes/default.less';
+@import '../../style/index.less';
+
+@trend-cls: ~'@{born-ui-prefix}-trend';
+
+.@{trend-cls} {
+  display: inline-block;
+  font-size: @font-size-base;
+  line-height: 22px;
+
+  &-up,
+  &-down {
+    position: relative;
+    top: 1px;
+    margin-left: 4px;
+    span {
+      font-size: 12px;
+      transform: scale(0.83);
+    }
+  }
+
+  &-up {
+    color: @red-6;
+  }
+  &-down {
+    top: -1px;
+    color: @green-6;
+  }
+
+  &-grey {
+    .@{trend-cls}-up,
+    .@{trend-cls}-down {
+      color: @text-color;
+    }
+  }
+
+  &-reverse {
+    .@{trend-cls}-up {
+      color: @green-6;
+    }
+    .@{trend-cls}-down {
+      color: @red-6;
+    }
+  }
+}

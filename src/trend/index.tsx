@@ -1,7 +1,7 @@
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 import React from 'react';
 import classNames from 'classnames';
-import styles from './index.less';
+import { CLASS_NAME_PREFIX } from '../constants';
 
 export interface TrendProps {
   colorful?: boolean;
@@ -16,25 +16,27 @@ const Trend: React.FC<TrendProps> = ({
   reverseColor = false,
   flag,
   children,
-  className,
+  className: propsClassName,
   ...rest
 }) => {
+  const className = `${CLASS_NAME_PREFIX}-trend`;
+
   const classString = classNames(
-    styles.trendItem,
-    {
-      [styles.trendItemGrey]: !colorful,
-      [styles.reverseColor]: reverseColor && colorful,
-    },
     className,
+    {
+      [`${className}-grey`]: !colorful,
+      [`${className}-reverse`]: reverseColor && colorful,
+    },
+    propsClassName,
   );
   return (
     <div {...rest} className={classString} title={typeof children === 'string' ? children : ''}>
+      <span className={`${className}-${flag}`}>{children}</span>
       {flag && (
-        <span className={styles[flag]}>
+        <span className={`${className}-${flag}`}>
           {flag === 'up' ? <CaretUpOutlined /> : <CaretDownOutlined />}
         </span>
       )}
-      <span className={styles[flag]}>{children}</span>
     </div>
   );
 };
