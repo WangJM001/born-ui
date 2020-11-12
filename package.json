@@ -38,6 +38,7 @@
       "prettier --write"
     ]
   },
+  "author": { "name" : "王建明", "email": "wangjianming.x@gmail.com"},
   "license": "UNLICENSED",
   "publishConfig": {
     "registry": "http://localhost:4873"
