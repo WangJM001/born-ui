@@ -2,8 +2,6 @@
 title: Descriptions
 ---
 
-# Descriptions
-
 ## 功能图谱
 
 <img src='./demos/images/features.png' />
