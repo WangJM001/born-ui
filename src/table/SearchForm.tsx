@@ -1,9 +1,9 @@
 import { DoubleRightOutlined } from '@ant-design/icons';
-import { CLASS_NAME_PREFIX } from '@utech/born-ui/constants';
 import { Button, Card, Space } from 'antd';
 import classNames from 'classnames';
 import React, { FC, useEffect } from 'react';
 import useMergeValue from 'use-merge-value';
+import { CLASS_NAME_PREFIX } from '../constants';
 import Form, { FormInstance, FormItemPropsExt } from '../form';
 import defaultRender from '../form/defaultRender';
 
