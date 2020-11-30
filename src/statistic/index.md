@@ -25,6 +25,7 @@ title: Statistic
 | footer | 尾部 | `React.ReactNode` | - |
 | titleTip | 标题栏提示 | `string \| TooltipProps` | - |
 | dataType | 根据类型内置了格式化方法，`currency`当值大于 `1000000` 时，转换单位为`万元` | `currency \| percent` | - |
+| extra | 额外内容，显示在单位之后 | `React.ReactNode` | - |
 
 ### StatisticGroup
 

@@ -15,6 +15,12 @@ import {
   SelectRequestWithoutPaginationWithoutParamsProps,
 } from './interfaces';
 
+export type SelectPropsType<T, U> =
+  | SelectBaseProps<T>
+  | SelectRequestWithPaginationProps<T, U>
+  | SelectRequestWithoutPaginationWithParamsProps<T, U>
+  | SelectRequestWithoutPaginationWithoutParamsProps<T>;
+
 const { Option } = ASelect;
 
 const PAGE_SIZE = 30;
@@ -56,13 +62,7 @@ const transferValue = <T, U = any>(
   return value;
 };
 
-const Select = <T extends {}, U extends Record<string, any> = {}>(
-  props:
-    | SelectBaseProps<T>
-    | SelectRequestWithPaginationProps<T, U>
-    | SelectRequestWithoutPaginationWithParamsProps<T, U>
-    | SelectRequestWithoutPaginationWithoutParamsProps<T>,
-) => {
+const Select = <T extends {}, U extends Record<string, any> = {}>(props: SelectPropsType<T, U>) => {
   const {
     request,
     params: propsParams,

@@ -15,7 +15,7 @@ export interface SelectBaseProps<T>
   search?: string | false;
   defaultValue?: ValueType<T>;
   value?: ValueType<T>;
-  onChange?: (value: ValueType<T>, options: OptionsType | OptionsType[number]) => void;
+  onChange?: (value: any, options: OptionsType | OptionsType[number]) => void;
 }
 
 export interface RequestBaseProps<T> extends Omit<SelectBaseProps<T>, 'options'> {
@@ -42,8 +42,7 @@ export interface RequestBaseProps<T> extends Omit<SelectBaseProps<T>, 'options'>
   };
 }
 
-export interface SelectRequestWithPaginationProps<T, U extends Record<string, any>>
-  extends RequestBaseProps<T> {
+export interface SelectRequestWithPaginationProps<T, U> extends RequestBaseProps<T> {
   /**
    * 一个获得 dataSource 的方法
    */
@@ -63,12 +62,11 @@ export interface SelectRequestWithPaginationProps<T, U extends Record<string, an
   pagination: true;
 }
 
-export interface SelectRequestWithoutPaginationWithParamsProps<T, U extends Record<string, any>>
-  extends RequestBaseProps<T> {
+export interface SelectRequestWithoutPaginationWithParamsProps<T, U> extends RequestBaseProps<T> {
   /**
    * 一个获得 dataSource 的方法
    */
-  request: (params: U) => Promise<RequestListData<T>>;
+  request: (params: Omit<U, 'pageSize' | 'pageNumber'>) => Promise<RequestListData<T>>;
   /**
    * 请求参数
    */

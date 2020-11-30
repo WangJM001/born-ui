@@ -1,5 +1,5 @@
 import ASelect from 'antd/lib/select';
-import InternalSelect from './Select';
+import InternalSelect, { SelectPropsType } from './Select';
 
 export * from './interfaces';
 
@@ -14,5 +14,7 @@ const Select = InternalSelect as SelectInterface;
 
 Select.Option = ASelect.Option;
 Select.OptGroup = ASelect.OptGroup;
+
+export type { SelectPropsType };
 
 export default Select;

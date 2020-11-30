@@ -15,6 +15,7 @@ import {
   TableRowSelection as ATableRowSelection,
 } from 'antd/lib/table/interface';
 import classNames from 'classnames';
+import { set } from 'lodash';
 import omit from 'lodash/omit';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
 import React, {
@@ -85,7 +86,7 @@ export interface ColumnType<T = unknown>
    * 自定义 render
    */
   render?: (
-    text: React.ReactNode,
+    value: any,
     record: T,
     index: number,
     action: UseFetchDataAction<RequestData<T>>,
@@ -136,7 +137,13 @@ export interface TableRowSelection<T> extends ATableRowSelection<T> {
    * 自定义 table 的 alert 的操作
    * 设置或者返回false 即可关闭
    */
-  alertOptionRender?: ((props: { onCleanSelected: () => void }) => React.ReactNode) | false;
+  alertOptionRender?:
+    | ((props: {
+        onCleanSelected: () => void;
+        selectedRowKeys: (string | number)[];
+        selectedRows: T[];
+      }) => React.ReactNode)
+    | false;
 }
 
 export interface TableProps<T, U extends { [key: string]: any }>
@@ -454,7 +461,20 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
   const [search, setSearch] = useState<Record<string, any>>();
   const [filter, setFilter] = useState<FilterType>();
   const [sorter, setSorter] = useState<SorterType>();
-  const [searchFormParams, setSearchFormParams] = useState<Record<string, any>>();
+  const [searchFormParams, setSearchFormParams] = useState<Record<string, any>>(() => {
+    const initialValues = searchForm?.initialValues || {};
+
+    if (searchForm?.items && searchForm.items.length) {
+      searchForm.items.forEach((category) => {
+        category.forEach((item) => {
+          if (item.name && item.initialValue !== undefined && item.initialValue !== null)
+            set(initialValues, item.name, item.initialValue);
+        });
+      });
+    }
+
+    return initialValues;
+  });
 
   const { tablePageSize: defaultTablePageSize, formatSymbol, emptyText } = useContext(
     ConfigContext,
@@ -466,7 +486,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
     search: undefined,
     filter: '{}',
     sorter: '{}',
-    searchForm: '{}',
+    searchForm: stringify(searchFormParams),
   };
   const [urlState, setUrlState] = useUrlState<UrlStateType>(defaultUrlState, {
     navigateMode: 'replace',
@@ -517,7 +537,6 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
         ...(pageParams || {}),
         ...params,
         ...search,
-        ...searchForm?.initialValues,
         ...searchFormParams,
       };
 
@@ -540,6 +559,19 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
       ],
     },
   );
+
+  /**
+   * 传入参数变化，返回第一页
+   */
+  useEffect(() => {
+    if (propsPagination) {
+      if (isUrlState) {
+        setUrlState({ pageNumber: 1 });
+      } else {
+        action.resetPageIndex();
+      }
+    }
+  }, [stringify(params)]);
 
   useEffect(() => {
     fullScreen.current = () => {
@@ -752,7 +784,6 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
   const extraRenderParams = useCreation(
     () => ({
       ...params,
-      ...searchForm?.initialValues,
       ...searchFormParams,
     }),
     [stringify(params), stringify(searchFormParams), stringify(searchForm?.initialValues)],
@@ -813,7 +844,10 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
         }, {});
 
         if (isUrlState) {
-          setUrlState({ filter: stringify(filterValue), pageNumber: 1 });
+          setUrlState({
+            filter: stringify(filterValue),
+            pageNumber: propsPagination ? 1 : undefined,
+          });
         } else {
           setFilter(filterValue);
           action.resetPageIndex();
@@ -884,7 +918,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
         onSearch={(keyword) => {
           if (options && options.search) {
             if (isUrlState) {
-              setUrlState({ search: keyword, pageNumber: 1 });
+              setUrlState({ search: keyword, pageNumber: propsPagination ? 1 : undefined });
             } else {
               setSearch({
                 [searchName]: keyword,
@@ -943,7 +977,10 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
           values={searchFormParams}
           onSearch={(values) => {
             if (isUrlState) {
-              setUrlState({ searchForm: stringify(values), pageNumber: 1 });
+              setUrlState({
+                searchForm: stringify(values),
+                pageNumber: propsPagination ? 1 : undefined,
+              });
             } else {
               setSearchFormParams(values);
               action.resetPageIndex();

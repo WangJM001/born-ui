@@ -117,4 +117,4 @@ function genDirectory(src, dest) {
 }
 
 genDirectory(path.join(__dirname, '../node_modules/antd/es'), path.join(__dirname, '../es'));
-genDirectory(path.join(__dirname, '../node_modules/antd/lib'), path.join(__dirname, '../lib'));
+// genDirectory(path.join(__dirname, '../node_modules/antd/lib'), path.join(__dirname, '../lib'));

@@ -21,29 +21,41 @@
     padding-right: 20px;
   }
   &-range {
-    &-left {
-      width: 115px;
-      &:hover,
-      &:focus,
-      &.@{ant-prefix}-input-number-focused {
-        border-right-width: 2px !important;
+    &-group {
+      width: 216px;
+      border: 1px solid @border-color-base;
+      border-radius: @border-radius-base;
+      &-focused {
+        border-color: @input-hover-border-color;
+        box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+      }
+      &:hover {
+        border-color: @input-hover-border-color;
+      }
+
+      .@{input-number-cls} {
+        width: 92px;
+        > .@{ant-prefix}-input-number {
+          border: none;
+          &.@{ant-prefix}-input-number-focused {
+            border: none;
+            box-shadow: none;
+          }
+        }
+        &-range-min {
+          .@{ant-prefix}-input-number-handler-wrap {
+            border-right: 1px solid @border-color-base;
+          }
+        }
       }
     }
-    &-split {
-      width: 30px !important;
-      background-color: #fff !important;
-      border-right: 0;
-      border-left: 0;
-      pointer-events: none;
-    }
-    &-right {
-      width: 115px;
-      border-left-width: 0;
-      &:hover,
-      &:focus,
-      &.@{ant-prefix}-input-number-focused {
-        border-left-width: 1px !important;
-      }
+
+    &-separator {
+      padding: 0 8px;
+      color: @disabled-color;
+      font-size: @font-size-lg;
+      line-height: 30px;
+      cursor: default;
     }
   }
 }

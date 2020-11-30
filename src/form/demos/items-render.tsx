@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Slider } from '@utech/born-ui';
+import { Form, InputNumber, Slider } from '@utech/born-ui';
 
 export default () => (
   <Form
@@ -49,6 +49,11 @@ export default () => (
         label: '文本框',
         name: 'textarea',
         dataType: 'textarea',
+      },
+      {
+        label: '金额范围',
+        name: 'currencyRange',
+        render: () => <InputNumber.Range suffix="万" />,
       },
       {
         label: '自定义',

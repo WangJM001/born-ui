@@ -1,5 +1,5 @@
 import React from 'react';
-import { SortableContainer, SortableElement, SortEnd } from 'react-sortable-hoc';
+import { SortableContainer, SortableElement, SortEnd } from '@utech/react-sortable-hoc';
 import arrayMove from 'array-move';
 import { PushpinOutlined, SettingOutlined, VerticalAlignMiddleOutlined } from '@ant-design/icons';
 import { Checkbox, Popover, Tooltip } from 'antd';

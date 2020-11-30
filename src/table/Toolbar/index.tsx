@@ -141,16 +141,7 @@ const Toolbar = <T, U = {}>({
               }}
             />
           )}
-          {actions
-            .filter((item) => item)
-            .map((node, index) => (
-              <div
-                // eslint-disable-next-line react/no-array-index-key
-                key={index}
-              >
-                {node}
-              </div>
-            ))}
+          {actions}
         </Space>
         <div className={`${className}-default-option`}>
           {renderDivider()}

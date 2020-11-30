@@ -19,6 +19,15 @@ export default defineConfig({
     [
       'import',
       {
+        libraryName: 'antd',
+        libraryDirectory: 'lib',
+        style: false,
+      },
+      'import-antd',
+    ],
+    [
+      'import',
+      {
         libraryName: '@utech/born-ui',
         customName: (name: string) => {
           if (componentNames.includes(name)) {

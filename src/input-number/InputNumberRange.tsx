@@ -1,8 +1,10 @@
-import React, { FC } from 'react';
+import { SwapRightOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
+import classNames from 'classnames';
+import React, { FC, useState } from 'react';
 import useMergeValue from 'use-merge-value';
-import InputNumber, { InputNumberProps } from '.';
 import { CLASS_NAME_PREFIX } from '../constants';
+import InputNumber, { InputNumberProps } from './InputNumber';
 
 export interface InputNumberRangeProps extends Omit<InputNumberProps, 'value' | 'onChange'> {
   value?: [number | undefined, number | undefined];
@@ -12,8 +14,11 @@ export interface InputNumberRangeProps extends Omit<InputNumberProps, 'value' | 
 const InputNumberRange: FC<InputNumberRangeProps> = ({
   value: propsValue,
   onChange,
+  onFocus,
+  onBlur,
   ...restProps
 }) => {
+  const [focused, setFocused] = useState(false);
   const [value, setValue] = useMergeValue<[number | undefined, number | undefined]>(
     [undefined, undefined],
     {
@@ -21,24 +26,42 @@ const InputNumberRange: FC<InputNumberRangeProps> = ({
       onChange,
     },
   );
+
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    setFocused(true);
+    if (onFocus) onFocus(e);
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setFocused(false);
+    if (onBlur) onBlur(e);
+  };
+
   const className = `${CLASS_NAME_PREFIX}-input-number-range`;
   return (
-    <Input.Group compact>
+    <Input.Group
+      compact
+      className={classNames(`${className}-group`, { [`${className}-group-focused`]: focused })}
+    >
       <InputNumber
         value={value[0]}
         placeholder="最小值"
         {...restProps}
         id="input-number-min"
-        className={`${className}-left`}
+        className={`${className}-min`}
         onChange={(v) => setValue([v as number, value[1]])}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
       />
-      <Input placeholder="~" disabled className={`${className}-split`} />
+      <span className={`${className}-separator`}>
+        <SwapRightOutlined />
+      </span>
       <InputNumber
         value={value[1]}
         placeholder="最大值"
         {...restProps}
         id="input-number-max"
-        className={`${className}-right`}
+        className={`${className}-max`}
         onChange={(v) => setValue([value[0], v as number])}
       />
     </Input.Group>

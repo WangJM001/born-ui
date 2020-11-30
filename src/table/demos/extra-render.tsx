@@ -67,6 +67,8 @@ export default () => (
             name: 'keyword',
             width: '100%',
           },
+        ],
+        [
           {
             label: '状态',
             name: 'status',
@@ -90,15 +92,13 @@ export default () => (
                 ]}
               />
             ),
-            width: 300,
+            width: 316,
           },
-        ],
-        [
           {
             label: '更新日期',
             name: 'updatedAt',
             dataType: 'dateRange',
-            width: 300,
+            width: 316,
           },
         ],
       ],

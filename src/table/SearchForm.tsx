@@ -2,6 +2,7 @@ import { DoubleRightOutlined } from '@ant-design/icons';
 import { Button, Card, Space } from 'antd';
 import classNames from 'classnames';
 import React, { FC, useEffect } from 'react';
+import { stringify } from 'use-json-comparison';
 import useMergeValue from 'use-merge-value';
 import { CLASS_NAME_PREFIX } from '../constants';
 import Form, { FormInstance, FormItemPropsExt } from '../form';
@@ -30,36 +31,38 @@ const SearchForm: FC<SearchFormProps> = ({
   onSearch,
 }) => {
   const className = `${CLASS_NAME_PREFIX}-table-search-form`;
+
   const [form] = Form.useForm(propsForm);
   const [collapsed, setCollapsed] = useMergeValue<boolean>(!!defaultCollapsed, {
     value: propsCollapsed,
     onChange: onCollapsedChange,
   });
 
+  const stringifyValues = stringify(values);
+
   useEffect(() => {
-    form.setFieldsValue(values);
-  }, [values]);
+    if (stringifyValues !== stringify(form.getFieldsValue())) {
+      form.resetFields();
+      form.setFieldsValue(values);
+    }
+  }, [stringifyValues]);
 
   return (
     <Card bordered={false} className={className}>
       <div className={`${className}-wrapper`}>
-        <Form
-          layout="inline"
-          form={form}
-          onFinish={onSearch}
-          initialValues={initialValues}
-          onKeyPress={(e) => {
-            // Enter
-            if (e.key === 'Enter') {
-              form.submit();
-            }
-          }}
-        >
+        <Form layout="inline" form={form} onFinish={onSearch} initialValues={initialValues}>
           {items[0].map(({ dataType, render, name, width, style, ...rest }, i) => (
             <Form.Item
               key={name?.toString() || i}
               name={name}
-              style={{ ...style, width }}
+              style={{
+                ...style,
+                width:
+                  // 百分比减去margin值，防止超出
+                  typeof width === 'string' && width.endsWith('%')
+                    ? `calc(${width} - 16px)`
+                    : width,
+              }}
               {...rest}
             >
               {render ? render() : defaultRender(dataType)}

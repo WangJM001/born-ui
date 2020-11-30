@@ -17,6 +17,7 @@ for (let i = 0; i < 300; i += 1) {
 }
 
 export async function getDataWithPagination(params: {
+  [key: string]: any;
   pageNumber: number;
   pageSize: number;
 }): Promise<RequestPagingData<DataItem>> {

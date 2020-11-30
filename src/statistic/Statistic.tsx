@@ -35,7 +35,7 @@ const Statistic: FC<StatisticProps> = ({
   let internalPrecision = precision;
 
   if (dataType === 'currency' && typeof internalValue === 'number') {
-    internalPrecision = 2;
+    internalPrecision = internalPrecision || 2;
     internalSuffix = '元';
     if (internalValue >= 1000000) {
       internalValue /= 10000;
@@ -44,7 +44,7 @@ const Statistic: FC<StatisticProps> = ({
   } else if (dataType === 'percent' && typeof internalValue === 'number') {
     internalValue *= 100;
     internalSuffix = '%';
-    internalPrecision = 1;
+    internalPrecision = internalPrecision || 1;
   }
 
   if (!internalValue && internalValue !== 0) {
@@ -54,8 +54,8 @@ const Statistic: FC<StatisticProps> = ({
 
   internalSuffix = (
     <>
-      {internalSuffix}
-      <span className={`${className}-extra`}>{extra}</span>
+      <span className={`${className}-content-suffix`}>{internalSuffix}</span>
+      <span className={`${className}-content-extra`}>{extra}</span>
     </>
   );
 

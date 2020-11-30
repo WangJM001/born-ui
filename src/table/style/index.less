@@ -12,14 +12,16 @@
       .@{search-form-cls}-wrapper {
         flex: 1;
         > .@{ant-prefix}-form-inline {
-          max-width: 750px;
+          max-width: 664px;
           .@{ant-prefix}-form-item {
-            margin-bottom: 24px;
+            margin: 0 16px 24px 0;
             > .@{ant-prefix}-form-item-label {
               min-width: 100px;
             }
           }
           .@{search-form-cls}-collapse-wrapper {
+            display: flex;
+            flex-flow: row wrap;
             width: 100%;
             &.collapsed {
               display: none;
@@ -61,7 +63,7 @@
     justify-content: space-between;
     margin: -6px 0 16px 0;
     &-title {
-      margin-right: 16px;
+      flex: 1;
       color: @heading-color;
       font-weight: 500;
       font-size: 16px;

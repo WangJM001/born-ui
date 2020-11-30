@@ -39,6 +39,7 @@ export type DataEnumType = {
 };
 
 export interface FormItemPropsExt extends Omit<FormItemProps, 'children'> {
+  key?: React.Key;
   dataType?: DataType;
   render?: () => React.ReactNode;
   width?: number | string;
@@ -71,24 +72,26 @@ function mergeItems(items: FormItemPropsExt[] = [], children: React.ReactNode, c
       });
   }
 
-  const itemNodes = items?.map(({ dataType, render, name, span = 1, width, style, ...rest }, i) => {
-    const item = (
-      <Item key={name?.toString() || i} name={name} style={{ ...style, width }} {...rest}>
-        {render ? render() : defaultRender(dataType)}
-      </Item>
-    );
-    return column ? (
-      <Col
-        key={`item-${name?.toString() || i}`}
-        className={className}
-        style={{ width: `${(span * 100) / column}%` }}
-      >
-        {item}
-      </Col>
-    ) : (
-      item
-    );
-  });
+  const itemNodes = items?.map(
+    ({ key, dataType, render, name, span = 1, width, style, ...rest }, i) => {
+      const item = (
+        <Item key={key || name?.toString() || i} name={name} style={{ ...style, width }} {...rest}>
+          {render ? render() : defaultRender(dataType)}
+        </Item>
+      );
+      return column ? (
+        <Col
+          key={`item-${name?.toString() || i}`}
+          className={className}
+          style={{ width: `${(span * 100) / column}%` }}
+        >
+          {item}
+        </Col>
+      ) : (
+        item
+      );
+    },
+  );
 
   return column ? (
     <Row gutter={[24, 0]}>
@@ -104,7 +107,7 @@ function mergeItems(items: FormItemPropsExt[] = [], children: React.ReactNode, c
 }
 
 const Form = forwardRef<FormInstance<any>, FormProps>(
-  ({ items, children, column, layout, className: propsClassName, ...restProps }, ref) => {
+  ({ items, children, column, layout, className: propsClassName, form, ...restProps }, ref) => {
     const className = `${CLASS_NAME_PREFIX}-form`;
 
     const screens = useBreakpoint();
@@ -130,6 +133,13 @@ const Form = forwardRef<FormInstance<any>, FormProps>(
           labelCol: { span: 6 },
           wrapperCol: { span: 14 },
         })}
+        form={form}
+        onKeyPress={(e) => {
+          // Enter
+          if (e.key === 'Enter' && form) {
+            form.submit();
+          }
+        }}
         {...restProps}
       >
         {mergeItems(items, children, mergedColumn)}
