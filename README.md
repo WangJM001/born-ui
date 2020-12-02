@@ -9,11 +9,11 @@
 ## 📦 安装
 
 ```bash
-npm install antd --save
+npm install @utech/born-ui --save
 ```
 
 ```bash
-yarn add antd
+yarn add  @utech/born-ui
 ```
 
 ## 🔨 示例
