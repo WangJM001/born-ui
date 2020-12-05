@@ -5,6 +5,9 @@
 @statistic-group-cls: ~'@{statistic-cls}-group';
 
 .@{statistic-cls} {
+  .@{ant-prefix}-statistic-content {
+    display: flex;
+  }
   &-tooltip-icon {
     display: inline-block;
     margin-left: 6px;
@@ -22,6 +25,28 @@
   }
   &-footer {
     color: @text-color-secondary;
+  }
+  &-small {
+    .@{ant-prefix}-statistic-title {
+      margin-bottom: 2px;
+    }
+    .@{ant-prefix}-statistic-content {
+      &-value,
+      &-suffix {
+        font-size: 18px;
+        line-height: 1;
+
+        &-int,
+        &-decimal {
+          font-size: 18px;
+        }
+      }
+    }
+
+    .@{statistic-cls}-content-suffix,
+    .@{statistic-cls}-content-extra {
+      font-size: 14px;
+    }
   }
 }
 

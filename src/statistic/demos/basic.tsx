@@ -13,7 +13,7 @@ export default () => (
       <Statistic title="百分比" value={0.1234} dataType="percent" />
     </Col>
     <Col span={6}>
-      <Statistic title="面积" titleTip="我是tooltip提示" value={1230} suffix="㎡" />
+      <Statistic title="面积" tip="我是tooltip提示" value={1230} suffix="㎡" />
     </Col>
   </Row>
 );

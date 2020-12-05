@@ -9,9 +9,10 @@ import { ConfigContext } from '../config-provider';
 
 export interface StatisticProps extends AStatisticProps {
   footer?: React.ReactNode;
-  titleTip?: string | TooltipProps;
+  tip?: string | TooltipProps;
   dataType?: 'percent' | 'currency';
   extra?: React.ReactNode;
+  size?: 'default' | 'small';
 }
 
 const Statistic: FC<StatisticProps> = ({
@@ -20,10 +21,11 @@ const Statistic: FC<StatisticProps> = ({
   suffix,
   precision,
   footer,
-  titleTip,
+  tip,
   className: propsClassName,
   dataType,
   extra,
+  size,
   ...restProps
 }) => {
   const className = `${CLASS_NAME_PREFIX}-statistic`;
@@ -31,7 +33,7 @@ const Statistic: FC<StatisticProps> = ({
   const { emptyText } = useContext(ConfigContext);
 
   let internalValue = value;
-  let internalSuffix = suffix || '';
+  let internalSuffix = suffix;
   let internalPrecision = precision;
 
   if (dataType === 'currency' && typeof internalValue === 'number') {
@@ -54,15 +56,14 @@ const Statistic: FC<StatisticProps> = ({
 
   internalSuffix = (
     <>
-      <span className={`${className}-content-suffix`}>{internalSuffix}</span>
-      <span className={`${className}-content-extra`}>{extra}</span>
+      {internalSuffix && <span className={`${className}-content-suffix`}>{internalSuffix}</span>}
+      {extra && <span className={`${className}-content-extra`}>{extra}</span>}
     </>
   );
 
   let mixTitle = title;
-  if (titleTip) {
-    const tooltipProps: TooltipProps =
-      typeof titleTip === 'string' ? { title: titleTip } : titleTip;
+  if (tip) {
+    const tooltipProps: TooltipProps = typeof tip === 'string' ? { title: tip } : tip;
     mixTitle = (
       <>
         {title}
@@ -76,7 +77,9 @@ const Statistic: FC<StatisticProps> = ({
   return (
     <>
       <AStatistic
-        className={classNames(classNames, propsClassName)}
+        className={classNames(className, propsClassName, {
+          [`${className}-small`]: size === 'small',
+        })}
         title={mixTitle}
         value={internalValue}
         suffix={internalSuffix}
