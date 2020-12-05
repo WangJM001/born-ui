@@ -54,7 +54,7 @@ title: Table
 | columnsStateMap | columns 的状态枚举 | `{[key: string]: { show:boolean, fixed: "right" \| "left"} }` | - |
 | onColumnsStateChange | columns 状态发生改变 | `(props: {[key: string]: { show:boolean, fixed: "right" \| "left"} }) => void` | - |
 | toolbar | 渲染工具栏 | `React.ReactNode[] \|(( action: UseFetchDataAction<T>, rows: { selectedRowKeys?: (string \| number)[]; selectedRows?: T[]; }) => React.ReactNode[])` | - |
-| onLoad | 数据加载完成后触发,会多次触发 | `(dataSource: T[]) => void` | - |
+| onLoadSuccess | 数据加载完成后触发,会多次触发 | `(dataSource: T[]) => void` | - |
 | headerTitle | 左上角的 title | `React.ReactNode` | - |
 | rowSelection | 与 antd 中基本相同，但支持选中后的工具栏渲染，[配置项](#rowSelection-定义) | `TableRowSelection<T> \| false` | - |
 | onEditSave | 行编辑下 Form 的保存事件 | `(formValue: T, originalRecord: T, index: number) => Promise<any>` | - |

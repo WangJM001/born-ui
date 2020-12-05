@@ -82,6 +82,7 @@ const Select = <T extends {}, U extends Record<string, any> = {}>(props: SelectP
     onBlur,
     children,
     options: propsOptions,
+    onLoadSuccess,
     ...restProps
   } = props as any;
   const [searchValue, setSearchValue] = useState<string>();
@@ -118,6 +119,11 @@ const Select = <T extends {}, U extends Record<string, any> = {}>(props: SelectP
         };
       },
       isNoMore: (d) => (d ? d.list.length >= d.total : false),
+      onSuccess: (result) => {
+        if (onLoadSuccess) {
+          onLoadSuccess(result.list);
+        }
+      },
     },
   );
 
@@ -174,7 +180,7 @@ const Select = <T extends {}, U extends Record<string, any> = {}>(props: SelectP
   };
 
   let options = propsOptions;
-  if (transform && !propsOptions) {
+  if (transform && !propsOptions && !renderOption) {
     options = list.map((item: T) => ({
       label: item[transform.label],
       value: item[transform.value],
@@ -192,10 +198,10 @@ const Select = <T extends {}, U extends Record<string, any> = {}>(props: SelectP
 
   return (
     <ASelect<any>
+      placeholder="请选择"
       {...restProps}
       showSearch={!!search}
       loading={loading}
-      placeholder="请选择"
       filterOption={pagination ? () => true : filterOption}
       defaultValue={transferValue(defaultValue, transform, labelInValue)}
       value={transferValue(value, transform, labelInValue)}
@@ -215,7 +221,9 @@ const Select = <T extends {}, U extends Record<string, any> = {}>(props: SelectP
             </Option>
           )}
         </>
-      ) : null}
+      ) : (
+        children
+      )}
     </ASelect>
   );
 };

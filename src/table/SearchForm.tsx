@@ -87,7 +87,6 @@ const SearchForm: FC<SearchFormProps> = ({
       </div>
       <div className={`${className}-actions`}>
         <Space align="end">
-          <Button onClick={form.submit}>查询</Button>
           <Button
             onClick={() => {
               form.resetFields();
@@ -96,7 +95,7 @@ const SearchForm: FC<SearchFormProps> = ({
           >
             重置
           </Button>
-
+          <Button onClick={form.submit}>查询</Button>
           {items.length > 1 && (
             <div className={`${className}-collapsed`} onClick={() => setCollapsed(!collapsed)}>
               <DoubleRightOutlined rotate={collapsed ? 90 : -90} />

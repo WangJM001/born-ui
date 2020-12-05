@@ -4,7 +4,7 @@
 
 .@{card-cls} {
   &-without-header-split {
-    > .ant-card-head {
+    > .@{ant-prefix}-card-head {
       border: none;
       & + .ant-card-body {
         padding-top: 0;
@@ -13,9 +13,15 @@
   }
   &-ghost {
     background: transparent;
-    > .ant-card-head {
+    &.@{ant-prefix}-card-bordered {
+      border: none;
+      .@{ant-prefix}-card-body {
+        border: @border-width-base @border-style-base @border-color-split;
+      }
+    }
+    > .@{ant-prefix}-card-head {
       padding-left: 0;
-      & + .ant-card-body {
+      & + .@{ant-prefix}-card-body {
         padding-top: 24px;
         background: @white;
       }

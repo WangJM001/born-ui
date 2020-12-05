@@ -35,14 +35,14 @@ const useFetchData = <T, U = {}>(
     defaultPageSize?: number;
     formatData?: (data: T[]) => any[];
     effects?: any[];
-    onLoad?: (dataSource: T[]) => void;
+    onLoadSuccess?: (dataSource: T[]) => void;
     pagination: boolean;
     onCancelEditing: () => void;
   },
 ): UseFetchDataAction<T> => {
   // 用于标定组件是否解除挂载，如果解除了就不要 setState
   const mountRef = useRef(true);
-  const { pagination, onLoad = () => null, formatData, onCancelEditing } = options;
+  const { pagination, onLoadSuccess = () => null, formatData, onCancelEditing } = options;
 
   const [dataSource, setDataSource] = useState<T[]>([]);
   const [loading, setLoading] = useState<boolean | undefined>(undefined);
@@ -110,8 +110,8 @@ const useFetchData = <T, U = {}>(
         }
         setDataAndLoading(items, total);
       }
-      if (onLoad) {
-        onLoad(items);
+      if (onLoadSuccess) {
+        onLoadSuccess(items);
       }
     } catch (e) {
       // 如果没有传递这个方法的话，需要把错误抛出去，以免吞掉错误

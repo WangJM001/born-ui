@@ -11,6 +11,8 @@ export default () => (
     <Descriptions.Item label="Label6">Value6</Descriptions.Item>
     <Descriptions.Item label="Label7">Value7</Descriptions.Item>
     <Descriptions.Item label="Label8">Value8</Descriptions.Item>
-    <Descriptions.Item label="Label9">Value9</Descriptions.Item>
+    <Descriptions.Item label="Label9" suffix="SUFFIX">
+      Value9
+    </Descriptions.Item>
   </Descriptions>
 );

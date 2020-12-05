@@ -190,7 +190,7 @@ export interface TableProps<T, U extends { [key: string]: any }>
   /**
    * 数据加载完成后触发
    */
-  onLoad?: (dataSource: T[]) => void;
+  onLoadSuccess?: (dataSource: T[]) => void;
 
   className?: string;
 
@@ -283,17 +283,8 @@ const columnRender = <T, U = any>({
     return null;
   }
 
-  const dom = defaultRenderText<T>(
-    text,
-    item.dataType || 'text',
-    index,
-    formatSymbol,
-    row,
-    columnEmptyText,
-  );
-
   if (item.render) {
-    const renderDom = item.render(dom, row, index, action.current);
+    const renderDom = item.render(text, row, index, action.current);
 
     // 如果是合并单元格的，直接返回对象
     if (
@@ -310,6 +301,16 @@ const columnRender = <T, U = any>({
     }
     return renderDom as React.ReactNode;
   }
+
+  const dom = defaultRenderText<T>(
+    text,
+    item.dataType || 'text',
+    index,
+    formatSymbol,
+    row,
+    columnEmptyText,
+  );
+
   return checkUndefinedOrNull(dom) ? dom : null;
 };
 
@@ -431,7 +432,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
     actionRef,
     columns: propsColumns = [],
     toolbar,
-    onLoad,
+    onLoadSuccess,
     style,
     columnsStateMap,
     onColumnsStateChange,
@@ -547,7 +548,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
     {
       ...fetchPagination,
       pagination: propsPagination !== false,
-      onLoad,
+      onLoadSuccess,
       formatData,
       onCancelEditing,
       effects: [
@@ -940,6 +941,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
       },
     },
   };
+  const dataSource = request ? (action.dataSource as T[]) : props.dataSource || [];
   const tableDom = (
     <ATable<T>
       {...rest}
@@ -960,7 +962,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
         return true;
       })}
       loading={action.loading || props.loading}
-      dataSource={action.dataSource}
+      dataSource={dataSource}
       pagination={pagination}
       onChange={onTableChange}
     />

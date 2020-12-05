@@ -40,6 +40,7 @@ export interface RequestBaseProps<T> extends Omit<SelectBaseProps<T>, 'options'>
     label: string;
     disabled?: string;
   };
+  onLoadSuccess?: (data: T[]) => void;
 }
 
 export interface SelectRequestWithPaginationProps<T, U> extends RequestBaseProps<T> {

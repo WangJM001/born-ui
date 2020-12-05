@@ -57,9 +57,14 @@ const defaultRenderTextByObject = <T, U = {}>(
   text: string | number,
   dataType: ColumnsDataEnumType | ColumnsDataOptionType<T>,
   item: T,
+  columnEmptyText?: ColumnEmptyText,
 ) => {
   if (dataType.type === 'enum' && dataType.values) {
-    return dataType.values[text];
+    const result = dataType.values[text];
+    if (typeof result !== 'boolean' && typeof result !== 'number' && !result && columnEmptyText) {
+      return columnEmptyText;
+    }
+    return result;
   }
   if (dataType.type === 'option' && dataType.actions && dataType.actions.length) {
     const options: ReactNode[] = [];
@@ -95,11 +100,12 @@ const defaultRenderText = <T, U = {}>(
   if (typeof dataType === 'function' && item) {
     return defaultRenderText<T>(text, dataType(item), index, formatSymbol, item, columnEmptyText);
   }
+
   /**
-   * 如果是枚举的值
+   * 如果是枚举/选项的值
    */
   if (typeof dataType === 'object') {
-    return defaultRenderTextByObject<T>(text as string, dataType, item);
+    return defaultRenderTextByObject<T>(text as string, dataType, item, columnEmptyText);
   }
 
   /**
