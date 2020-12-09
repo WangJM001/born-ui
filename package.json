@@ -46,7 +46,7 @@
     "@ahooksjs/use-url-state": "^2.5.1",
     "@ant-design/icons": "^4.2.2",
     "ahooks": "^2.6.0",
-    "antd": "4.8.6",
+    "antd": "4.9.1",
     "array-move": "^3.0.1",
     "classnames": "^2.2.6",
     "dayjs": "^1.8.36",
