@@ -1,6 +1,8 @@
 import React from 'react';
 import { ConfigProvider as AConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
 import {
   ConfigConsumer,
   ConfigConsumerProps,
@@ -8,6 +10,8 @@ import {
   defaultFormatSymbol,
   defaultTablePageSize,
 } from './context';
+
+dayjs.locale('zh-cn');
 
 export { ConfigContext, ConfigConsumer };
 
