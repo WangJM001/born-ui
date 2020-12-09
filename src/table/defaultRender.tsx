@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { Link } from 'umi';
 import numeral from 'numeral';
 import dayjs from 'dayjs';
 import { Divider } from 'antd';
@@ -57,14 +58,9 @@ const defaultRenderTextByObject = <T, U = {}>(
   text: string | number,
   dataType: ColumnsDataEnumType | ColumnsDataOptionType<T>,
   item: T,
-  columnEmptyText?: ColumnEmptyText,
 ) => {
   if (dataType.type === 'enum' && dataType.values) {
-    const result = dataType.values[text];
-    if (typeof result !== 'boolean' && typeof result !== 'number' && !result && columnEmptyText) {
-      return columnEmptyText;
-    }
-    return result;
+    return dataType.values[text];
   }
   if (dataType.type === 'option' && dataType.actions && dataType.actions.length) {
     const options: ReactNode[] = [];
@@ -94,92 +90,92 @@ const defaultRenderText = <T, U = {}>(
   formatSymbol: FormatSymbolType,
   item: T,
   columnEmptyText?: ColumnEmptyText,
+  link?: (record: T) => string,
 ): React.ReactNode => {
+  let finalText: any = text;
   // when dataType == function
   // item always not null
   if (typeof dataType === 'function' && item) {
-    return defaultRenderText<T>(text, dataType(item), index, formatSymbol, item, columnEmptyText);
-  }
-
-  /**
-   * 如果是枚举/选项的值
-   */
-  if (typeof dataType === 'object') {
-    return defaultRenderTextByObject<T>(text as string, dataType, item, columnEmptyText);
-  }
-
-  /**
-   * 如果是金额的值
-   */
-  if (dataType === 'currency' && (text || text === 0)) {
-    return numeral(text).format(formatSymbol.currency);
-  }
-
-  /**
-   *如果是日期的值
-   */
-  if (dataType === 'date' && text) {
-    return dayjs(text).format(formatSymbol.date);
-  }
-
-  /**
-   *如果是日期范围的值
-   */
-  if (dataType === 'dateRange' && text && Array.isArray(text) && text.length === 2) {
+    finalText = defaultRenderText<T>(
+      text,
+      dataType(item),
+      index,
+      formatSymbol,
+      item,
+      columnEmptyText,
+    );
+  } else if (typeof dataType === 'object') {
+    /**
+     * 如果是枚举/选项的值
+     */
+    finalText = defaultRenderTextByObject<T>(text as string, dataType, item);
+  } else if (dataType === 'currency' && (text || text === 0)) {
+    /**
+     * 如果是金额的值
+     */
+    finalText = numeral(text).format(formatSymbol.currency);
+  } else if (dataType === 'date' && text) {
+    /**
+     *如果是日期的值
+     */
+    finalText = dayjs(text).format(formatSymbol.date);
+  } else if (dataType === 'dateRange' && text && Array.isArray(text) && text.length === 2) {
+    /**
+     *如果是日期范围的值
+     */
     // 值不存在的时候显示 "-"
     const [startText, endText] = text;
-    return (
+    finalText = (
       <div>
         <span>{startText ? dayjs(startText).format(formatSymbol.date) : columnEmptyText}</span>
         <span>~</span>
         <span>{endText ? dayjs(endText).format(formatSymbol.date) : columnEmptyText}</span>
       </div>
     );
-  }
-
-  /**
-   *如果是日期加时间类型的值
-   */
-  if (dataType === 'dateTime' && text) {
-    return dayjs(text).format(formatSymbol.dateTime);
-  }
-
-  /**
-   *如果是日期加时间类型的值的值
-   */
-  if (dataType === 'dateTimeRange' && text && Array.isArray(text) && text.length === 2) {
+  } else if (dataType === 'dateTime' && text) {
+    /**
+     *如果是日期加时间类型的值
+     */
+    finalText = dayjs(text).format(formatSymbol.dateTime);
+  } else if (dataType === 'dateTimeRange' && text && Array.isArray(text) && text.length === 2) {
+    /**
+     *如果是日期加时间类型的值的值
+     */
     // 值不存在的时候显示 "-"
     const [startText, endText] = text;
-    return (
+    finalText = (
       <div>
         <span>{startText ? dayjs(startText).format(formatSymbol.dateTime) : columnEmptyText}</span>
         <span>~</span>
         <span>{endText ? dayjs(endText).format(formatSymbol.dateTime) : columnEmptyText}</span>
       </div>
     );
+  } else if (dataType === 'number' && (text || text === 0)) {
+    /**
+     * 如果是数字
+     */
+    finalText = numeral(text).format(formatSymbol.number);
+  } else if (dataType === 'percent' && (text || text === 0)) {
+    /**
+     * 如果是百分比
+     */
+    finalText = numeral(text).format(formatSymbol.percent);
   }
 
-  /**
-   * 如果是数字
-   */
-  if (dataType === 'number' && (text || text === 0)) {
-    return numeral(text).format(formatSymbol.number);
+  if (
+    columnEmptyText &&
+    typeof finalText !== 'boolean' &&
+    typeof finalText !== 'number' &&
+    !finalText
+  ) {
+    return typeof columnEmptyText === 'string' ? columnEmptyText : '-';
   }
 
-  /**
-   * 如果是百分比
-   */
-  if (dataType === 'percent' && (text || text === 0)) {
-    return numeral(text).format(formatSymbol.percent);
+  if (link) {
+    return <Link to={link(item)}>{finalText}</Link>;
   }
 
-  if (columnEmptyText) {
-    if (typeof text !== 'boolean' && typeof text !== 'number' && !text) {
-      return typeof columnEmptyText === 'string' ? columnEmptyText : '-';
-    }
-  }
-
-  return text;
+  return finalText;
 };
 
 export default defaultRenderText;

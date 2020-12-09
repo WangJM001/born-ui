@@ -91,6 +91,7 @@ ref.current.edit();
 | 属性 | 描述 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | dataIndex | 与 antd 中基本相同，但是只支持字符串和字符串数组 | `string \| string[]` | - |
+| link | 生成`Link`链接 | `(record:T)=>string` | - |
 | title | 与 antd 中基本相同，但是支持通过传入一个方法 | `ReactNode \| ((config: ColumnType<T>) => ReactNode)` | - |
 | render | 类似 table 的 render，增加了第四个参数 action | `(text: React.ReactNode,record: T,index: number,action: UseFetchDataAction<RequestData<T>>) => React.ReactNode \| React.ReactNode[]` | - |
 | dataType | 值的类型，[配置项](#datatype-类型) | `ColumnsDataType<T>` | 'text' |

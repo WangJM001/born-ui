@@ -82,6 +82,8 @@ export interface ColumnType<T = unknown>
   dataIndex: string | string[];
   index?: number;
   title?: ReactNode | ((config: ColumnType<T>) => ReactNode);
+  /** Link to */
+  link?: (record: T) => string;
   /**
    * 自定义 render
    */
@@ -309,6 +311,7 @@ const columnRender = <T, U = any>({
     formatSymbol,
     row,
     columnEmptyText,
+    item.link,
   );
 
   return checkUndefinedOrNull(dom) ? dom : null;
@@ -864,15 +867,22 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
             if (!value.order) {
               return pre;
             }
+
+            const key = Array.isArray(value.field) ? value.field.join('.') : value.field;
+
             return {
               ...pre,
-              [`${value.field}`]: transformSortOrder(value.order),
+              [`${key}`]: transformSortOrder(value.order),
             };
           }, {});
           sorterValue = omitEmpty(data);
         } else if (changeSorter.order) {
+          const key = Array.isArray(changeSorter.field)
+            ? changeSorter.field.join('.')
+            : changeSorter.field;
+
           sorterValue = omitEmpty({
-            [`${changeSorter.field}`]: transformSortOrder(changeSorter.order),
+            [`${key}`]: transformSortOrder(changeSorter.order),
           });
         }
 
