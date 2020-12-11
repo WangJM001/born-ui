@@ -46,7 +46,7 @@ const RangePicker = forwardRef<any, RangePickerProps>(
 
     const handleChange = (_: any, dateStr: [string, string]) => {
       if (onChange) {
-        onChange(dateStr);
+        onChange(_ ? dateStr : _);
       }
     };
 

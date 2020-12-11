@@ -39,6 +39,7 @@ export default () => (
         label: '日期范围',
         name: 'dateRange',
         dataType: 'dateRange',
+        rules: [{ required: true }],
       },
       {
         label: '时间范围',
