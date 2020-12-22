@@ -42,11 +42,17 @@
   "publishConfig": {
     "registry": "http://localhost:4873"
   },
+  "sideEffects": [
+    "dist/*",
+    "es/**/style/*",
+    "lib/**/style/*",
+    "*.less"
+  ],
   "dependencies": {
     "@ahooksjs/use-url-state": "^2.5.1",
     "@ant-design/icons": "^4.2.2",
     "ahooks": "^2.6.0",
-    "antd": "4.9.1",
+    "antd": "4.9.4",
     "array-move": "^3.0.1",
     "classnames": "^2.2.6",
     "dayjs": "^1.8.36",
