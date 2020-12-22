@@ -3,6 +3,15 @@
 @descriptions-cls: ~'@{born-ui-prefix}-descriptions';
 
 .@{descriptions-cls} {
+  .@{ant-prefix}-descriptions-item-container .@{ant-prefix}-descriptions-item-content {
+    align-items: center;
+  }
+  &-tooltip-icon {
+    display: inline-block;
+    margin-left: 6px;
+    color: @text-color-secondary;
+    font-size: 12px;
+  }
   .@{ant-prefix}-descriptions-row:last-child {
     & > .@{ant-prefix}-descriptions-item {
       padding-bottom: 0;

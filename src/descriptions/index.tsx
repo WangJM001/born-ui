@@ -1,10 +1,12 @@
-import React, { cloneElement, useContext } from 'react';
-import classNames from 'classnames';
-import toArray from 'rc-util/lib/Children/toArray';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import ADescriptions, { DescriptionsProps } from 'antd/lib/descriptions';
 import AItem, { DescriptionsItemProps as ADescriptionsItemProps } from 'antd/lib/descriptions/Item';
-import { CLASS_NAME_PREFIX } from '../constants';
+import Tooltip, { TooltipProps } from 'antd/lib/tooltip';
+import classNames from 'classnames';
+import toArray from 'rc-util/lib/Children/toArray';
+import React, { cloneElement, useContext } from 'react';
 import { ConfigContext } from '../config-provider';
+import { CLASS_NAME_PREFIX } from '../constants';
 
 export * from 'antd/lib/descriptions';
 
@@ -12,6 +14,7 @@ const className = `${CLASS_NAME_PREFIX}-descriptions`;
 
 export interface DescriptionsItemProps extends ADescriptionsItemProps {
   suffix?: string;
+  tip?: string | TooltipProps;
 }
 
 const Item = (props: DescriptionsItemProps) => <AItem {...props} />;
@@ -30,11 +33,22 @@ const Descriptions = ({ children, className: propsClassName, ...restProps }: Des
         );
       }
 
+      const itemChildren = [nodeProps.children];
       if (nodeProps.suffix) {
-        return cloneElement(node, { key: i }, [nodeProps.children, nodeProps.suffix]);
+        itemChildren.push(nodeProps.suffix);
       }
 
-      return cloneElement(node, { key: i });
+      if (nodeProps.tip) {
+        const tooltipProps: TooltipProps =
+          typeof nodeProps.tip === 'string' ? { title: nodeProps.tip } : nodeProps.tip;
+        itemChildren.push(
+          <Tooltip {...tooltipProps}>
+            <InfoCircleOutlined className={`${className}-tooltip-icon`} />
+          </Tooltip>,
+        );
+      }
+
+      return cloneElement(node, { key: i }, itemChildren);
     });
   return (
     <ADescriptions className={classNames(className, propsClassName)} {...restProps}>
