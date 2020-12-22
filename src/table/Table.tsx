@@ -20,6 +20,7 @@ import omit from 'lodash/omit';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
 import React, {
   CSSProperties,
+  Key,
   ReactNode,
   useCallback,
   useContext,
@@ -807,9 +808,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
 
   const onTableChange = (
     changePagination: TablePaginationConfig,
-    changeFilters: {
-      [string: string]: React.ReactText[] | null;
-    },
+    changeFilters: Record<string, (Key | boolean)[] | null>,
     changeSorter: SorterResult<T> | SorterResult<T>[],
     extra: TableCurrentDataSource<T>,
   ) => {
