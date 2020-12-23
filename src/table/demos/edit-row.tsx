@@ -44,7 +44,7 @@ export default () => {
     {
       title: '操作',
       dataIndex: 'option',
-      width: 120,
+      width: 125,
       dataType: {
         type: 'option',
         actions: (record) => [
@@ -58,7 +58,11 @@ export default () => {
 
   const handleEditSave = (values: TableListItem, originalRecord: TableListItem, index: number) => {
     console.log(values, originalRecord, index);
-    return new Promise((resolve) => resolve());
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 2000);
+    });
   };
 
   return (

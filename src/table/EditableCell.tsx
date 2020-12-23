@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useState } from 'react';
 import { Divider, message, Select } from 'antd';
 import Form, { Rule } from 'antd/lib/form';
 import isEqual from 'lodash/isEqual';
@@ -10,6 +10,7 @@ import InputPercent from '../input-percent';
 import Container from './container';
 import { isOptionColumn } from './utils';
 import { CLASS_NAME_PREFIX } from '../constants';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const FormItem = Form.Item;
 
@@ -130,9 +131,12 @@ const EditableCell = <T, U = {}>({
   const counter = Container.useContainer();
   const editing = counter.isEditing(record || {});
 
-  const editSave = () => {
-    if (!index && index !== 0) return;
+  const [saving, setSaving] = useState(false);
 
+  const editSave = () => {
+    if (saving || (!index && index !== 0)) return;
+
+    setSaving(true);
     counter.editFormRef.current
       ?.validateFields()
       .then((row: any) => {
@@ -140,7 +144,6 @@ const EditableCell = <T, U = {}>({
         if (onEditSave && isFormValChange(row as T, record)) {
           onEditSave(row as T, record, index).then((res) => {
             const { action } = counter;
-
             if (index > -1) {
               action.current?.setDataSource((dataSource: T[]) => {
                 const item = dataSource[index];
@@ -158,15 +161,18 @@ const EditableCell = <T, U = {}>({
             }
 
             counter.setEditingKey(undefined);
+            setSaving(false);
             message.success('保存成功');
           });
         } else {
           counter.setEditingKey(undefined);
+          setSaving(false);
         }
       })
       .catch((e: Error) => {
         message.error(`错误：${e.message}`);
         counter.setEditingKey(undefined);
+        setSaving(false);
       });
   };
 
@@ -187,9 +193,15 @@ const EditableCell = <T, U = {}>({
     } else if (isOptionColumn(record, dataType)) {
       dom = (
         <>
-          <a onClick={editSave}>保存</a>
+          <a onClick={editSave}>{saving && <LoadingOutlined />} 保存</a>
           <Divider type="vertical" />
-          <a onClick={() => counter.setEditingKey(undefined)}>取消</a>
+          <a
+            onClick={() => {
+              if (!saving) counter.setEditingKey(undefined);
+            }}
+          >
+            取消
+          </a>
         </>
       );
     }
