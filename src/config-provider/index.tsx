@@ -25,7 +25,9 @@ const ConfigProvider: React.FC<ConfigProviderProps> = (props) => {
   };
   return (
     <ConfigContext.Provider value={config}>
-      <AConfigProvider locale={zhCN}>{props.children}</AConfigProvider>
+      <AConfigProvider locale={zhCN} input={{ autoComplete: 'off' }}>
+        {props.children}
+      </AConfigProvider>
     </ConfigContext.Provider>
   );
 };

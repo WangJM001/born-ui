@@ -42,7 +42,7 @@ const Descriptions = ({ children, className: propsClassName, ...restProps }: Des
         const tooltipProps: TooltipProps =
           typeof nodeProps.tip === 'string' ? { title: nodeProps.tip } : nodeProps.tip;
         itemChildren.push(
-          <Tooltip {...tooltipProps}>
+          <Tooltip key="tip" {...tooltipProps}>
             <InfoCircleOutlined className={`${className}-tooltip-icon`} />
           </Tooltip>,
         );
