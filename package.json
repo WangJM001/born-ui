@@ -1,6 +1,6 @@
 {
   "name": "@utech/born-ui",
-  "version": "0.1.0-alpha.7",
+  "version": "1.0.0",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
@@ -40,7 +40,7 @@
   "author": { "name" : "王建明", "email": "wangjianming.x@gmail.com"},
   "license": "UNLICENSED",
   "publishConfig": {
-    "registry": "http://localhost:4873"
+    "registry": "http://8.136.101.171:88"
   },
   "sideEffects": [
     "dist/*",
