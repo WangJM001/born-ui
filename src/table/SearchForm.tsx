@@ -1,4 +1,4 @@
-import { DownOutlined } from '@ant-design/icons';
+import { DoubleRightOutlined } from '@ant-design/icons';
 import { Button, Card, Space } from 'antd';
 import classNames from 'classnames';
 import React, { FC, useEffect } from 'react';
@@ -87,6 +87,7 @@ const SearchForm: FC<SearchFormProps> = ({
       </div>
       <div className={`${className}-actions`}>
         <Space align="end">
+          <Button onClick={form.submit}>查询</Button>
           <Button
             onClick={() => {
               form.resetFields();
@@ -95,20 +96,11 @@ const SearchForm: FC<SearchFormProps> = ({
           >
             重置
           </Button>
-          <Button type="primary" onClick={form.submit}>
-            查询
-          </Button>
+
           {items.length > 1 && (
-            <Button type="link" onClick={() => setCollapsed(!collapsed)}>
-              {collapsed ? '展开' : '收起'}
-              <DownOutlined
-                style={{
-                  marginLeft: '0.5em',
-                  transition: '0.3s all',
-                  transform: `rotate(${collapsed ? 0 : 0.5}turn)`,
-                }}
-              />
-            </Button>
+            <div className={`${className}-collapsed`} onClick={() => setCollapsed(!collapsed)}>
+              <DoubleRightOutlined rotate={collapsed ? 90 : -90} />
+            </div>
           )}
         </Space>
       </div>

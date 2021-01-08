@@ -34,9 +34,22 @@
         display: flex;
         align-items: flex-end;
         clear: both;
+        width: 136px;
         margin: 0 0 24px 24px;
-        .@{ant-prefix}-btn-link {
-          width: 64px;
+        .@{search-form-cls}-collapsed {
+          position: absolute;
+          right: -24px;
+          bottom: -40px;
+          width: 24px;
+          height: 16px;
+          line-height: 15px;
+          text-align: center;
+          background-color: @white;
+          border-radius: 0 0 8px 8px;
+          cursor: pointer;
+          &:hover {
+            color: @primary-color;
+          }
         }
       }
     }
