@@ -1,6 +1,6 @@
 {
   "name": "@utech/born-ui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
@@ -37,7 +37,10 @@
       "prettier --write"
     ]
   },
-  "author": { "name" : "王建明", "email": "wangjianming.x@gmail.com"},
+  "author": {
+    "name": "王建明",
+    "email": "wangjianming.x@gmail.com"
+  },
   "license": "UNLICENSED",
   "publishConfig": {
     "registry": "http://8.136.101.171:88"
@@ -51,6 +54,7 @@
   "dependencies": {
     "@ahooksjs/use-url-state": "^2.5.1",
     "@ant-design/icons": "^4.2.2",
+    "@utech/react-sortable-hoc": "^1.11.1",
     "ahooks": "^2.6.0",
     "antd": "4.9.4",
     "array-move": "^3.0.1",
@@ -59,7 +63,6 @@
     "fast-deep-equal": "^3.1.3",
     "lodash": "^4.17.20",
     "numeral": "^2.0.6",
-    "@utech/react-sortable-hoc": "^1.11.1",
     "unstated-next": "^1.1.0",
     "use-json-comparison": "^1.0.5",
     "use-merge-value": "^1.0.2"
@@ -69,6 +72,10 @@
     "@commitlint/config-conventional": "^11.0.0",
     "@commitlint/prompt-cli": "^11.0.0",
     "@types/classnames": "^2.2.10",
+    "@types/enzyme": "^3.10.8",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "@types/enzyme-to-json": "^1.5.4",
+    "@types/jest": "^26.0.19",
     "@types/numeral": "^0.0.28",
     "@umijs/fabric": "^2.2.2",
     "@umijs/preset-react": "1.x",
@@ -76,10 +83,15 @@
     "babel-plugin-import": "^1.13.0",
     "commitlint": "^11.0.0",
     "dumi": "^1.0.9",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.5",
+    "enzyme-to-json": "^3.6.1",
     "eslint": "^7.9.0",
     "father-build": "^1.17.2",
     "husky": "^4.3.0",
+    "jest": "^26.6.3",
     "lint-staged": "^10.3.0",
+    "mockdate": "^3.0.2",
     "prettier": "^2.1.2",
     "react-dom": "^16.13.1",
     "stylelint": "^13.7.1",
