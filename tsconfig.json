@@ -22,5 +22,5 @@
       "@utech/born-ui/*": ["./src/*", "./node_modules/antd/es/*"]
     }
   },
-  "exclude": ["node_modules", "lib", "es", "dist", "typings", "**/__test__", "test"]
+  "exclude": ["node_modules", "lib", "es", "dist", "typings"]
 }

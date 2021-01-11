@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./src/card/demos/basic.tsx correctly 1`] = `
+<div
+  class="ant-card born-ui-card born-ui-card-without-header-split"
+>
+  <div
+    class="ant-card-head"
+  >
+    <div
+      class="ant-card-head-wrapper"
+    >
+      <div
+        class="ant-card-head-title"
+      >
+        title
+      </div>
+    </div>
+  </div>
+  <div
+    class="ant-card-body"
+  >
+    content
+  </div>
+</div>
+`;
+
+exports[`renders ./src/card/demos/ghost.tsx correctly 1`] = `
+<div
+  class="ant-card born-ui-card born-ui-card-ghost born-ui-card-without-header-split"
+>
+  <div
+    class="ant-card-head"
+  >
+    <div
+      class="ant-card-head-wrapper"
+    >
+      <div
+        class="ant-card-head-title"
+      >
+        title
+      </div>
+    </div>
+  </div>
+  <div
+    class="ant-card-body"
+  >
+    content
+  </div>
+</div>
+`;

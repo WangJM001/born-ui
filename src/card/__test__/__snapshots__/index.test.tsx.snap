@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card should show border correctly 1`] = `
+<div
+  class="ant-card ant-card-bordered born-ui-card born-ui-card-without-header-split"
+>
+  <div
+    class="ant-card-head"
+  >
+    <div
+      class="ant-card-head-wrapper"
+    >
+      <div
+        class="ant-card-head-title"
+      >
+        card-title
+      </div>
+    </div>
+  </div>
+  <div
+    class="ant-card-body"
+  >
+    Content
+  </div>
+</div>
+`;
+
+exports[`Card should show ghost mode correctly 1`] = `
+<div
+  class="ant-card born-ui-card born-ui-card-ghost born-ui-card-without-header-split"
+>
+  <div
+    class="ant-card-head"
+  >
+    <div
+      class="ant-card-head-wrapper"
+    >
+      <div
+        class="ant-card-head-title"
+      >
+        card-title
+      </div>
+    </div>
+  </div>
+  <div
+    class="ant-card-body"
+  >
+    Content
+  </div>
+</div>
+`;
+
+exports[`Card should show header bottom border correctly 1`] = `
+<div
+  class="ant-card born-ui-card"
+>
+  <div
+    class="ant-card-head"
+  >
+    <div
+      class="ant-card-head-wrapper"
+    >
+      <div
+        class="ant-card-head-title"
+      >
+        card-title
+      </div>
+    </div>
+  </div>
+  <div
+    class="ant-card-body"
+  >
+    Content
+  </div>
+</div>
+`;
