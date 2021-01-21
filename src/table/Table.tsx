@@ -1026,7 +1026,7 @@ const Table = <T extends Record<string, any>, U extends Record<string, any>>(
   );
 };
 
-const ProviderWarp = <T, U extends Record<string, any>>(props: TableProps<T, U>) => (
+const ProviderWarp = <T, U = Record<string, any>>(props: TableProps<T, U>) => (
   <Container.Provider initialState={props}>
     <Table {...props} />
   </Container.Provider>

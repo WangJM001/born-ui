@@ -41,7 +41,7 @@ function useDebounceFn<T extends any[]>(
 
   const run = useCallback(
     async (...args: any) => {
-      return new Promise((resolve) => {
+      return new Promise<void>((resolve) => {
         cancel();
         timer.current = setTimeout(async () => {
           await fnRef.current(...args);

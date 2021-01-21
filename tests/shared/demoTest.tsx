@@ -1,11 +1,9 @@
 import React from 'react';
 import glob from 'glob';
-import { mount, render } from 'enzyme';
+import { mount } from 'enzyme';
 import MockDate from 'mockdate';
 import dayjs from 'dayjs';
 
-type CheerIO = ReturnType<typeof render>;
-type CheerIOElement = CheerIO[0];
 // We should avoid use it in 4.0. Reopen if can not handle this.
 const USE_REPLACEMENT = false;
 const testDist = process.env.LIB_DIR === 'dist';
@@ -16,12 +14,12 @@ const testDist = process.env.LIB_DIR === 'dist';
  * Or `f7fa7a3c-a675-47bc-912e-0c45fb6a74d9`(randomly) when not test env.
  * So we need hack of this to modify the `aria-controls`.
  */
-function ariaConvert(wrapper: CheerIO) {
+function ariaConvert(wrapper: any) {
   if (!testDist || !USE_REPLACEMENT) return wrapper;
 
   const matches = new Map();
 
-  function process(entry: CheerIOElement) {
+  function process(entry: any) {
     const { attribs, children } = entry;
     if (matches.has(entry)) return;
     matches.set(entry, true);
@@ -41,20 +39,21 @@ function ariaConvert(wrapper: CheerIO) {
   return wrapper;
 }
 
-type Options = {
+interface Options {
   skip?: boolean;
-};
+}
 
 export default function demoTest(component: string, options: Options = {}) {
   const files = glob.sync(`./src/${component}/demos/*.tsx`);
-
   files.forEach((file) => {
     let testMethod = options.skip === true ? test.skip : test;
     if (Array.isArray(options.skip) && options.skip.some((c) => file.includes(c))) {
       testMethod = test.skip;
     }
+
     testMethod(`renders ${file} correctly`, () => {
       MockDate.set(dayjs('2020-12-31').valueOf());
+
       const Demo = require(`../.${file}`).default; // eslint-disable-line global-require, import/no-dynamic-require
       const wrapper = mount(<Demo />);
 

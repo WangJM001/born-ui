@@ -18,7 +18,7 @@ const InputPercent = React.forwardRef<unknown, InputPercentProps>(
     },
     ref,
   ) => {
-    const handleChange = (v: string | number | undefined) => {
+    const handleChange = (v: string | number | undefined | null) => {
       if (onChange) {
         onChange(v && typeof v === 'number' ? v / 100 : v);
       }
