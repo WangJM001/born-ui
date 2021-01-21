@@ -118,7 +118,7 @@ export interface ColumnGroupType<T> extends ColumnType<T> {
   children: ColumnsType<T>;
 }
 
-export type ColumnsType<T = {}> = (ColumnGroupType<T> | ColumnType<T>)[];
+export type ColumnsType<T extends Record<string, any>> = (ColumnGroupType<T> | ColumnType<T>)[];
 
 export interface TableRowSelection<T> extends ATableRowSelection<T> {
   /**
@@ -233,7 +233,7 @@ const mergePagination = <T extends any>(
   if (pagination === false) {
     return {};
   }
-  let defaultPagination: TablePaginationConfig | {} = pagination || {};
+  let defaultPagination: TablePaginationConfig | typeof pagination = pagination || {};
   const { current, pageSize, totalRow } = action;
   if (pagination === true) {
     defaultPagination = {};
@@ -414,7 +414,9 @@ const genColumnList = <T,>(
  * 重新封装Table
  * @param props
  */
-const Table = <T extends Record<string, any>, U extends object>(props: TableProps<T, U>) => {
+const Table = <T extends Record<string, any>, U extends Record<string, any>>(
+  props: TableProps<T, U>,
+) => {
   const {
     request,
     className,
@@ -587,12 +589,12 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
 
   const pagination = propsPagination !== false && mergePagination<T>(propsPagination, action);
 
-  const onCleanSelected = useCallback(() => {
+  const onCleanSelected = () => {
     if (propsRowSelection && propsRowSelection.onChange) {
       propsRowSelection.onChange([], []);
     }
     setSelectedRowsAndKey([], []);
-  }, [setSelectedRowKeys]);
+  };
 
   counter.setAction(action);
   counter.propsRef.current = props;
@@ -1024,7 +1026,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
   );
 };
 
-const ProviderWarp = <T, U extends Record<string, any> = {}>(props: TableProps<T, U>) => (
+const ProviderWarp = <T, U extends Record<string, any>>(props: TableProps<T, U>) => (
   <Container.Provider initialState={props}>
     <Table {...props} />
   </Container.Provider>

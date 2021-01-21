@@ -62,7 +62,9 @@ const transferValue = <T,>(
   return value;
 };
 
-const Select = <T extends {}, U extends Record<string, any> = {}>(props: SelectPropsType<T, U>) => {
+const Select = <T extends Record<string, any>, U extends Record<string, any>>(
+  props: SelectPropsType<T, U>,
+) => {
   const {
     request,
     params: propsParams,
@@ -131,6 +133,7 @@ const Select = <T extends {}, U extends Record<string, any> = {}>(props: SelectP
     if (request && requestReady) {
       reload();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stringify(propsParams || {}), searchValue, requestReady]);
 
   const { list = [] } = data || {};
