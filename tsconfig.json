@@ -22,5 +22,14 @@
       "@utech/born-ui/*": ["./src/*", "./node_modules/antd/es/*"]
     }
   },
+  "include": [
+    "src/**/*",
+    "tests/**/*",
+    "typings/**/*",
+    ".eslintrc.js",
+    ".stylelintrc.js",
+    ".prettierrc.js",
+    "jest.config.js"
+  ],
   "exclude": ["node_modules", "lib", "es", "dist", "typings"]
 }

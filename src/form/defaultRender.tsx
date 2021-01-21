@@ -1,8 +1,9 @@
-import React, { ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import React from 'react';
 import Input from '../input';
 import InputNumber from '../input-number';
 import DatePicker from '../date-picker';
-import { DataType } from './Form';
+import type { DataType } from './Form';
 import Select from '../select';
 import InputPercent from '../input-percent';
 

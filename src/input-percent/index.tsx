@@ -1,5 +1,7 @@
-import InternalInputPercent, { InputPercentProps } from './InputPercent';
-import InputPercentRange, { InputPercentRangeProps } from './InputPercentRange';
+import type { InputPercentProps } from './InputPercent';
+import InternalInputPercent from './InputPercent';
+import type { InputPercentRangeProps } from './InputPercentRange';
+import InputPercentRange from './InputPercentRange';
 
 type InternalInputPercentType = typeof InternalInputPercent;
 

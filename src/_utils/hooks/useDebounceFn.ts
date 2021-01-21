@@ -1,4 +1,5 @@
-import { useEffect, useRef, DependencyList, useCallback } from 'react';
+import type { DependencyList } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 
 export interface ReturnValue<T extends any[]> {
   run: (...args: T) => void;

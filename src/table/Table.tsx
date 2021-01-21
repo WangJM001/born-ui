@@ -1,14 +1,15 @@
 import useUrlState from '@ahooksjs/use-url-state';
 import { useCreation } from 'ahooks';
 import { Card, Empty, Space, Table as ATable } from 'antd';
-import Form, { Rule } from 'antd/lib/form';
-import {
+import type { Rule } from 'antd/lib/form';
+import Form from 'antd/lib/form';
+import type {
   ColumnsType as AColumnsType,
   ColumnType as AColumnType,
   TablePaginationConfig,
   TableProps as ATableProps,
 } from 'antd/lib/table';
-import {
+import type {
   ColumnFilterItem,
   SorterResult,
   TableCurrentDataSource,
@@ -18,52 +19,44 @@ import classNames from 'classnames';
 import { set } from 'lodash';
 import omit from 'lodash/omit';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
-import React, {
-  CSSProperties,
-  Key,
-  ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import type { CSSProperties, Key, ReactNode } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { stringify } from 'use-json-comparison';
 import { ConfigContext } from '../config-provider';
-import { FormatSymbolType } from '../config-provider/context';
+import type { FormatSymbolType } from '../config-provider/context';
 import { CLASS_NAME_PREFIX } from '../constants';
-import { RequestData } from '../interface';
+import type { RequestData } from '../interface';
 import checkUndefinedOrNull from '../_utils/checkUndefinedOrNull';
 import useDeepCompareEffect from '../_utils/hooks/useDeepCompareEffect';
 import omitEmpty from '../_utils/omitEmpty';
 import Alert from './Alert';
-import Container, { useCounter } from './container';
+import type { useCounter } from './container';
+import Container from './container';
 import defaultColumnsFilter from './defaultFilter';
-import defaultRenderText, { ColumnsDataType } from './defaultRender';
+import type { ColumnsDataType } from './defaultRender';
+import defaultRenderText from './defaultRender';
 import defaultColumnsSorter from './defaultSorter';
 import EditableCell from './EditableCell';
-import useFetchData, { UseFetchDataAction } from './hooks/useFetchData';
-import SearchForm, { SearchFormProps } from './SearchForm';
-import Toolbar, { OptionConfig, ToolbarProps } from './Toolbar';
+import type { UseFetchDataAction } from './hooks/useFetchData';
+import useFetchData from './hooks/useFetchData';
+import type { SearchFormProps } from './SearchForm';
+import SearchForm from './SearchForm';
+import type { OptionConfig, ToolbarProps } from './Toolbar';
+import Toolbar from './Toolbar';
 import { genColumnKey, genDataIndexStr, getRowKey, transformSortOrder } from './utils';
 
-export type SorterType = {
-  [key: string]: 'asc' | 'desc';
-};
+export type SorterType = Record<string, 'asc' | 'desc'>;
 
-export type FilterType = {
-  [key: string]: any;
-};
+export type FilterType = Record<string, any>;
 
-export type UrlStateType = {
+export interface UrlStateType {
   pageNumber?: string;
   pageSize?: string;
   search?: string;
   filter?: string;
   sorter?: string;
   searchForm?: string;
-};
+}
 
 export interface ActionType<T> {
   reload: (resetPageIndex?: boolean) => void;
@@ -149,17 +142,15 @@ export interface TableRowSelection<T> extends ATableRowSelection<T> {
     | false;
 }
 
-export interface TableProps<T, U extends { [key: string]: any }>
+export interface TableProps<T, U extends Record<string, any>>
   extends Omit<ATableProps<T>, 'columns' | 'rowSelection'> {
   columns?: ColumnsType<T>;
 
   params?: U;
 
-  columnsStateMap?: {
-    [key: string]: ColumnsState;
-  };
+  columnsStateMap?: Record<string, ColumnsState>;
 
-  onColumnsStateChange?: (map: { [key: string]: ColumnsState }) => void;
+  onColumnsStateChange?: (map: Record<string, ColumnsState>) => void;
 
   /**
    * 一个获得 dataSource 的方法
@@ -232,10 +223,10 @@ export interface TableProps<T, U extends { [key: string]: any }>
    * searchForm与table之间的内容块
    * params = propsParams + searchForm
    */
-  extraRender?: (params: U & { [key: string]: any }) => ReactNode;
+  extraRender?: (params: U & Record<string, any>) => ReactNode;
 }
 
-const mergePagination = <T extends any, U>(
+const mergePagination = <T extends any>(
   pagination: TablePaginationConfig | boolean | undefined = {},
   action: UseFetchDataAction<T>,
 ): TablePaginationConfig | false | undefined => {
@@ -272,7 +263,7 @@ interface ColumnRenderInterface<T> {
  * 这个组件负责单元格的具体渲染
  * @param param0
  */
-const columnRender = <T, U = any>({
+const columnRender = <T,>({
   item,
   text,
   row,
@@ -322,7 +313,7 @@ const columnRender = <T, U = any>({
  * 数字、金额、百分比默认居右显示
  * @param dataType
  */
-const columnAlgin = <T, U = any>(dataType: ColumnType<T>['dataType']): ColumnType<T>['align'] =>
+const columnAlgin = <T,>(dataType: ColumnType<T>['dataType']): ColumnType<T>['align'] =>
   dataType === 'currency' || dataType === 'number' || dataType === 'percent' ? 'right' : 'left';
 
 /**
@@ -332,11 +323,9 @@ const columnAlgin = <T, U = any>(dataType: ColumnType<T>['dataType']): ColumnTyp
  * @param map
  * @param columnEmptyText
  */
-const genColumnList = <T, U = {}>(
+const genColumnList = <T,>(
   columns: ColumnsType<T>,
-  map: {
-    [key: string]: ColumnsState;
-  },
+  map: Record<string, ColumnsState>,
   counter: ReturnType<typeof useCounter>,
   urlState: UrlStateType,
   formatSymbol: FormatSymbolType,
@@ -527,6 +516,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
     if (counter.editable) {
       counter.setEditingKey(undefined);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [counter.editable]);
 
   const action = useFetchData(
@@ -576,6 +566,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
         action.resetPageIndex();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stringify(params)]);
 
   useEffect(() => {
@@ -589,11 +580,12 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
         rootRef.current.requestFullscreen();
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rootRef.current]);
 
   action.fullScreen = fullScreen.current;
 
-  const pagination = propsPagination !== false && mergePagination<T, {}>(propsPagination, action);
+  const pagination = propsPagination !== false && mergePagination<T>(propsPagination, action);
 
   const onCleanSelected = useCallback(() => {
     if (propsRowSelection && propsRowSelection.onChange) {
@@ -620,11 +612,13 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
         pageSize: Number(urlState.pageSize),
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUrlState, urlState.pageNumber, urlState.pageSize]);
   useEffect(() => {
     if (isUrlState) {
       setSearch({ [searchName]: urlState.search });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUrlState, urlState.search]);
   useEffect(() => {
     if (isUrlState) {
@@ -682,6 +676,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
     if (actionRef && typeof actionRef !== 'function') {
       actionRef.current = userAction;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [counter.editable]);
 
   useDeepCompareEffect(() => {
@@ -698,6 +693,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
         formatSymbol,
         emptyText,
       ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [propsColumns, ...urlStateDeps],
   );
 
@@ -860,9 +856,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
       case 'sort': {
         let sorterValue;
         if (Array.isArray(changeSorter)) {
-          const data = changeSorter.reduce<{
-            [key: string]: any;
-          }>((pre, value) => {
+          const data = changeSorter.reduce<Record<string, any>>((pre, value) => {
             if (!value.order) {
               return pre;
             }
@@ -1030,7 +1024,7 @@ const Table = <T extends Record<string, any>, U extends object>(props: TableProp
   );
 };
 
-const ProviderWarp = <T, U extends { [key: string]: any } = {}>(props: TableProps<T, U>) => (
+const ProviderWarp = <T, U extends Record<string, any> = {}>(props: TableProps<T, U>) => (
   <Container.Provider initialState={props}>
     <Table {...props} />
   </Container.Provider>

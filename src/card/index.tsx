@@ -1,5 +1,5 @@
 import { Card as ACard } from 'antd';
-import { CardProps as ACardProps } from 'antd/lib/card';
+import type { CardProps as ACardProps } from 'antd/lib/card';
 import Grid from 'antd/lib/card/Grid';
 import Meta from 'antd/lib/card/Meta';
 import classNames from 'classnames';

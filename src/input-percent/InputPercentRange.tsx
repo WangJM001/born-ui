@@ -1,10 +1,12 @@
 import { SwapRightOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import classNames from 'classnames';
-import React, { FC, useState } from 'react';
+import type { FC } from 'react';
+import React, { useState } from 'react';
 import useMergeValue from 'use-merge-value';
 import { CLASS_NAME_PREFIX } from '../constants';
-import InputPercent, { InputPercentProps } from './InputPercent';
+import type { InputPercentProps } from './InputPercent';
+import InputPercent from './InputPercent';
 
 export interface InputPercentRangeProps extends Omit<InputPercentProps, 'value' | 'onChange'> {
   value?: [number | undefined, number | undefined];

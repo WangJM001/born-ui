@@ -1,5 +1,7 @@
-import React, { FC } from 'react';
-import AFormItem, { FormItemProps as AFormItemProps } from 'antd/lib/form/FormItem';
+import type { FC } from 'react';
+import React from 'react';
+import type { FormItemProps as AFormItemProps } from 'antd/lib/form/FormItem';
+import AFormItem from 'antd/lib/form/FormItem';
 
 export interface FormItemProps extends AFormItemProps {
   span?: number;

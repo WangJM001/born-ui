@@ -1,11 +1,11 @@
 import get from '../_utils/get';
-import { ColumnType } from './Table';
+import type { ColumnType } from './Table';
 
 /**
  * 根据dataType生成默认排序方法
  * @param dataType
  */
-const defaultColumnsSorter = <T, U = {}>(
+const defaultColumnsSorter = <T,>(
   dataIndex: string | string[],
   dataType: ColumnType<T>['dataType'],
 ) => {

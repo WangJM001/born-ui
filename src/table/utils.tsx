@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { DataIndex } from 'rc-table/lib/interface';
-import { TableProps } from '.';
-import { ColumnType } from './Table';
+import type { DataIndex } from 'rc-table/lib/interface';
+import type { TableProps } from '.';
+import type { ColumnType } from './Table';
 
 export const genDataIndexStr = (dataIndex: string | string[]) =>
   Array.isArray(dataIndex) ? dataIndex.join('.') : dataIndex;
@@ -29,14 +29,14 @@ export const genColumnKey = (
   return `${index}`;
 };
 
-export const getRowKey = <T, U = {}>(record: T, rowKey: TableProps<any, any>['rowKey'] = 'id') =>
+export const getRowKey = <T,>(record: T, rowKey: TableProps<any, any>['rowKey'] = 'id') =>
   typeof rowKey === 'function' ? rowKey(record) : record[rowKey];
 
 /**
  * 根据dataType判断是否为操作列
  * @param dataType
  */
-export const isOptionColumn = <T, U = {}>(record: T, dataType: ColumnType['dataType']): boolean => {
+export const isOptionColumn = <T,>(record: T, dataType: ColumnType['dataType']): boolean => {
   if (typeof dataType === 'function' && record) {
     return isOptionColumn(record, dataType(record));
   }

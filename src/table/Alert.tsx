@@ -18,7 +18,7 @@ export interface TableAlertProps<T> {
       }) => React.ReactNode);
 }
 
-const TableAlert = <T, U = {}>({
+const TableAlert = <T,>({
   selectedRowKeys = [],
   onCleanSelected,
   selectedRows = [],

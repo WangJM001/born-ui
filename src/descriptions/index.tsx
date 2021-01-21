@@ -1,7 +1,10 @@
 import { InfoCircleOutlined } from '@ant-design/icons';
-import ADescriptions, { DescriptionsProps } from 'antd/lib/descriptions';
-import AItem, { DescriptionsItemProps as ADescriptionsItemProps } from 'antd/lib/descriptions/Item';
-import Tooltip, { TooltipProps } from 'antd/lib/tooltip';
+import type { DescriptionsProps } from 'antd/lib/descriptions';
+import ADescriptions from 'antd/lib/descriptions';
+import type { DescriptionsItemProps as ADescriptionsItemProps } from 'antd/lib/descriptions/Item';
+import AItem from 'antd/lib/descriptions/Item';
+import type { TooltipProps } from 'antd/lib/tooltip';
+import Tooltip from 'antd/lib/tooltip';
 import classNames from 'classnames';
 import toArray from 'rc-util/lib/Children/toArray';
 import React, { cloneElement, useContext } from 'react';

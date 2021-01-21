@@ -1,5 +1,6 @@
 import ASelect from 'antd/lib/select';
-import InternalSelect, { SelectPropsType } from './Select';
+import type { SelectPropsType } from './Select';
+import InternalSelect from './Select';
 
 export * from './interfaces';
 

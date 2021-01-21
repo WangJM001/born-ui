@@ -1,5 +1,7 @@
-import StatisticGroup, { StatisticGroupProps } from './StatisticGroup';
-import InternalStatistic, { StatisticProps } from './Statistic';
+import type { StatisticGroupProps } from './StatisticGroup';
+import StatisticGroup from './StatisticGroup';
+import type { StatisticProps } from './Statistic';
+import InternalStatistic from './Statistic';
 
 type InternalStatisticType = typeof InternalStatistic;
 

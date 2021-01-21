@@ -1,11 +1,14 @@
-import React, { forwardRef, ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import React, { forwardRef } from 'react';
 import classNames from 'classnames';
 import toArray from 'rc-util/lib/Children/toArray';
-import { FormInstance, FormProps as AFormProps } from 'antd/lib/form';
+import type { FormInstance, FormProps as AFormProps } from 'antd/lib/form';
 import { Col, Form as AForm, Row } from 'antd';
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
-import { Breakpoint, responsiveArray } from 'antd/lib/_util/responsiveObserve';
-import Item, { FormItemProps } from './FormItem';
+import type { Breakpoint } from 'antd/lib/_util/responsiveObserve';
+import { responsiveArray } from 'antd/lib/_util/responsiveObserve';
+import type { FormItemProps } from './FormItem';
+import Item from './FormItem';
 import defaultRender from './defaultRender';
 import { CLASS_NAME_PREFIX } from '../constants';
 
@@ -33,10 +36,10 @@ export type DataBaseType =
   | 'percent'
   | 'number';
 
-export type DataEnumType = {
+export interface DataEnumType {
   type: 'enum';
-  values: { [key: string]: ReactNode };
-};
+  values: Record<string, ReactNode>;
+}
 
 export interface FormItemPropsExt extends Omit<FormItemProps, 'children'> {
   key?: React.Key;

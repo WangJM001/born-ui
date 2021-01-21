@@ -1,5 +1,7 @@
-import InternalInputNumber, { InputNumberProps } from './InputNumber';
-import InputNumberRange, { InputNumberRangeProps } from './InputNumberRange';
+import type { InputNumberProps } from './InputNumber';
+import InternalInputNumber from './InputNumber';
+import type { InputNumberRangeProps } from './InputNumberRange';
+import InputNumberRange from './InputNumberRange';
 
 type InternalInputNumberType = typeof InternalInputNumber;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { InputNumberProps as AInputNumberProps } from 'antd/lib/input-number';
+import type { InputNumberProps as AInputNumberProps } from 'antd/lib/input-number';
 import { InputNumber as AInputNumber } from 'antd';
 import { CLASS_NAME_PREFIX } from '../constants';
 

@@ -2,10 +2,10 @@ import React from 'react';
 import useMergeValue from 'use-merge-value';
 import { ReloadOutlined, SettingOutlined } from '@ant-design/icons';
 import { Divider, Space, Tooltip, Input } from 'antd';
-import { SearchProps } from 'antd/lib/input';
+import type { SearchProps } from 'antd/lib/input';
 import { CLASS_NAME_PREFIX } from '../../constants';
 import ColumnSetting from '../ColumnSetting';
-import { UseFetchDataAction } from '../hooks/useFetchData';
+import type { UseFetchDataAction } from '../hooks/useFetchData';
 import FullScreenIcon from './FullscreenIcon';
 
 export interface OptionConfig {
@@ -34,7 +34,7 @@ export interface ToolbarProps<T = unknown> {
   onSearch?: (keyWords: string) => void;
 }
 
-const getButtonText = <T, U = {}>(action: UseFetchDataAction<T>) => ({
+const getButtonText = <T,>(action: UseFetchDataAction<T>) => ({
   fullScreen: {
     text: '全屏',
     icon: <FullScreenIcon />,
@@ -56,7 +56,7 @@ const getButtonText = <T, U = {}>(action: UseFetchDataAction<T>) => ({
  * @param options
  * @param className
  */
-const renderDefaultOption = <T, U = {}>(
+const renderDefaultOption = <T,>(
   action: UseFetchDataAction<T>,
   options: ToolbarProps<T>['options'],
   className: string,
@@ -83,7 +83,7 @@ const renderDefaultOption = <T, U = {}>(
     })
     .filter((item) => item);
 
-const Toolbar = <T, U = {}>({
+const Toolbar = <T,>({
   headerTitle,
   toolbar = [],
   action,

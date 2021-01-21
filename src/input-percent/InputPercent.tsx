@@ -1,7 +1,8 @@
 import React from 'react';
-import InputNumber, { InputNumberProps } from '../input-number';
+import type { InputNumberProps } from '../input-number';
+import InputNumber from '../input-number';
 
-export interface InputPercentProps extends InputNumberProps {}
+export type InputPercentProps = InputNumberProps;
 
 const InputPercent = React.forwardRef<unknown, InputPercentProps>(
   (

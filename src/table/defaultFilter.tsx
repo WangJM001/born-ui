@@ -1,10 +1,10 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import { Button, Input } from 'antd';
-import { FilterDropdownProps } from 'antd/lib/table/interface';
+import type { FilterDropdownProps } from 'antd/lib/table/interface';
 import { SearchOutlined } from '@ant-design/icons';
-import { ColumnsDataEnumType, ColumnsDataOptionType } from './defaultRender';
-import { ColumnType } from './Table';
+import type { ColumnsDataEnumType, ColumnsDataOptionType } from './defaultRender';
+import type { ColumnType } from './Table';
 import { CLASS_NAME_PREFIX } from '../constants';
 import InputNumberRange from '../input-number/InputNumberRange';
 import InputPercentRange from '../input-percent/InputPercentRange';
@@ -15,7 +15,7 @@ type FilterDropdownSelectedKeyType = [
   [string | number | undefined, string | number | undefined] | string,
 ];
 
-const defaultOnFilter = <T, U = {}>(
+const defaultOnFilter = <T,>(
   dataType: ColumnType<T>['dataType'],
   value: string | [number | undefined, number | undefined],
   record: T,
@@ -72,7 +72,7 @@ const defaultOnFilter = <T, U = {}>(
   return String(itemValue).toLowerCase().includes(String(value).toLowerCase());
 };
 
-const defaultColumnsFilterByObject = <T, U = {}>(
+const defaultColumnsFilterByObject = <T,>(
   dataType: ColumnsDataEnumType | ColumnsDataOptionType<T>,
 ) => {
   if (dataType.type === 'enum' && dataType.values) {
@@ -91,7 +91,7 @@ const defaultColumnsFilterByObject = <T, U = {}>(
  * @param dataType
  * @param request false 则认为是本地模式，采用前端过滤
  */
-const defaultColumnsFilter = <T, U = {}>(
+const defaultColumnsFilter = <T,>(
   dataIndex: string | string[],
   dataType: ColumnType<T>['dataType'],
   request: boolean,

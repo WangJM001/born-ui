@@ -1,5 +1,5 @@
-import { RequestPagingData } from '@utech/born-ui/interface';
-import { FilterType, SortType } from '@utech/born-ui/table';
+import type { RequestPagingData } from '@utech/born-ui/interface';
+import type { FilterType, SortType } from '@utech/born-ui/table';
 
 const valueEnum = {
   0: 'close',

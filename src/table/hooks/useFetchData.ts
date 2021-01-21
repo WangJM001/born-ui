@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { usePrevious } from 'ahooks';
-import { RequestData } from '../../interface';
+import type { RequestData } from '../../interface';
 import useDebounceFn from '../../_utils/hooks/useDebounceFn';
 import useDeepCompareEffect from '../../_utils/hooks/useDeepCompareEffect';
 
@@ -26,7 +26,7 @@ interface PageInfo {
   totalRow: number;
 }
 
-const useFetchData = <T, U = {}>(
+const useFetchData = <T>(
   getData: (params?: { pageSize: number; pageNumber: number }) => Promise<RequestData<T>>,
   options: {
     current?: number;
@@ -148,6 +148,7 @@ const useFetchData = <T, U = {}>(
       return () => fetchListDebounce.cancel();
     }
     return () => undefined;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageInfo.pageNumber]);
 
   // pageSize 修改后返回第一页
@@ -163,6 +164,7 @@ const useFetchData = <T, U = {}>(
     setPageInfo({ ...pageInfo, pageNumber: 1 });
     fetchListDebounce.run();
     return () => fetchListDebounce.cancel();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageInfo.pageSize]);
 
   /**

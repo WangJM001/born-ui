@@ -1,4 +1,4 @@
-import { ReactText } from 'react';
+import type { ReactText } from 'react';
 
 export default function get(entity: any, path: ReactText | ReactText[]) {
   let tempPath: ReactText[] = [''];

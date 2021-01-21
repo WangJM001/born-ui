@@ -1,5 +1,6 @@
-import defaultRenderText, { ColumnsDataType } from './defaultRender';
-import Table, {
+import type { ColumnsDataType } from './defaultRender';
+import defaultRenderText from './defaultRender';
+import type {
   ActionType,
   ColumnsState,
   ColumnsType,
@@ -7,6 +8,7 @@ import Table, {
   SorterType,
   TableProps,
 } from './Table';
+import Table from './Table';
 
 export type {
   TableProps,

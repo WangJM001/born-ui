@@ -1,8 +1,9 @@
-import React, { FC, useContext } from 'react';
+import type { FC } from 'react';
+import React, { useContext } from 'react';
 import classNames from 'classnames';
 import { Statistic as AStatistic, Tooltip } from 'antd';
-import { StatisticProps as AStatisticProps } from 'antd/es/statistic/Statistic';
-import { TooltipProps } from 'antd/es/tooltip';
+import type { StatisticProps as AStatisticProps } from 'antd/es/statistic/Statistic';
+import type { TooltipProps } from 'antd/es/tooltip';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { CLASS_NAME_PREFIX } from '../constants';
 import { ConfigContext } from '../config-provider';

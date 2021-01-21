@@ -1,17 +1,15 @@
 import { useState, useRef } from 'react';
 import { createContainer } from 'unstated-next';
-import { ColumnType } from 'antd/lib/table';
+import type { ColumnType } from 'antd/lib/table';
 import useMergeValue from 'use-merge-value';
-import { FormInstance } from 'antd/lib/form';
-import { UseFetchDataAction } from './hooks/useFetchData';
-import { ColumnsState, TableProps } from './Table';
+import type { FormInstance } from 'antd/lib/form';
+import type { UseFetchDataAction } from './hooks/useFetchData';
+import type { ColumnsState, TableProps } from './Table';
 import { getRowKey } from './utils';
 
 export interface UseCounterProps {
-  columnsStateMap?: {
-    [key: string]: ColumnsState;
-  };
-  onColumnsStateChange?: (map: { [key: string]: ColumnsState }) => void;
+  columnsStateMap?: Record<string, ColumnsState>;
+  onColumnsStateChange?: (map: Record<string, ColumnsState>) => void;
 }
 
 function useCounter(props: UseCounterProps = {}) {
@@ -25,12 +23,13 @@ function useCounter(props: UseCounterProps = {}) {
   // 用于排序的数组
   const [sortKeyColumns, setSortKeyColumns] = useState<(string | number)[]>([]);
 
-  const [columnsMap, setColumnsMap] = useMergeValue<{
-    [key: string]: ColumnsState;
-  }>(props.columnsStateMap || {}, {
-    value: props.columnsStateMap,
-    onChange: props.onColumnsStateChange,
-  });
+  const [columnsMap, setColumnsMap] = useMergeValue<Record<string, ColumnsState>>(
+    props.columnsStateMap || {},
+    {
+      value: props.columnsStateMap,
+      onChange: props.onColumnsStateChange,
+    },
+  );
   return {
     action: actionRef,
     setAction: (newAction: UseFetchDataAction<any>) => {

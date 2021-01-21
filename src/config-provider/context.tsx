@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type FormatSymbolType = {
+export interface FormatSymbolType {
   date: string;
   dateTime: string;
   year: string;
@@ -10,7 +10,7 @@ export type FormatSymbolType = {
   currency: string;
   number: string;
   percent: string;
-};
+}
 
 export interface ConfigConsumerProps {
   formatSymbol: FormatSymbolType;

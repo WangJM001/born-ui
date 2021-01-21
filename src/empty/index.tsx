@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import type { FC } from 'react';
+import React from 'react';
 import { Empty as AEmpty } from 'antd';
-import { EmptyProps } from 'antd/lib/empty';
+import type { EmptyProps } from 'antd/lib/empty';
 
 export * from 'antd/lib/empty';
 

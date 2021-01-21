@@ -1,5 +1,7 @@
-import InternalDatePicker, { DatePickerProps } from './DatePicker';
-import RangePicker, { RangePickerProps } from './RangePicker';
+import type { DatePickerProps } from './DatePicker';
+import InternalDatePicker from './DatePicker';
+import type { RangePickerProps } from './RangePicker';
+import RangePicker from './RangePicker';
 
 type InternalDatePickType = typeof InternalDatePicker;
 

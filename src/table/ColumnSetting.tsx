@@ -1,13 +1,14 @@
 import React from 'react';
-import { SortableContainer, SortableElement, SortEnd } from '@utech/react-sortable-hoc';
+import type { SortEnd } from '@utech/react-sortable-hoc';
+import { SortableContainer, SortableElement } from '@utech/react-sortable-hoc';
 import arrayMove from 'array-move';
 import { PushpinOutlined, SettingOutlined, VerticalAlignMiddleOutlined } from '@ant-design/icons';
 import { Checkbox, Popover, Tooltip } from 'antd';
-import { ColumnsType, ColumnType } from 'antd/lib/table';
+import type { ColumnsType, ColumnType } from 'antd/lib/table';
 import { CLASS_NAME_PREFIX } from '../constants';
 import Container from './container';
 import { genColumnKey } from './utils';
-import { ColumnsState } from './Table';
+import type { ColumnsState } from './Table';
 
 interface ColumnSettingProps<T = any> {
   columns?: ColumnsType<T>;
@@ -45,11 +46,9 @@ const CheckboxListItem: React.FC<{
   columnKey: string | number;
   className?: string;
   title?: React.ReactNode;
-  columnsMap: {
-    [key: string]: ColumnsState;
-  };
+  columnsMap: Record<string, ColumnsState>;
   fixed?: boolean | 'left' | 'right';
-  setColumnsMap: (map: { [key: string]: ColumnsState }) => void;
+  setColumnsMap: (map: Record<string, ColumnsState>) => void;
 }> = ({ columnKey, className, columnsMap, title, setColumnsMap, fixed }) => {
   const config = columnsMap[columnKey || 'null'] || { show: true };
   return (
@@ -184,7 +183,7 @@ const GroupCheckboxList: React.FC<{
   );
 };
 
-const ColumnSetting = <T, U = {}>(props: ColumnSettingProps<T>) => {
+const ColumnSetting = <T,>(props: ColumnSettingProps<T>) => {
   const counter = Container.useContainer();
   const localColumns: Omit<ColumnType<T> & { index?: number }, 'ellipsis'>[] =
     props.columns || counter.columns || [];

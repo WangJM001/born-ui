@@ -1,10 +1,15 @@
-import { Rule, RuleObject, RuleRender } from 'rc-field-form/lib/interface';
-import { useForm, FormInstance } from 'antd/lib/form/Form';
-import ErrorList, { ErrorListProps } from 'antd/lib/form/ErrorList';
-import List, { FormListProps } from 'antd/lib/form/FormList';
+import type { Rule, RuleObject, RuleRender } from 'rc-field-form/lib/interface';
+import type { FormInstance } from 'antd/lib/form/Form';
+import { useForm } from 'antd/lib/form/Form';
+import type { ErrorListProps } from 'antd/lib/form/ErrorList';
+import ErrorList from 'antd/lib/form/ErrorList';
+import type { FormListProps } from 'antd/lib/form/FormList';
+import List from 'antd/lib/form/FormList';
 import { FormProvider } from 'antd/lib/form/context';
-import Item, { FormItemProps } from './FormItem';
-import InternalForm, { FormProps, FormItemPropsExt } from './Form';
+import type { FormItemProps } from './FormItem';
+import Item from './FormItem';
+import type { FormProps, FormItemPropsExt } from './Form';
+import InternalForm from './Form';
 
 type InternalFormType = typeof InternalForm;
 

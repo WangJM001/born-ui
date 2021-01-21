@@ -5,8 +5,8 @@ import { debounce } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { stringify } from 'use-json-comparison';
 import { CLASS_NAME_PREFIX } from '../constants';
-import { RequestData, RequestPagingData } from '../interface';
-import {
+import type { RequestData, RequestPagingData } from '../interface';
+import type {
   ValueType,
   SelectBaseProps,
   RequestBaseProps,
@@ -37,7 +37,7 @@ const filterOption = (input: string, option: any) => {
   return false;
 };
 
-const transferValue = <T, U = any>(
+const transferValue = <T,>(
   value: T | T[],
   transform?: RequestBaseProps<T>['transform'],
   labelInValue?: boolean,

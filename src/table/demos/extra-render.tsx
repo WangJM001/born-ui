@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button, Radio, Table, Card, Select } from '@utech/born-ui';
-import { ColumnsType } from '@utech/born-ui/table';
-import { getTableListData, TableListItem } from './service';
+import type { ColumnsType } from '@utech/born-ui/table';
+import type { TableListItem } from './service';
+import { getTableListData } from './service';
 
 const columns: ColumnsType<TableListItem> = [
   {

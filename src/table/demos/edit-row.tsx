@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import { Table, Button } from '@utech/born-ui';
-import { ColumnsType, ActionType } from '@utech/born-ui/table';
-import { getTableListData, TableListItem } from './service';
+import type { ColumnsType, ActionType } from '@utech/born-ui/table';
+import type { TableListItem } from './service';
+import { getTableListData } from './service';
 
 export default () => {
   const actionRef = useRef<ActionType<TableListItem>>();

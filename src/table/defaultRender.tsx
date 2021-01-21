@@ -1,10 +1,11 @@
-import React, { ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import React from 'react';
 import { Link } from 'umi';
 import numeral from 'numeral';
 import dayjs from 'dayjs';
 import { Divider } from 'antd';
-import { ColumnEmptyText } from './Table';
-import { FormatSymbolType } from '../config-provider/context';
+import type { ColumnEmptyText } from './Table';
+import type { FormatSymbolType } from '../config-provider/context';
 
 export type ColumnsDataType<T> =
   | ColumnsDataBaseType
@@ -35,15 +36,15 @@ export type ColumnsDataBaseType =
   | 'percent'
   | 'number';
 
-export type ColumnsDataEnumType = {
+export interface ColumnsDataEnumType {
   type: 'enum';
-  values: { [key: string]: ReactNode };
-};
+  values: Record<string, ReactNode>;
+}
 
-export type ColumnsDataOptionType<T> = {
+export interface ColumnsDataOptionType<T> {
   type: 'option';
   actions: React.ReactNode[] | ((record: T) => React.ReactNode[]);
-};
+}
 
 export type ColumnsDataTypeFunction<T> = (
   item: T,
@@ -54,7 +55,7 @@ export type ColumnsDataTypeFunction<T> = (
  * @param text string | number
  * @param dataType ColumnsValueObjectType
  */
-const defaultRenderTextByObject = <T, U = {}>(
+const defaultRenderTextByObject = <T,>(
   text: string | number,
   dataType: ColumnsDataEnumType | ColumnsDataOptionType<T>,
   item: T,
@@ -83,7 +84,7 @@ const defaultRenderTextByObject = <T, U = {}>(
  * @param text
  * @param dataType
  */
-const defaultRenderText = <T, U = {}>(
+const defaultRenderText = <T,>(
   text: string | number,
   dataType: ColumnsDataType<T>,
   index: number,

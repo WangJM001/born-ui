@@ -1,10 +1,12 @@
 import { SwapRightOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import classNames from 'classnames';
-import React, { FC, useState } from 'react';
+import type { FC } from 'react';
+import React, { useState } from 'react';
 import useMergeValue from 'use-merge-value';
 import { CLASS_NAME_PREFIX } from '../constants';
-import InputNumber, { InputNumberProps } from './InputNumber';
+import type { InputNumberProps } from './InputNumber';
+import InputNumber from './InputNumber';
 
 export interface InputNumberRangeProps extends Omit<InputNumberProps, 'value' | 'onChange'> {
   value?: [number | undefined, number | undefined];

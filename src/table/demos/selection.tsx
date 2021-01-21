@@ -1,8 +1,9 @@
 import React from 'react';
 import { Button, Table } from '@utech/born-ui';
 
-import { ColumnsType } from '@utech/born-ui/table';
-import { tableListDataSource, TableListItem } from './service';
+import type { ColumnsType } from '@utech/born-ui/table';
+import type { TableListItem } from './service';
+import { tableListDataSource } from './service';
 
 const columns: ColumnsType<TableListItem> = [
   {

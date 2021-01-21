@@ -1,11 +1,13 @@
-import React, { PropsWithChildren, useState } from 'react';
+import type { PropsWithChildren } from 'react';
+import React, { useState } from 'react';
 import { Divider, message, Select } from 'antd';
-import Form, { Rule } from 'antd/lib/form';
+import type { Rule } from 'antd/lib/form';
+import Form from 'antd/lib/form';
 import isEqual from 'lodash/isEqual';
 import DatePicker from '../date-picker';
 import Input from '../input';
 import InputNumber from '../input-number';
-import { ColumnType } from './Table';
+import type { ColumnType } from './Table';
 import InputPercent from '../input-percent';
 import Container from './container';
 import { isOptionColumn } from './utils';
@@ -18,7 +20,7 @@ function filterOption(input: string, option: any) {
   return option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 }
 
-export function genCellEditor<T, U = {}>(
+export function genCellEditor<T>(
   record: T,
   editor: ColumnType<T>['editor'],
   dataType: ColumnType<T>['dataType'],
@@ -112,10 +114,10 @@ export interface EditableCellProps<T> {
   title: string;
 }
 
-const isFormValChange = <T, U = {}>(formVal: T, record: T): boolean =>
+const isFormValChange = <T,>(formVal: T, record: T): boolean =>
   !isEqual({ ...record, ...formVal }, record);
 
-const EditableCell = <T, U = {}>({
+const EditableCell = <T,>({
   index,
   title,
   record,

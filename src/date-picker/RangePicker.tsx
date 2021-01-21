@@ -1,11 +1,13 @@
 import React, { useContext, forwardRef } from 'react';
-import dayjs, { Dayjs } from 'dayjs';
+import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import dayjsGenerateConfig from 'rc-picker/lib/generate/dayjs';
-import generatePicker, {
+import type {
   RangePickerBaseProps,
   RangePickerDateProps,
   RangePickerTimeProps,
 } from 'antd/lib/date-picker/generatePicker';
+import generatePicker from 'antd/lib/date-picker/generatePicker';
 import { ConfigContext } from '../config-provider';
 
 const ADatePicker = generatePicker<Dayjs>(dayjsGenerateConfig);

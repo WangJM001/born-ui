@@ -1,12 +1,15 @@
-import React, { FC, forwardRef } from 'react';
-import AInput, {
+import type { FC } from 'react';
+import React, { forwardRef } from 'react';
+import type {
   InputProps,
   GroupProps,
   SearchProps,
   TextAreaProps,
   PasswordProps,
 } from 'antd/lib/input';
-import ATextArea, { TextAreaRef } from 'antd/lib/input/TextArea';
+import AInput from 'antd/lib/input';
+import type { TextAreaRef } from 'antd/lib/input/TextArea';
+import ATextArea from 'antd/lib/input/TextArea';
 
 export type { InputProps, GroupProps, SearchProps, TextAreaProps, PasswordProps };
 

@@ -1,6 +1,6 @@
-import { SelectProps as ASelectProps, SelectValue } from 'antd/lib/select';
-import { OptionsType } from 'rc-select/lib/interface';
-import { RequestListData, RequestPagingData } from '../interface';
+import type { SelectProps as ASelectProps, SelectValue } from 'antd/lib/select';
+import type { OptionsType } from 'rc-select/lib/interface';
+import type { RequestListData, RequestPagingData } from '../interface';
 
 export declare type RawValue = string | number;
 
