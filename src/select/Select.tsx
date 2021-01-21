@@ -49,13 +49,13 @@ const transferValue = <T,>(
       return value.map((v: ValueType<T>) => ({
         label: v[transform.label],
         value: v[transform.value],
-        disabled: transform.disabled && !!v[transform.disabled],
+        disabled: !!v[transform.disabled || 'disabled'],
       }));
     }
     return {
       label: value[transform.label],
       value: value[transform.value],
-      disabled: transform.disabled && !!value[transform.disabled],
+      disabled: !!value[transform.disabled || 'disabled'],
     };
   }
 
