@@ -218,7 +218,7 @@ const Select = <T extends Record<string, any>, U extends Record<string, any>>(
       {children}
       {renderOption && (
         <>
-          {list.map((option: T, index) => renderOption(option, index))}
+          {list.map((option: T, index: number) => renderOption(option, index))}
           {loadingMore && (
             <Option key="spinning" value="spinning" disabled>
               <Spin spinning size="small" className={`${CLASS_NAME_PREFIX}-select-spin`} />
