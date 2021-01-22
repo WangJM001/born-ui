@@ -165,12 +165,11 @@ const Select = <T extends Record<string, any>, U extends Record<string, any>>(
         if (Array.isArray(selectedValue)) {
           if (selectedValue.length) {
             const values = selectedValue.map((v) => v.value);
-            // 多选模式
-            finalValue = list.filter((item: T) => values.includes(item[key])) || [];
-            // 在懒加载时，value中的值可能在list还未加载到
-            if (finalValue.length !== selectedValue.length && value && value.length) {
-              finalValue = finalValue.concat(value.filter((item: T) => values.includes(item[key])));
-            }
+            finalValue = values.map((v: any) => {
+              // 在懒加载时，value中的值可能在list还未加载到
+              const source = [...list, ...values];
+              return source.find((item: T) => item[key] === v);
+            });
           }
         } else {
           finalValue = list.find((item: T) => item[key] === selectedValue.value);
