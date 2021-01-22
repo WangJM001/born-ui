@@ -19,12 +19,12 @@ title: Select
 > 这里只列出与 antd select 不同的 api
 
 | 属性 | 描述 | 类型 | 默认值 |
-| --- | --- | --- | --- |
+| --- | --- | --- | --- | --- |
 | request | 获取 `dataSource` 的方法 | `(params?: {pageSize: number;current: number;[key: string]: any;}) => Promise<RequestData<T>>` | - |
 | params | 用于 request 查询的多余参数，一旦变化会触发重新加载 | object | - | - |
 | formatData | 对通过 `request` 获取的数据进行处理 | `(data: T[]) => T[]` | - |
 | transform | 转换`value` `defaultValue` 以及 request 返回的业务数据 | `RawValue \| RawValue[] \| T \| T[]` | - |
-| renderOption | 自定义渲染 Option | `(data: T) => React.ReactNode` | - |
+| renderOption | 自定义渲染 Option | `(data: T, index:number) => React.ReactNode` | - |
 | requestReady | 值为 false 时，不执行 request | `boolean` | true |
 | onChange | 扩展 value 值，返回原始的业务对象 | `(value: string \| number \| string[] \| number[] \| T \| T[], options: OptionsType \| OptionsType[number]) => void` | true |
 | pagination | 滚动分页加载 | `boolean` | false |

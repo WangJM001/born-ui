@@ -215,17 +215,16 @@ const Select = <T extends Record<string, any>, U extends Record<string, any>>(
       onSearch={pagination ? handleSearch : undefined}
       onBlur={handleBlur}
     >
-      {renderOption ? (
+      {children}
+      {renderOption && (
         <>
-          {list.map((option: T) => renderOption(option))}
+          {list.map((option: T, index) => renderOption(option, index))}
           {loadingMore && (
             <Option key="spinning" value="spinning" disabled>
               <Spin spinning size="small" className={`${CLASS_NAME_PREFIX}-select-spin`} />
             </Option>
           )}
         </>
-      ) : (
-        children
       )}
     </ASelect>
   );

@@ -30,7 +30,7 @@ export interface RequestBaseProps<T> extends Omit<SelectBaseProps<T>, 'options'>
   /**
    * 自定义渲染Option
    */
-  renderOption?: (data: T) => React.ReactNode;
+  renderOption?: (data: T, index: number) => React.ReactNode;
   /**
    * 值转换
    * eq: value=>T[transform.value]
