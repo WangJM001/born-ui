@@ -163,13 +163,17 @@ const Select = <T extends Record<string, any>, U extends Record<string, any>>(
       if (request && labelInValue) {
         const key = transform ? transform.value : 'value';
         if (Array.isArray(selectedValue)) {
-          const values = selectedValue.map((v) => v.value);
-          // 多选模式
-          const originalValues = list.filter((item: T) => values.includes(item[key]));
-          if (originalValues && originalValues.length > 0) finalValue = originalValues;
+          if (selectedValue.length) {
+            const values = selectedValue.map((v) => v.value);
+            // 多选模式
+            finalValue = list.filter((item: T) => values.includes(item[key])) || [];
+            // 在懒加载时，value中的值可能在list还未加载到
+            if (finalValue.length !== selectedValue.length && value && value.length) {
+              finalValue = finalValue.concat(value.filter((item: T) => values.includes(item[key])));
+            }
+          }
         } else {
-          const originalValue = list.find((item: T) => item[key] === selectedValue.value);
-          if (originalValue) finalValue = originalValue;
+          finalValue = list.find((item: T) => item[key] === selectedValue.value);
         }
       }
       onChange(finalValue, option);
