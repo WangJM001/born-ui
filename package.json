@@ -1,6 +1,6 @@
 {
   "name": "@utech/born-ui",
-  "version": "1.0.2-alpha.3",
+  "version": "1.0.2-alpha.5",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
@@ -56,7 +56,7 @@
     "@ant-design/icons": "^4.2.2",
     "@utech/react-sortable-hoc": "^1.11.1",
     "ahooks": "^2.6.0",
-    "antd": "4.10.3",
+    "antd": "^4.11.1",
     "array-move": "^3.0.1",
     "classnames": "^2.2.6",
     "dayjs": "^1.8.36",
