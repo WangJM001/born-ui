@@ -128,7 +128,7 @@ const defaultColumnsFilter = <T,>(
       <Button
         key="filter-btn-search"
         type="primary"
-        onClick={confirm}
+        onClick={() => confirm({ closeDropdown: true })}
         icon={<SearchOutlined />}
         size="small"
         style={{ width: 90, marginRight: 8 }}
@@ -196,7 +196,7 @@ const defaultColumnsFilter = <T,>(
                 placeholder="请输入"
                 value={selectedKeys[0] as string}
                 onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-                onPressEnter={confirm}
+                onPressEnter={() => confirm({ closeDropdown: true })}
                 style={{ width: 188 }}
               />
             </div>
