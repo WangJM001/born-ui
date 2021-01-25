@@ -168,7 +168,7 @@ const Select = <T extends Record<string, any>, U extends Record<string, any>>(
             finalValue = values.map((v: any) => {
               // 在懒加载时，value中的值可能在list还未加载到
               const source = [...list, ...values];
-              return source.find((item: T) => item[key] === v);
+              return source.find((item: T) => item && item[key] === v);
             });
           }
         } else {
