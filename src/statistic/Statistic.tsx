@@ -40,10 +40,10 @@ const Statistic: FC<StatisticProps> = ({
   if (dataType === 'currency' && typeof internalValue === 'number') {
     internalPrecision = internalPrecision || 2;
     internalSuffix = '元';
-    if (internalValue >= 1000000) {
-      internalValue /= 10000;
-      internalSuffix = '万元';
-    }
+    // if (internalValue >= 1000000) {
+    //   internalValue /= 10000;
+    //   internalSuffix = '万元';
+    // }
   } else if (dataType === 'percent' && typeof internalValue === 'number') {
     internalValue *= 100;
     internalSuffix = '%';
