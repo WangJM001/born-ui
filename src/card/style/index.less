@@ -3,28 +3,30 @@
 @card-cls: ~'@{born-ui-prefix}-card';
 
 .@{card-cls} {
-  &-without-header-split {
-    > .@{ant-prefix}-card-head {
-      border: none;
-      & + .ant-card-body {
-        padding-top: 0;
+  &.@{card-cls} {
+    &-without-header-split {
+      > .@{ant-prefix}-card-head {
+        border: none;
+        & + .ant-card-body {
+          padding-top: 0;
+        }
       }
     }
-  }
-  &-ghost {
-    background: transparent;
-    &.@{ant-prefix}-card-bordered {
-      border: none;
-      .@{ant-prefix}-card-body {
-        border: @border-width-base @border-style-base @border-color-split;
+    &-ghost {
+      background: transparent;
+      &.@{ant-prefix}-card-bordered {
+        border: none;
+        .@{ant-prefix}-card-body {
+          border: @border-width-base @border-style-base @border-color-split;
+        }
       }
-    }
-    > .@{ant-prefix}-card-head {
-      padding-right: 0;
-      padding-left: 0;
-      & + .@{ant-prefix}-card-body {
-        padding-top: 24px;
-        background: @white;
+      > .@{ant-prefix}-card-head {
+        padding-right: 0;
+        padding-left: 0;
+        & + .@{ant-prefix}-card-body {
+          padding-top: 24px;
+          background: @white;
+        }
       }
     }
   }
