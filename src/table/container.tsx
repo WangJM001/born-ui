@@ -1,10 +1,9 @@
 import { useState, useRef } from 'react';
 import { createContainer } from 'unstated-next';
-import type { ColumnType } from 'antd/lib/table';
 import useMergeValue from 'use-merge-value';
 import type { FormInstance } from 'antd/lib/form';
 import type { UseFetchDataAction } from './hooks/useFetchData';
-import type { ColumnsState, TableProps } from './Table';
+import type { ColumnsState, ColumnType, TableProps } from './Table';
 import { getRowKey } from './utils';
 
 export interface UseCounterProps {

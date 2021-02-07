@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import type { DataIndex } from 'rc-table/lib/interface';
 import type { TableProps } from '.';
 import type { ColumnType } from './Table';
 
@@ -14,7 +13,7 @@ export const genDataIndexStr = (dataIndex: string | string[]) =>
  */
 export const genColumnKey = (
   key?: string | number | undefined,
-  dataIndex?: DataIndex,
+  dataIndex?: ColumnType['dataIndex'],
   index?: number,
 ) => {
   if (key) {

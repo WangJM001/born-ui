@@ -1,14 +1,13 @@
-import React from 'react';
+import { PushpinOutlined, SettingOutlined, VerticalAlignMiddleOutlined } from '@ant-design/icons';
 import type { SortEnd } from '@utech/react-sortable-hoc';
 import { SortableContainer, SortableElement } from '@utech/react-sortable-hoc';
-import arrayMove from 'array-move';
-import { PushpinOutlined, SettingOutlined, VerticalAlignMiddleOutlined } from '@ant-design/icons';
 import { Checkbox, Popover, Tooltip } from 'antd';
-import type { ColumnsType, ColumnType } from 'antd/lib/table';
+import arrayMove from 'array-move';
+import React from 'react';
 import { CLASS_NAME_PREFIX } from '../constants';
 import Container from './container';
+import type { ColumnsState, ColumnType, ColumnsType } from './Table';
 import { genColumnKey } from './utils';
-import type { ColumnsState } from './Table';
 
 interface ColumnSettingProps<T = any> {
   columns?: ColumnsType<T>;
@@ -185,8 +184,7 @@ const GroupCheckboxList: React.FC<{
 
 const ColumnSetting = <T,>(props: ColumnSettingProps<T>) => {
   const counter = Container.useContainer();
-  const localColumns: Omit<ColumnType<T> & { index?: number }, 'ellipsis'>[] =
-    props.columns || counter.columns || [];
+  const localColumns: Omit<ColumnType<T>, 'ellipsis'>[] = props.columns || counter.columns || [];
   const { columnsMap, setColumnsMap, setSortKeyColumns } = counter;
   /**
    * 设置全部选中，或全部未选中

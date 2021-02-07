@@ -4,7 +4,6 @@ import { Card, Empty, Space, Table as ATable } from 'antd';
 import type { Rule } from 'antd/lib/form';
 import Form from 'antd/lib/form';
 import type {
-  ColumnsType as AColumnsType,
   ColumnType as AColumnType,
   TablePaginationConfig,
   TableProps as ATableProps,
@@ -330,7 +329,7 @@ const genColumnList = <T,>(
   urlState: UrlStateType,
   formatSymbol: FormatSymbolType,
   columnEmptyText?: ColumnEmptyText,
-): (AColumnsType<T>[number] & { index?: number })[] => {
+): ColumnsType<T> => {
   const urlFilter = urlState.filter ? JSON.parse(urlState.filter) : {};
   const urlSorter = urlState.sorter ? JSON.parse(urlState.sorter) : {};
 
@@ -407,7 +406,7 @@ const genColumnList = <T,>(
 
       return tempColumn;
     })
-    .filter((item: any) => !item.hideInTable) as unknown) as AColumnType<T>[];
+    .filter((item: any) => !item.hideInTable) as unknown) as ColumnsType<T>;
 };
 
 /**
@@ -953,19 +952,21 @@ const Table = <T extends Record<string, any>, U extends Record<string, any>>(
       {...(counter.editable && editableProps)}
       rowKey={rowKey}
       rowSelection={propsRowSelection === false ? undefined : rowSelection}
-      columns={counter.columns.filter((item) => {
-        // 删掉不应该显示的
-        const { key, dataIndex } = item;
-        const columnKey = genColumnKey(key, dataIndex);
-        if (!columnKey) {
+      columns={
+        counter.columns.filter((item) => {
+          // 删掉不应该显示的
+          const { key, dataIndex } = item;
+          const columnKey = genColumnKey(key, dataIndex);
+          if (!columnKey) {
+            return true;
+          }
+          const config = counter.columnsMap[columnKey];
+          if (config && config.show === false) {
+            return false;
+          }
           return true;
-        }
-        const config = counter.columnsMap[columnKey];
-        if (config && config.show === false) {
-          return false;
-        }
-        return true;
-      })}
+        }) as any
+      }
       loading={action.loading || props.loading}
       dataSource={dataSource}
       pagination={pagination}
